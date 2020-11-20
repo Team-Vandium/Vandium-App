@@ -1,18 +1,26 @@
-{ "products":[
-  {
-  "id": 12345,
-  "name": "2320 15\" Laptop",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  "price": 1200,
-  "manufacturer": "dell",
-  "image": "https://i.dell.com/is/image/DellContent//content/dam/global-site-design/product_images/dell_client_products/notebooks/inspiron_notebooks/15_7590/global_spi/ng/notebook-inspiron-15-7590-campaign-hero-504x350-ng.psd?fmt=jpg&wid=570&hei=400",
-  "size": "small",
-  "weight": 4,
-  "tags": [
-    "parent",
-    "electronics",
-    "computer"
-    ]
-  }
+{
+  "products": [
+    {
+      "id": 12345,
+      "name": "2320 15\" Laptop",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "price": 1200,
+      "manufacturer": "dell",
+      "image": "https://i.dell.com/is/image/DellContent//content/dam/global-site-design/product_images/dell_client_products/notebooks/inspiron_notebooks/15_7590/global_spi/ng/notebook-inspiron-15-7590-campaign-hero-504x350-ng.psd?fmt=jpg&wid=570&hei=400",
+      "size": "small",
+      "weight": 4,
+      "tags": ["parent", "electronics", "computer"]
+    },
+    {
+      "id": 12345,
+      "name": "test",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "price": 1200,
+      "manufacturer": "test",
+      "image": "https://i.dell.com/is/image/DellContent//content/dam/global-site-design/product_images/dell_client_products/notebooks/inspiron_notebooks/15_7590/global_spi/ng/notebook-inspiron-15-7590-campaign-hero-504x350-ng.psd?fmt=jpg&wid=570&hei=400",
+      "size": "small",
+      "weight": 4,
+      "tags": ["parent", "electronics", "computer"]
+    },
   ]
 }
