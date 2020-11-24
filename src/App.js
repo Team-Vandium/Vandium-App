@@ -13,7 +13,21 @@ class App extends Component {
       apiData: [],
       isFetched: false,
       errorMsg: null,
+      basket: [],
     };
+    this.addToBasket = this.addToBasket.bind(this);
+  }
+  addToBasket(id){ //use unique ID from map function to filter for element in apiData
+    let item = this.state.apiData.filter( //variable item to hold the element
+        this.getItem(id) //call getItem function to return object
+    );
+    this.setState({basket: this.state.basket.concat(item)}); //add item to basket array
+  }
+
+  getItem(a){
+    return function(obj){
+        return obj.id === a;
+    }
   }
 
   async componentDidMount() {
@@ -38,6 +52,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        Items in Basket: {this.state.basket.length}
         <ProductList />
         <div className="container-md">
           {/* Started on Filter box with checkboxs, can be integrated with search */}
@@ -48,6 +63,7 @@ class App extends Component {
               return (
                 <div className="col-xs-12 col-sm-6 col-lg-4">
                   <ProductCard key={p.id} product={p}></ProductCard>
+                  <button onClick = {()=>this.addToBasket(p.id)}>Add To Basket</button>
                 </div>
               );
             })}
