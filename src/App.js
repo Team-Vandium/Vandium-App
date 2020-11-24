@@ -19,7 +19,7 @@ class App extends Component {
   async componentDidMount() {
     try {
       const API_URL =
-        "https://raw.githubusercontent.com/Team-Vandium/data/main/products-jaymie.json";
+        'https://raw.githubusercontent.com/Team-Vandium/data/main/products-jaymie.json';
       // fetch data from api
       const response = await fetch(API_URL);
       // store response
@@ -43,10 +43,14 @@ class App extends Component {
           {/* Started on Filter box with checkboxs, can be integrated with search box */}
           <FilterBox></FilterBox>
           <div className="row">
-            <div className="col-4">
-              {/* Sample Product Card - to be added to */}
-              <ProductCard></ProductCard>
-            </div>
+            {/* Sample Product Card - to be added to */}
+            {this.state.apiData.map((p) => {
+              return (
+                <div className="col-xs-12 col-sm-6 col-lg-4">
+                  <ProductCard key={p.id} product={p}></ProductCard>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

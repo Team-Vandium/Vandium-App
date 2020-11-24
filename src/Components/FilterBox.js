@@ -44,24 +44,24 @@ export default class FilterBox extends Component {
   render() {
     return (
       <>
-        <div class="card border-primary mt-3 mb-3">
-          <div class="card-header text-left">Filter Products</div>
-          <div class="card-body">
+        <div className="card border-primary mt-3 mb-3">
+          <div className="card-header text-left">Filter Products</div>
+          <div className="card-body">
             <form action="">
-              <fieldset class="form-group">
-                <div className="row">
+              <fieldset className="form-group">
+                <div classNameName="row">
                   {this.state.categories.map((c) => {
                     return (
-                      <div className="col-6 col-sm-4 col-lg-2">
-                        <div class="form-check text-left">
+                      <div classNameName="col-6 col-sm-4 col-lg-2">
+                        <div className="form-check text-left">
                           <input
-                            class="form-check-input"
+                            className="form-check-input"
                             type="checkbox"
                             value={c}
                             isSelected={this.state.checkboxes[c]}
                             onChange={this.handleCheckboxChange}
                           />
-                          <label class="form-check-label">{c}</label>
+                          <label className="form-check-label">{c}</label>
                         </div>
                       </div>
                     );
