@@ -7,12 +7,7 @@ export default class ProductCard extends Component {
     } else return desc;
   }
   render() {
-    const {
-      name,
-      description,
-      price,
-      tags,
-    } = this.props.product;
+    const { name, description, price, tags } = this.props.product;
     return (
       <>
         <div className="card mb-3">

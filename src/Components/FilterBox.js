@@ -49,10 +49,10 @@ export default class FilterBox extends Component {
           <div className="card-body">
             <form action="">
               <fieldset className="form-group">
-                <div classNameName="row">
+                <div className="row">
                   {this.state.categories.map((c) => {
                     return (
-                      <div classNameName="col-6 col-sm-4 col-lg-2">
+                      <div key={c} className="col-6 col-sm-4 col-lg-2">
                         <div className="form-check text-left">
                           <input
                             className="form-check-input"
