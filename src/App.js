@@ -40,7 +40,7 @@ class App extends Component {
       <div className="App">
         <ProductList />
         <div className="container-md">
-          {/* Started on Filter box with checkboxs, can be integrated with search box */}
+          {/* Started on Filter box with checkboxs, can be integrated with search */}
           <FilterBox></FilterBox>
           <div className="row">
             {/* Sample Product Card - to be added to */}
