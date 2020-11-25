@@ -22,7 +22,8 @@ export default class ProductCard extends Component {
             <p className="card-text">{this.shortenDescription(description)}</p>
             <a href="#" className="btn btn-primary">
               More Information
-            </a><button onClick = {()=>this.props.addToBasket(id)}>Add To Basket</button>
+            </a>
+            <button onClick = {()=>this.props.addToBasket(id)}>Add To Basket</button>
             <hr />
             {tags.map((t) => {
               return <span className="badge badge-success m-1">{t}</span>;

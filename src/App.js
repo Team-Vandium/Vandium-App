@@ -17,18 +17,21 @@ class App extends Component {
       basket: [],
     };
     this.addToBasket = this.addToBasket.bind(this);
+    this.emptyBasket = this.emptyBasket.bind(this);
   }
-  addToBasket(id){ //use unique ID from map function to filter for element in apiData
+  addToBasket(id){ //use unique ID from productCard map function to filter for element in apiData
      let item = this.state.apiData.filter( //variable item to hold the element
          this.getItem(id) //call getItem function to return object
     );
      this.setState({basket: this.state.basket.concat(item)}); //add item to basket array
-}
-
-  getItem(a){
+  }
+  getItem(a){ //returns correct object from apiData to addToBasket
       return function(obj){
           return obj.id === a;
       }
+  }
+  emptyBasket(){
+    this.setState({basket: []});
   }
 
   async componentDidMount() {
@@ -53,8 +56,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        Items in Basket: {this.state.basket.length}
-        {this.state.apiData.length> 0 && <Basket state ={this.state}></Basket>}
+        {this.state.apiData.length> 0 && <Basket state ={this.state} emptyBasket={this.emptyBasket}></Basket>}
         
         <ProductList />
         <div className="container-md">
@@ -65,8 +67,7 @@ class App extends Component {
             {this.state.apiData.map((p) => {
               return (
                 <div className="col-xs-12 col-sm-6 col-lg-4">
-                  <ProductCard key={p.id} product={p} addToBasket={this.addToBasket}></ProductCard>
-                  
+                  <ProductCard key={p.id} product={p} addToBasket={this.addToBasket}></ProductCard> 
                 </div>
               );
             })}
