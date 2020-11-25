@@ -15,9 +15,11 @@ class App extends Component {
       isFetched: false,
       errorMsg: null,
       basket: [],
+      viewBasket: false,
     };
     this.addToBasket = this.addToBasket.bind(this);
     this.emptyBasket = this.emptyBasket.bind(this);
+    this.viewBasket = this.viewBasket.bind(this);
   }
   addToBasket(id){ //use unique ID from productCard map function to filter for element in apiData
      let item = this.state.apiData.filter( //variable item to hold the element
@@ -30,8 +32,15 @@ class App extends Component {
           return obj.id === a;
       }
   }
-  emptyBasket(){
+  emptyBasket(){ //remove all items from basket array
     this.setState({basket: []});
+  }
+  viewBasket(){
+    if (this.state.viewBasket === false)
+    this.setState({viewBasket: true})
+    else{
+      this.setState({viewBasket: false})
+    }
   }
 
   async componentDidMount() {
@@ -56,8 +65,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.apiData.length> 0 && <Basket state ={this.state} emptyBasket={this.emptyBasket}></Basket>}
-        
+        {this.state.apiData.length > 0 && <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket}></Basket>}
         <ProductList />
         <div className="container-md">
           {/* Started on Filter box with checkboxs, can be integrated with search */}
