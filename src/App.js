@@ -33,7 +33,7 @@ class App extends Component {
   async componentDidMount() {
     try {
       const API_URL =
-        'https://raw.githubusercontent.com/Team-Vandium/data/main/products-jaymie.json';
+        'https://raw.githubusercontent.com/Team-Vandium/data/main/products-masterlist.json';
       // fetch data from api
       const response = await fetch(API_URL);
       // store response
