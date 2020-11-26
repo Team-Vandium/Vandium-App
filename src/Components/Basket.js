@@ -11,7 +11,7 @@ export default class Basket extends Component {
             <div>
             Items in Basket: {this.props.state.basket.length} &nbsp;
             Total: €{this.props.state.basket.reduce(getTotal, 0.00)} <br></br>
-            <button onClick = {()=>this.props.emptyBasket()}>Empty Basket</button> &nbsp;
+            <button onClick = {()=>this.props.emptyBasket()}>Empty Basket</button> &nbsp; 
             <button onClick ={()=>this.props.viewBasket()}>View Basket</button>
             {basketBoolean? //ternary operator to diplay basket when view basket pressed, if false display nothing
              <table class = "table" >
