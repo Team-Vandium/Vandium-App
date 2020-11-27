@@ -68,7 +68,7 @@ class App extends Component {
   async componentDidMount() {
     try {
       const API_URL =
-        'https://raw.githubusercontent.com/Team-Vandium/data/main/products-masterlist.json';
+        'https://raw.githubusercontent.com/Team-Vandium/data/main/products-kim.json';
       // fetch data from api
       const response = await fetch(API_URL);
       // store response
@@ -89,7 +89,7 @@ class App extends Component {
       <div className="App"> 
         {this.state.apiData.length > 0 && <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket}></Basket>}
         
-        <ProductList />
+        {/* <ProductList /> */}
 
         <SearchForm
           searchTerm={this.state.searchTerm}
@@ -103,7 +103,7 @@ class App extends Component {
         />
 
         <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket} removeFromBasket = {this.removeFromBasket}></Basket>
-        {/* <ProductList /> */}
+        <ProductList />
         <div className="container-md">
           {/* Started on Filter box with checkboxs, can be integrated with search */}
           <FilterBox></FilterBox>

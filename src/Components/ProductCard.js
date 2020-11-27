@@ -8,12 +8,14 @@ export default class ProductCard extends Component {
   }
   render() {
     const { id, name, description, price, tags } = this.props.product;
+    const image = require(`../Images/${id}.JPG`);
+    console.log(image)
     return (
       <>
         <div className="card mb-3">
           <img
             className="card-img-top"
-            src="https://via.placeholder.com/800"
+            src={image.default ? image.default : 'https://via.placeholder.com/800'}
             alt={name}
           />
           <div className="card-body">
@@ -23,7 +25,9 @@ export default class ProductCard extends Component {
             <a href="#" className="btn btn-primary">
               More Information
             </a>
-            <button onClick = {()=>this.props.addToBasket(id)}>Add To Basket</button>
+            <button onClick={() => this.props.addToBasket(id)}>
+              Add To Basket
+            </button>
             <hr />
             {tags.map((t) => {
               return <span className="badge badge-success m-1">{t}</span>;
