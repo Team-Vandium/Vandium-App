@@ -64,7 +64,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App"> 
         {this.state.apiData.length > 0 && <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket}></Basket>}
         <ProductList />
         <div className="container-md">
