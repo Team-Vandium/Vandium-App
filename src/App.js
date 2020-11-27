@@ -24,8 +24,12 @@ class App extends Component {
     this.addToBasket = this.addToBasket.bind(this);
     this.emptyBasket = this.emptyBasket.bind(this);
     this.viewBasket = this.viewBasket.bind(this);
+<<<<<<< HEAD
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
     this.clearSearchBox = this.clearSearchBox.bind(this);
+=======
+    this.removeFromBasket = this.removeFromBasket.bind(this);
+>>>>>>> ec9ccb7061392c5f8ad54c13c2ab18bca3213f85
   }
 
   onSearchFormChange(event) {
@@ -42,7 +46,7 @@ class App extends Component {
     );
      this.setState({basket: this.state.basket.concat(item)}); //add item to basket array
   }
-  getItem(a){ //returns correct object from apiData to addToBasket
+  getItem(a){ //returns correct object from array when passed an element
       return function(obj){
           return obj.id === a;
       }
@@ -56,6 +60,12 @@ class App extends Component {
     else{
       this.setState({viewBasket: false})
     }
+  }
+  removeFromBasket(i){
+    let bArray = this.state.basket;
+    let itemIndex = bArray.findIndex(this.getItem(i));
+    bArray.splice(itemIndex, 1);
+    this.setState({basket: bArray});
   }
 
   async componentDidMount() {
@@ -80,6 +90,7 @@ class App extends Component {
   render() {
     return (
       <div className="App"> 
+<<<<<<< HEAD
         {this.state.apiData.length > 0 && <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket}></Basket>}
         
         <ProductList />
@@ -95,6 +106,10 @@ class App extends Component {
           productArray={this.state.apiData}
         />
 
+=======
+        <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket} removeFromBasket = {this.removeFromBasket}></Basket>
+        {/* <ProductList /> */}
+>>>>>>> ec9ccb7061392c5f8ad54c13c2ab18bca3213f85
         <div className="container-md">
           {/* Started on Filter box with checkboxs, can be integrated with search */}
           <FilterBox></FilterBox>
