@@ -5,8 +5,8 @@ import 'bootswatch/dist/yeti/bootstrap.min.css';
 import FilterBox from './Components/FilterBox.js';
 import ProductCard from './Components/ProductCard.js';
 import Basket from './Components/Basket.js';
-import SearchForm from "./Components/SearchForm";
-import SearchResults from "./SearchResults";
+import SearchForm from "./Components/SearchForm.js";
+import SearchResults from "./Components/SearchResults.js";
 
 class App extends Component {
   constructor(props) {
