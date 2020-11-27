@@ -24,12 +24,9 @@ class App extends Component {
     this.addToBasket = this.addToBasket.bind(this);
     this.emptyBasket = this.emptyBasket.bind(this);
     this.viewBasket = this.viewBasket.bind(this);
-<<<<<<< HEAD
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
     this.clearSearchBox = this.clearSearchBox.bind(this);
-=======
     this.removeFromBasket = this.removeFromBasket.bind(this);
->>>>>>> ec9ccb7061392c5f8ad54c13c2ab18bca3213f85
   }
 
   onSearchFormChange(event) {
@@ -90,7 +87,6 @@ class App extends Component {
   render() {
     return (
       <div className="App"> 
-<<<<<<< HEAD
         {this.state.apiData.length > 0 && <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket}></Basket>}
         
         <ProductList />
@@ -106,10 +102,8 @@ class App extends Component {
           productArray={this.state.apiData}
         />
 
-=======
         <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket} removeFromBasket = {this.removeFromBasket}></Basket>
         {/* <ProductList /> */}
->>>>>>> ec9ccb7061392c5f8ad54c13c2ab18bca3213f85
         <div className="container-md">
           {/* Started on Filter box with checkboxs, can be integrated with search */}
           <FilterBox></FilterBox>
