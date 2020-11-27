@@ -32,6 +32,12 @@ class ProductList extends Component {
     } // end of try catch
   } // end of componentDidMount()
 
+  shuffle(productA,productB){
+    let comparison = 0;
+    comparison = Math.random()-0.5;
+    return comparison;
+  }
+
   render() {
     if (this.state.errorMsg) {
       return (
@@ -64,14 +70,14 @@ class ProductList extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.apiData.map((p) => (
+                {this.state.apiData.sort(this.shuffle).map((p) => (
                   <tr key={p.id}>
                     <td>
                       <img src={p.image} alt="TEST" />
                     </td>
                     <td>{p.name}</td>
                     <td>{p.description}</td>
-                    <td>€{p.price}</td>
+                    <td>€{p.price.toFixed(2)}</td>
                     <td>{p.tags[2]}</td>
                   </tr>
                 ))}

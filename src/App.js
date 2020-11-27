@@ -5,6 +5,8 @@ import 'bootswatch/dist/yeti/bootstrap.min.css';
 import FilterBox from './Components/FilterBox.js';
 import ProductCard from './Components/ProductCard.js';
 import Basket from './Components/Basket.js';
+import SearchForm from "./Components/SearchForm";
+import SearchResults from "./SearchResults";
 
 class App extends Component {
   constructor(props) {
@@ -16,11 +18,24 @@ class App extends Component {
       errorMsg: null,
       basket: [],
       viewBasket: false,
+      searchTerm: "",
+      len: 0
     };
     this.addToBasket = this.addToBasket.bind(this);
     this.emptyBasket = this.emptyBasket.bind(this);
     this.viewBasket = this.viewBasket.bind(this);
+    this.onSearchFormChange = this.onSearchFormChange.bind(this);
+    this.clearSearchBox = this.clearSearchBox.bind(this);
   }
+
+  onSearchFormChange(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
+
+  clearSearchBox() {
+    this.setState({ searchTerm: ""});
+  }
+
   addToBasket(id){ //use unique ID from productCard map function to filter for element in apiData
      let item = this.state.apiData.filter( //variable item to hold the element
          this.getItem(id) //call getItem function to return object
@@ -66,7 +81,20 @@ class App extends Component {
     return (
       <div className="App"> 
         {this.state.apiData.length > 0 && <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket}></Basket>}
+        
         <ProductList />
+
+        <SearchForm
+          searchTerm={this.state.searchTerm}
+          onChange={this.onSearchFormChange}
+          buttonHandler={this.clearSearchBox}
+          />
+
+        <SearchResults
+          searchTerm={this.state.searchTerm}
+          productArray={this.state.apiData}
+        />
+
         <div className="container-md">
           {/* Started on Filter box with checkboxs, can be integrated with search */}
           <FilterBox></FilterBox>
