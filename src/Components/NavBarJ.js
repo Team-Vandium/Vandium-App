@@ -39,6 +39,11 @@ export default class NavBarJ extends Component {
                   About
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/Newsletter">
+                  Newsletter
+                </Link>
+              </li>
             </ul>
           </div>
         </nav>
