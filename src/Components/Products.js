@@ -14,17 +14,13 @@ class Products extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      basket: [],
-      viewBasket: false,
       searchTerm: '',
       len: 0,
     };
-    this.addToBasket = this.addToBasket.bind(this);
-    this.emptyBasket = this.emptyBasket.bind(this);
-    this.viewBasket = this.viewBasket.bind(this);
+    
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
     this.clearSearchBox = this.clearSearchBox.bind(this);
-    this.removeFromBasket = this.removeFromBasket.bind(this);
+    
   }
 
   onSearchFormChange(event) {
@@ -35,38 +31,10 @@ class Products extends Component {
     this.setState({ searchTerm: '' });
   }
 
-  addToBasket(id) {
-    //use unique ID from productCard map function to filter for element in apiData
-    let item = this.props.apiData.filter(
-      //variable item to hold the element
-      this.getItem(id) //call getItem function to return object
-    );
-    this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
-  }
-  getItem(a) {
-    //returns correct object from array when passed an element
-    return function (obj) {
-      return obj.id === a;
-    };
-  }
-  emptyBasket() {
-    //remove all items from basket array
-    this.setState({ basket: [] });
-  }
-  viewBasket() {
-    if (this.state.viewBasket === false) this.setState({ viewBasket: true });
-    else {
-      this.setState({ viewBasket: false });
-    }
-  }
-  removeFromBasket(i) {
-    let bArray = this.state.basket;
-    let itemIndex = bArray.findIndex(this.getItem(i));
-    bArray.splice(itemIndex, 1);
-    this.setState({ basket: bArray });
-  }
+  
 
   render() {
+    console.log(this.props);
     return (
       <div className="App">
         {/* {this.state.apiData.length > 0 && (
@@ -103,7 +71,7 @@ class Products extends Component {
                   <ProductCard
                     key={p.id}
                     product={p}
-                    addToBasket={this.addToBasket}
+                    addToBasket={this.props.addToBasket}
                   ></ProductCard>
                 </div>
               );

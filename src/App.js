@@ -8,6 +8,7 @@ import Home from './Components/Home.js';
 import About from './Components/About.js';
 import NoMatch from './Components/NoMatch.js';
 import Products from './Components/Products.js';
+import Basket from './Components/Basket.js';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +19,45 @@ class App extends Component {
       delivery: [],
       isFetched: false,
       errorMsg: null,
+      basket: [],
+      viewBasket: false,
     };
+    this.addToBasket = this.addToBasket.bind(this);
+    this.emptyBasket = this.emptyBasket.bind(this);
+    this.viewBasket = this.viewBasket.bind(this);
+    this.removeFromBasket = this.removeFromBasket.bind(this);
+  }
+
+  addToBasket(id) {
+    //use unique ID from productCard map function to filter for element in apiData
+    let item = this.state.apiData.filter(
+    //variable item to hold the element
+    this.getItem(id) //call getItem function to return object
+     
+  );
+    this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
+  }
+  getItem(a) {
+    //returns correct object from array when passed an element
+    return function (obj) {
+      return obj.id === a;
+    };
+  }
+  emptyBasket() {
+    //remove all items from basket array
+    this.setState({ basket: [] });
+  }
+  viewBasket() {
+    if (this.state.viewBasket === false) this.setState({ viewBasket: true });
+    else {
+      this.setState({ viewBasket: false });
+    }
+  }
+  removeFromBasket(i) {
+    let bArray = this.state.basket;
+    let itemIndex = bArray.findIndex(this.getItem(i));
+    bArray.splice(itemIndex, 1);
+    this.setState({ basket: bArray });
   }
 
   async componentDidMount() {
@@ -46,19 +85,23 @@ class App extends Component {
       <Router>
         <div className="App">
           {/* NavBar */}
-          <Navbar />
+          <Navbar addToBasket ={this.addToBasket}/>
           <div className="container">
             <Switch>
               <Route
                 exact
                 path="/"
-                render={() => <Products apiData={this.state.apiData} />}
+                render={() => <Products apiData={this.state.apiData} addToBasket ={this.addToBasket}/>}
               />
               <Route path="/Home" component={Home} />
               <Route path="/About" component={About} />
+              <Route path="/Basket" render={()=><Basket state={this.state} 
+              emptyBasket={this.emptyBasket}
+              viewBasket={this.viewBasket}
+              />} />
               <Route
                 path="/Products"
-                render={() => <Products apiData={this.state.apiData} />}
+                render={() => <Products apiData={this.state.apiData} addToBasket ={this.addToBasket} />}
               />
               <Route component={NoMatch} />
             </Switch>
