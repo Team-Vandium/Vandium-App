@@ -22,9 +22,9 @@ class App extends Component {
           <NavBar />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/Home" component={Home} />
-            <Route exact path="/About" component={About} />
-            <Route exact path="/Products" component={Products} />
+            <Route path="/Home" component={Home} />
+            <Route path="/About" component={About} />
+            <Route path="/Products" component={Products} />
             <Route component={NoMatch} />
           </Switch>
         </div>
