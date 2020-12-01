@@ -9,7 +9,7 @@ export default class ProductCard extends Component {
   render() {
     const { id, name, description, price, tags } = this.props.product;
     const image = require(`../Images/${id}.jpg`);
-    console.log(image);
+    
     return (
       <>
         <div className="card mb-3">
