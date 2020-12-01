@@ -68,8 +68,6 @@ class Products extends Component {
     this.setState({ basket: bArray });
   }
 
-<<<<<<< HEAD
-=======
   async componentDidMount() {
     try {
       const API_URL =
@@ -88,16 +86,11 @@ class Products extends Component {
       this.setState({ errorMsg: error });
     } // end of try catch
   } // end of componentDidMount()
->>>>>>> 3b729026b1b1d3a98b5ad444505ef36666be5bbf
 
   render() {
     return (
       <div className="App">
-<<<<<<< HEAD
-        {this.props.apiData.length > 0 && (
-=======
         {/* {this.state.apiData.length > 0 && (
->>>>>>> 3b729026b1b1d3a98b5ad444505ef36666be5bbf
           <Basket
             state={this.state}
             emptyBasket={this.emptyBasket}
@@ -116,13 +109,8 @@ class Products extends Component {
 
         {/* <SearchResults
           searchTerm={this.state.searchTerm}
-<<<<<<< HEAD
           productArray={this.props.apiData}
         />
-=======
-          productArray={this.state.apiData}
-        /> */}
->>>>>>> 3b729026b1b1d3a98b5ad444505ef36666be5bbf
 
         <div className="container-md">
           {/* Started on Filter box with checkboxs, can be integrated with search */}
@@ -142,7 +130,7 @@ class Products extends Component {
             })}
           </div>
         </div>
-      </div>
+      
     );
   }
 }

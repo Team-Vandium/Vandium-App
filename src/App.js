@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import "bootswatch/dist/yeti/bootstrap.min.css";
-import NavBar from "./Components/NavBar.js";
+import Navbar from "./Components/NavBarJ.js";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Components/Home.js";
 import About from "./Components/About.js";

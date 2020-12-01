@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import vanadium from '../Images/vanadium_atomic.png';
+import React, { Component } from 'react';
+import { GiStarSwirl } from 'react-icons/gi';
+import { GiShoppingCart } from 'react-icons/gi';
+import Basket from './Basket';
 
-export default class NavBar extends Component {
+export default class Navbar extends Component {
   render() {
     return (
       <nav class="navbar navbar-expand-lg bg-dark navbar-dark justify-content-end">
@@ -19,7 +20,7 @@ export default class NavBar extends Component {
         </a>
         {/* <button class="btn btn-success ml-auto mr-1">Always Show</button> */}
         <a href="/" class="mr-1 text-light" style={{ fontSize: '1.6rem' }}>
-          {/* <GiShoppingCart></GiShoppingCart>{' '}
+          <GiShoppingCart></GiShoppingCart>{' '}
           {this.props.basket.length > 0 && (
             <span
               style={{ fontSize: '.6rem' }}
@@ -27,7 +28,7 @@ export default class NavBar extends Component {
             >
               {this.props.basket.length}
             </span>
-          )} */}
+          )}
         </a>
         <div
           class="collapse navbar-collapse flex-grow-0"
