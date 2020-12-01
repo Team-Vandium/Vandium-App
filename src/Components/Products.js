@@ -1,11 +1,12 @@
-import React, { Component } from "react";
-import "../App.css";
-import "bootswatch/dist/yeti/bootstrap.min.css";
-import FilterBox from "./FilterBox.js";
-import ProductCard from "./ProductCard.js";
-import Basket from "./Basket.js";
-import SearchForm from "./SearchForm.js";
-import SearchResults from "./SearchResults.js";
+import React, { Component } from 'react';
+import '../App.css';
+import 'bootswatch/dist/yeti/bootstrap.min.css';
+import FilterBox from './FilterBox.js';
+import ProductCard from './ProductCard.js';
+import Basket from './Basket.js';
+import SearchForm from './SearchForm.js';
+import CarouselSlider from './CarouselSlider.js';
+import SearchResults from './SearchResults.js';
 
 // update to use API data from props, mounted in App
 
@@ -17,7 +18,7 @@ class Products extends Component {
       
       basket: [],
       viewBasket: false,
-      searchTerm: "",
+      searchTerm: '',
       len: 0,
     };
     this.addToBasket = this.addToBasket.bind(this);
@@ -33,7 +34,7 @@ class Products extends Component {
   }
 
   clearSearchBox() {
-    this.setState({ searchTerm: "" });
+    this.setState({ searchTerm: '' });
   }
 
   addToBasket(id) {
@@ -67,19 +68,45 @@ class Products extends Component {
     this.setState({ basket: bArray });
   }
 
+<<<<<<< HEAD
+=======
+  async componentDidMount() {
+    try {
+      const API_URL =
+        'https://raw.githubusercontent.com/Team-Vandium/data/main/products-masterlist.json';
+      // fetch data from api
+      const response = await fetch(API_URL);
+      // store response
+      const jsonResult = await response.json();
+
+      this.setState({ apiData: jsonResult.products });
+      this.setState({ isFetched: true });
+    } catch (error) {
+      // API threw an error
+      this.setState({ isFetched: false });
+      // save to variable to display the error
+      this.setState({ errorMsg: error });
+    } // end of try catch
+  } // end of componentDidMount()
+>>>>>>> 3b729026b1b1d3a98b5ad444505ef36666be5bbf
 
   render() {
     return (
       <div className="App">
+<<<<<<< HEAD
         {this.props.apiData.length > 0 && (
+=======
+        {/* {this.state.apiData.length > 0 && (
+>>>>>>> 3b729026b1b1d3a98b5ad444505ef36666be5bbf
           <Basket
             state={this.state}
             emptyBasket={this.emptyBasket}
             viewBasket={this.viewBasket}
           ></Basket>
-        )}
+        )} */}
 
         {/* <ProductList /> */}
+        <CarouselSlider data={this.state.apiData}></CarouselSlider>
 
         <SearchForm
           searchTerm={this.state.searchTerm}
@@ -87,10 +114,15 @@ class Products extends Component {
           buttonHandler={this.clearSearchBox}
         />
 
-        <SearchResults
+        {/* <SearchResults
           searchTerm={this.state.searchTerm}
+<<<<<<< HEAD
           productArray={this.props.apiData}
         />
+=======
+          productArray={this.state.apiData}
+        /> */}
+>>>>>>> 3b729026b1b1d3a98b5ad444505ef36666be5bbf
 
         <div className="container-md">
           {/* Started on Filter box with checkboxs, can be integrated with search */}
