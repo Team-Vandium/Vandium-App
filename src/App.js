@@ -20,11 +20,11 @@ class App extends Component {
       isFetched: false,
       errorMsg: null,
       basket: [],
-      viewBasket: false,
+      deliveryDetails: false,
     };
     this.addToBasket = this.addToBasket.bind(this);
     this.emptyBasket = this.emptyBasket.bind(this);
-    this.viewBasket = this.viewBasket.bind(this);
+    this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
   }
 
@@ -47,10 +47,10 @@ class App extends Component {
     //remove all items from basket array
     this.setState({ basket: [] });
   }
-  viewBasket() {
-    if (this.state.viewBasket === false) this.setState({ viewBasket: true });
+  deliveryDetails() {
+    if (this.state.deliveryDetails === false) this.setState({ deliveryDetails: true });
     else {
-      this.setState({ viewBasket: false });
+      this.setState({ deliveryDetails: false });
     }
   }
   removeFromBasket(i) {
@@ -85,7 +85,7 @@ class App extends Component {
       <Router>
         <div className="App">
           {/* NavBar */}
-          <Navbar addToBasket ={this.addToBasket}/>
+          <Navbar/>
           <div className="container">
             <Switch>
               <Route
@@ -96,8 +96,9 @@ class App extends Component {
               <Route path="/Home" component={Home} />
               <Route path="/About" component={About} />
               <Route path="/Basket" render={()=><Basket state={this.state} 
+              apiData={this.state.apiData}
               emptyBasket={this.emptyBasket}
-              viewBasket={this.viewBasket}
+              deliveryDetails={this.deliveryDetails}
               />} />
               <Route
                 path="/Products"
