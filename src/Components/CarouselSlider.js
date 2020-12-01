@@ -14,7 +14,7 @@ const CarouselSlider = ({ data }) => {
     })
     .slice(0, 19);
 
-  const image = (id) => require(`../Images/${id}.JPG`);
+  const image = (id) => require(`../Images/${id}.jpg`);
   return (
     <div className="row">
       <div className="col">

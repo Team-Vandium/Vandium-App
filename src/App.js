@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import "./App.css";
-import "bootswatch/dist/yeti/bootstrap.min.css";
-import Navbar from "./Components/NavbarC.js";
+import React, { Component } from 'react';
+import './App.css';
+import 'bootswatch/dist/yeti/bootstrap.min.css';
+import Navbar from './Components/NavbarC.js';
 import NavBarJ from './Components/NavBarJ';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./Components/Home.js";
-import About from "./Components/About.js";
-import NoMatch from "./Components/NoMatch.js";
-import Products from "./Components/Products.js";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './Components/Home.js';
+import About from './Components/About.js';
+import NoMatch from './Components/NoMatch.js';
+import Products from './Components/Products.js';
 
 class App extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class App extends Component {
   async componentDidMount() {
     try {
       const API_URL =
-        "https://raw.githubusercontent.com/Team-Vandium/data/main/products-masterlist.json";
+        'https://raw.githubusercontent.com/Team-Vandium/data/main/products-masterlist.json';
       // fetch data from api
       const response = await fetch(API_URL);
       // store response
@@ -43,19 +43,26 @@ class App extends Component {
 
   render() {
     return (
-      
       <Router>
         <div className="App">
           {/* NavBar */}
           <Navbar />
-          <Switch>
-            <Route exact path="/" render={() => <Products apiData={this.state.apiData} />} />
-            <Route path="/Home" component={Home} />
-            <Route path="/About" component={About} />
-            <Route path="/Products" render={() => <Products apiData={this.state.apiData} />}
-            />
-            <Route component={NoMatch} />
-          </Switch>
+          <div className="container">
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => <Products apiData={this.state.apiData} />}
+              />
+              <Route path="/Home" component={Home} />
+              <Route path="/About" component={About} />
+              <Route
+                path="/Products"
+                render={() => <Products apiData={this.state.apiData} />}
+              />
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
         </div>
       </Router>
     );
