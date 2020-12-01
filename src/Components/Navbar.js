@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { GiStarSwirl } from 'react-icons/gi';
 import { GiShoppingCart } from 'react-icons/gi';
 import Basket from './Basket';
-
 export default class Navbar extends Component {
   render() {
     return (
@@ -21,14 +20,16 @@ export default class Navbar extends Component {
         {/* <button class="btn btn-success ml-auto mr-1">Always Show</button> */}
         <a href="/" class="mr-1 text-light" style={{ fontSize: '1.6rem' }}>
           <GiShoppingCart></GiShoppingCart>{' '}
-          {/*this.props.basket.length > 0 && (
+          {/* <GiShoppingCart></GiShoppingCart>{' '}
+          {this.props.basket.length > 0 && (
             <span
               style={{ fontSize: '.6rem' }}
               class="badge badge-pill badge-success "
             >
               {this.props.basket.length}
             </span>
-          )*/}
+          )}
+          )} */}
         </a>
         <div
           class="collapse navbar-collapse flex-grow-0"
