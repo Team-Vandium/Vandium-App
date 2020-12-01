@@ -99,13 +99,6 @@ class App extends Component {
           <NavBarJ />
           <Navbar />
           <Switch>
-<<<<<<< HEAD
-            <Route exact path="/" component={Home} />
-            <Route exact path="/Home" component={Home} />
-            <Route exact path="/About" component={About} />
-            <Route exact path="/Products" component={Products} />
-            <Route exact path="/Products/test" component={Products} />
-=======
             <Route exact path="/" render={() => <Products apiData={this.state.apiData} />} />
             <Route path="/Home" component={Home} />
             <Route path="/About" component={About} />
@@ -113,7 +106,6 @@ class App extends Component {
             <Route path="/Products" render={() => <Products apiData={this.state.apiData} />}
             />
 
->>>>>>> 0bbdce746fa62c29e5be2e521ba79b3d2714bc69
             <Route component={NoMatch} />
           </Switch>
         </div>
