@@ -33,47 +33,8 @@ class Newsletter extends Component {
   render() {
     return (
       <div className="container">
-        <div className="form-group">
-          <h1>Newsletter</h1>
-          <form onSubmit={this.handleSubmit}>
-            <label
-              className="col-form-label col-form-label-lg"
-              for="input-large"
-            >
-              Enter Email Address:{" "}
-            </label>
-            <input
-              className="form-control form-control-lg"
-              type="text"
-              onChange={this.onEmailFormChange}
-            />
-
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={!this.state.emailValid}
-              onClick={this.handleSignUpButtonClick}
-            >
-              Sign Up
-            </button>
-            <br />
-            <br />
-            {!this.state.emailValid && (
-              <alert>PLEASE ENTER A VALID EMAIL ADDRESS</alert>
-            )}
-            {this.state.emailValid && <alert>THANKS!</alert>}
-          </form>
-        </div>
-        {this.state.submitted && (
-          <div className="alert alert-dismissible alert-success">
-            <button type="button" className="close" data-dismiss="alert">
-              &times;
-            </button>
-            <strong>Well done!</strong>
-          </div>
-        )}
         <div>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <fieldset>
               <legend>Newsletter</legend>
               <div className="form-group">
@@ -86,9 +47,31 @@ class Newsletter extends Component {
                   onChange={this.onEmailFormChange}
                 />
               </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={!this.state.emailValid}
+                onClick={this.handleSignUpButtonClick}
+              >
+                Submit
+              </button>
+              <br />
+              {!this.state.emailValid && (
+                <alert>PLEASE ENTER A VALID EMAIL ADDRESS</alert>
+              )}
+              {this.state.emailValid && <alert>THANKS!</alert>}
             </fieldset>
           </form>
         </div>
+        
+        {this.state.submitted && (
+          <div className="alert alert-dismissible alert-success">
+            <button type="button" className="close" data-dismiss="alert">
+              &times;
+            </button>
+            <strong>Well done!</strong>
+          </div>
+        )}
       </div>
     );
   }
