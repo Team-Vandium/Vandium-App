@@ -8,7 +8,7 @@ export default class ProductCard extends Component {
   }
   render() {
     const { id, name, description, price, tags } = this.props.product;
-    const image = require(`../Images/${id}.jpg`);
+    const image = require(`../Images/${id}.JPG`);
     
     return (
       <>

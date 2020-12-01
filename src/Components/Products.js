@@ -7,14 +7,14 @@ import Basket from "./Basket.js";
 import SearchForm from "./SearchForm.js";
 import SearchResults from "./SearchResults.js";
 
+// update to use API data from props, mounted in App
+
 class Products extends Component {
   constructor(props) {
     super(props);
     // get product data from api and store in state
     this.state = {
-      apiData: [],
-      isFetched: false,
-      errorMsg: null,
+      
       basket: [],
       viewBasket: false,
       searchTerm: "",
@@ -38,7 +38,7 @@ class Products extends Component {
 
   addToBasket(id) {
     //use unique ID from productCard map function to filter for element in apiData
-    let item = this.state.apiData.filter(
+    let item = this.props.apiData.filter(
       //variable item to hold the element
       this.getItem(id) //call getItem function to return object
     );
@@ -67,29 +67,11 @@ class Products extends Component {
     this.setState({ basket: bArray });
   }
 
-  async componentDidMount() {
-    try {
-      const API_URL =
-        "https://raw.githubusercontent.com/Team-Vandium/data/main/products-jaymie.json";
-      // fetch data from api
-      const response = await fetch(API_URL);
-      // store response
-      const jsonResult = await response.json();
-
-      this.setState({ apiData: jsonResult.products });
-      this.setState({ isFetched: true });
-    } catch (error) {
-      // API threw an error
-      this.setState({ isFetched: false });
-      // save to variable to display the error
-      this.setState({ errorMsg: error });
-    } // end of try catch
-  } // end of componentDidMount()
 
   render() {
     return (
       <div className="App">
-        {this.state.apiData.length > 0 && (
+        {this.props.apiData.length > 0 && (
           <Basket
             state={this.state}
             emptyBasket={this.emptyBasket}
@@ -107,7 +89,7 @@ class Products extends Component {
 
         <SearchResults
           searchTerm={this.state.searchTerm}
-          productArray={this.state.apiData}
+          productArray={this.props.apiData}
         />
 
         <div className="container-md">
@@ -115,7 +97,7 @@ class Products extends Component {
           <FilterBox></FilterBox>
           <div className="row">
             {/* Sample Product Card - to be added to */}
-            {this.state.apiData.map((p) => {
+            {this.props.apiData.map((p) => {
               return (
                 <div className="col-xs-12 col-sm-6 col-lg-4">
                   <ProductCard
