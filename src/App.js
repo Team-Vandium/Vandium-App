@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import "bootswatch/dist/yeti/bootstrap.min.css";
-import Navbar from "./Components/NavBarJ.js";
+import Navbar from "./Components/NavbarC.js";
+import NavBarJ from './Components/NavBarJ';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Components/Home.js";
 import About from "./Components/About.js";
@@ -42,17 +43,16 @@ class App extends Component {
 
   render() {
     return (
+      
       <Router>
         <div className="App">
           {/* NavBar */}
           <Navbar />
           <Switch>
-            <Route exact path="/" component={Products} />
+            <Route exact path="/" render={() => <Products apiData={this.state.apiData} />} />
             <Route path="/Home" component={Home} />
             <Route path="/About" component={About} />
-            <Route
-              path="/Products"
-              render={() => <Products apiData={this.state.apiData} />}
+            <Route path="/Products" render={() => <Products apiData={this.state.apiData} />}
             />
             <Route component={NoMatch} />
           </Switch>

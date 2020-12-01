@@ -13,9 +13,7 @@ import SearchResults from './SearchResults.js';
 class Products extends Component {
   constructor(props) {
     super(props);
-    // get product data from api and store in state
     this.state = {
-      
       basket: [],
       viewBasket: false,
       searchTerm: '',
@@ -68,25 +66,6 @@ class Products extends Component {
     this.setState({ basket: bArray });
   }
 
-  async componentDidMount() {
-    try {
-      const API_URL =
-        'https://raw.githubusercontent.com/Team-Vandium/data/main/products-masterlist.json';
-      // fetch data from api
-      const response = await fetch(API_URL);
-      // store response
-      const jsonResult = await response.json();
-
-      this.setState({ apiData: jsonResult.products });
-      this.setState({ isFetched: true });
-    } catch (error) {
-      // API threw an error
-      this.setState({ isFetched: false });
-      // save to variable to display the error
-      this.setState({ errorMsg: error });
-    } // end of try catch
-  } // end of componentDidMount()
-
   render() {
     return (
       <div className="App">
@@ -99,7 +78,7 @@ class Products extends Component {
         )} */}
 
         {/* <ProductList /> */}
-        <CarouselSlider data={this.state.apiData}></CarouselSlider>
+        <CarouselSlider data={this.props.apiData}></CarouselSlider>
 
         <SearchForm
           searchTerm={this.state.searchTerm}
@@ -117,6 +96,7 @@ class Products extends Component {
           <FilterBox></FilterBox>
           <div className="row">
             {/* Sample Product Card - to be added to */}
+            
             {this.props.apiData.map((p) => {
               return (
                 <div className="col-xs-12 col-sm-6 col-lg-4">
