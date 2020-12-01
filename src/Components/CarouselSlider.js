@@ -1,13 +1,10 @@
-import Carousel, { Dots } from '@brainhubeu/react-carousel';
+import Carousel, {
+  slidesToShowPlugin,
+  autoplayPlugin,
+} from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
-import { useState } from 'react';
 
 const CarouselSlider = ({ data }) => {
-  const [value, setValue] = useState(0);
-
-  const onChange = (value) => {
-    setValue(value);
-  };
 
   const randomProducts = data
     .sort((a, b) => {
@@ -16,14 +13,66 @@ const CarouselSlider = ({ data }) => {
       return comparison;
     })
     .slice(0, 19);
-  randomProducts.map((p) => console.log(p.id));
-  console.log(randomProducts);
 
   const image = (id) => require(`../Images/${id}.jpg`);
   return (
     <div className="row">
       <div className="col">
-        <Carousel arrows slidesPerPage={1}>
+        <Carousel
+          plugins={[
+            'arrows',
+            'infinite',
+            {
+              resolve: slidesToShowPlugin,
+              options: {
+                numberOfSlides: 6,
+              },
+            },
+            {
+              resolve: autoplayPlugin,
+              options: {
+                interval: 2000,
+              },
+            },
+          ]}
+          animationSpeed={1000}
+          breakpoints={{
+            640: {
+              plugins: [
+                'arrows',
+                'infinite',
+                {
+                  resolve: slidesToShowPlugin,
+                  options: {
+                    numberOfSlides: 2,
+                  },
+                },
+                {
+                  resolve: autoplayPlugin,
+                  options: {
+                    interval: 2000,
+                  },
+                },
+              ],
+            },
+            900: {
+              plugins: [
+                {
+                  resolve: slidesToShowPlugin,
+                  options: {
+                    numberOfSlides: 3,
+                  }
+                },
+                {
+                  resolve: autoplayPlugin,
+                  options: {
+                    interval: 2000,
+                  },
+                },
+              ],
+            },
+          }}
+        >
           {randomProducts.map((p) => {
             return (
               <div>
@@ -32,8 +81,8 @@ const CarouselSlider = ({ data }) => {
                   className="img-example img-fluid"
                   src={image(p.id).default}
                 />
-                <p className="mt-2 h5">{p.name}</p>
-                <a className="btn btn-primary mt-2">View</a>
+                <p className="mt-2 h6"> {p.name}</p>
+                {/* <a className="btn btn-primary mt-2">View</a> */}
               </div>
             );
           })}

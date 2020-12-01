@@ -20,7 +20,7 @@ export default class Navbar extends Component {
         </a>
         {/* <button class="btn btn-success ml-auto mr-1">Always Show</button> */}
         <a href="/" class="mr-1 text-light" style={{ fontSize: '1.6rem' }}>
-          <GiShoppingCart></GiShoppingCart>{' '}
+          {/* <GiShoppingCart></GiShoppingCart>{' '}
           {this.props.basket.length > 0 && (
             <span
               style={{ fontSize: '.6rem' }}
@@ -28,7 +28,7 @@ export default class Navbar extends Component {
             >
               {this.props.basket.length}
             </span>
-          )}
+          )} */}
         </a>
         <div
           class="collapse navbar-collapse flex-grow-0"
