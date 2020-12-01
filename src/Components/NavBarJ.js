@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import vanadium from '../Images/vanadium_atomic.png';
 
-export default class NavBar extends Component {
+export default class NavBarJ extends Component {
   render() {
     return (
       <div>
