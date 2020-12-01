@@ -26,6 +26,7 @@ export default class Basket extends Component {
                      <th>Item</th> 
                      <th></th> 
                      <th>Item Name</th>
+                     <th>Quantity</th>
                      <th>Manufacturer</th>
                      <th>Price</th>  
                       
@@ -35,9 +36,13 @@ export default class Basket extends Component {
                  {this.props.state.basket.map((i, index) =>(
                      <tr key = {index}>  
                          <td>{index+1}</td>
-                         <td><img src= {image(i.id).default} class="img-responsive" alt={i.name} width="150" height="150"/></td>
-                         <td>{i.name} </td>
-                         <td>{i.manufacturer} </td>
+                         <td><img src= {image(i.id).default} class="img-responsive" alt={i.name} width="100" height="100"/></td>
+                         <td>{i.name.toUpperCase()} </td>
+                         <td><button>-</button>&nbsp;
+                         <b>1</b> &nbsp;
+                         <button>+</button>
+                         </td>
+                         <td>{i.manufacturer.toUpperCase()} </td>
                          <td>€{i.price}</td> 
                          <td><button onClick = {()=>this.props.removeFromBasket(i.id)}>Remove Item</button></td>
                      </tr>
