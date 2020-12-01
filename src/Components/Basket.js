@@ -3,6 +3,16 @@ import React, { Component } from 'react';
 function getTotal(acc, obj){
     return acc + obj.price;
 }
+
+function toTitleCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
+
 //function calculateDelivery(){
  //   {this.props.state.basket.map((d, index)=>(
  //       <div key = index> </div>
@@ -37,20 +47,21 @@ export default class Basket extends Component {
                      <tr key = {index}>  
                          <td>{index+1}</td>
                          <td><img src= {image(i.id).default} class="img-responsive" alt={i.name} width="100" height="100"/></td>
-                         <td>{i.name.toUpperCase()} </td>
+                         <td>{toTitleCase(i.name)} </td>
                          <td><button>-</button>&nbsp;
                          <b>1</b> &nbsp;
                          <button>+</button>
                          </td>
-                         <td>{i.manufacturer.toUpperCase()} </td>
+                         <td>{toTitleCase(i.manufacturer)} </td>
                          <td>€{i.price}</td> 
                          <td><button onClick = {()=>this.props.removeFromBasket(i.id)}>Remove Item</button></td>
                      </tr>
                  ))} 
              </tbody> 
-         </table>
-          
-                 
+             </table>
+                    Subtotal({this.props.state.basket.length} items): 
+                    €{this.props.state.basket.reduce(getTotal, 0.00).toFixed(2)} &nbsp;
+                    <button>Checkout</button>
             </div> 
             
             
