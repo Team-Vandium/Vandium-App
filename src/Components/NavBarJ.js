@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import vanadium from '../Images/vanadium_atomic.png';
 
-export default class NavBar extends Component {
+export default class NavBarJ extends Component {
   render() {
     return (
       <div>
@@ -37,6 +37,11 @@ export default class NavBar extends Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/About">
                   About
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/Newsletter">
+                  Newsletter
                 </Link>
               </li>
             </ul>
