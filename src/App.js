@@ -12,6 +12,7 @@ class App extends Component {
     // get product data from api and store in state
     this.state = {
       apiData: [],
+      delivery: [],
       isFetched: false,
       errorMsg: null,
       basket: [],
@@ -36,14 +37,14 @@ class App extends Component {
   emptyBasket(){ //remove all items from basket array
     this.setState({basket: []});
   }
-  viewBasket(){
+  viewBasket(){ //boolean change to display basket or not
     if (this.state.viewBasket === false)
     this.setState({viewBasket: true})
     else{
       this.setState({viewBasket: false})
     }
   }
-  removeFromBasket(i){
+  removeFromBasket(i){ //get index and splice function to remove item from basket array
     let bArray = this.state.basket;
     let itemIndex = bArray.findIndex(this.getItem(i));
     bArray.splice(itemIndex, 1);
@@ -59,6 +60,7 @@ class App extends Component {
       // store response
       const jsonResult = await response.json();
 
+      this.setState({ delivery: jsonResult.deliveryCost });
       this.setState({ apiData: jsonResult.products });
       this.setState({ isFetched: true });
     } catch (error) {
@@ -72,7 +74,8 @@ class App extends Component {
   render() {
     return (
       <div className="App"> 
-        <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket} removeFromBasket = {this.removeFromBasket}></Basket>
+        <Basket state ={this.state} emptyBasket={this.emptyBasket} viewBasket = {this.viewBasket} 
+        removeFromBasket = {this.removeFromBasket}></Basket>
         {/* <ProductList /> */}
         <div className="container-md">
           {/* Started on Filter box with checkboxs, can be integrated with search */}
