@@ -3,11 +3,12 @@ import React, { Component } from "react";
 class Newsletter extends Component {
   constructor(props) {
     super(props);
-    this.state = { emailInput: "", emailValid: false, submitted: false };
+    this.state = { emailInput: "", emailValid: false, submitted: false, clearToast: false };
 
     this.onEmailFormChange = this.onEmailFormChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.handleToastClose = this.handleToastClose.bind(this);
   }
 
   validateEmail(email) {
@@ -30,11 +31,16 @@ class Newsletter extends Component {
     this.setState({ submitted: true });
   }
 
+  handleToastClose() {
+    this.setState({ clearToast: true })
+
+  }
+
   render() {
     return (
       <div className="container">
         <div>
-          <form onSubmit={this.handleSubmit}>
+          <form>
             <fieldset>
               <legend>Newsletter</legend>
               <p>
@@ -52,10 +58,10 @@ class Newsletter extends Component {
                     onChange={this.onEmailFormChange}
                   />
                   <button
-                    type="submit"
+                    type="button"
                     className="btn btn-primary"
                     disabled={!this.state.emailValid}
-                    onClick={this.handleSignUpButtonClick}
+                    onClick={this.handleSubmit}
                   >
                     Submit
                   </button>
@@ -72,12 +78,28 @@ class Newsletter extends Component {
           </form>
         </div>
 
-        {this.state.submitted && (
-          <div className="alert alert-dismissible alert-success">
-            <button type="button" className="close" data-dismiss="alert">
-              &times;
-            </button>
-            <strong>Well done!</strong>
+        {this.state.submitted && !this.state.clearToast && (
+          <div
+            className="toast-show"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+          >
+            <div className="toast-header">
+              <strong className="mr-auto">Thank you!</strong>
+              <button
+                type="button"
+                className="ml-2 mb-1 close"
+                data-dismiss="toast"
+                aria-label="close"
+                onClick={this.handleToastClose}
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="toast-body">
+              You have successfully signed up for our newsletter.
+            </div>
           </div>
         )}
       </div>

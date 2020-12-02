@@ -20,14 +20,14 @@ export default class NavBar extends Component {
         {/* <button class="btn btn-success ml-auto mr-1">Always Show</button> */}
         <Link to="/Basket" class="mr-1 text-light" style={{ fontSize: '1.6rem' }}>
           <GiShoppingCart></GiShoppingCart>{' '}
-          {/*this.props.basket.length > 0 && (
+          {this.props.basket.length > 0 && (
             <span
               style={{ fontSize: '.6rem' }}
               class="badge badge-pill badge-success "
             >
               {this.props.basket.length}
             </span>
-          )*/}
+          )}
         </Link>
         <div
           class="collapse navbar-collapse flex-grow-0"

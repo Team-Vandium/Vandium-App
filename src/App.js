@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import 'bootswatch/dist/yeti/bootstrap.min.css';
 import Navbar from './Components/NavbarC.js';
-import NavBarJ from './Components/NavBarJ';
+import Newsletter from './Components/Newsletter';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Components/Home.js';
 import About from './Components/About.js';
@@ -88,35 +88,12 @@ class App extends Component {
     this.setState({ searchTerm: '' });
   }
 
-  addToBasket(id) {
-    //use unique ID from productCard map function to filter for element in apiData
-    let item = this.props.apiData.filter(
-      //variable item to hold the element
-      this.getItem(id) //call getItem function to return object
-    );
-    this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
-  }
-  getItem(a) {
-    //returns correct object from array when passed an element
-    return function (obj) {
-      return obj.id === a;
-    };
-  }
-  emptyBasket() {
-    //remove all items from basket array
-    this.setState({ basket: [] });
-  }
+
   viewBasket() {
     if (this.state.viewBasket === false) this.setState({ viewBasket: true });
     else {
       this.setState({ viewBasket: false });
     }
-  }
-  removeFromBasket(i) {
-    let bArray = this.state.basket;
-    let itemIndex = bArray.findIndex(this.getItem(i));
-    bArray.splice(itemIndex, 1);
-    this.setState({ basket: bArray });
   }
 
 
@@ -125,7 +102,7 @@ class App extends Component {
       <Router>
         <div className="App">
           {/* NavBar */}
-          <Navbar/>
+          <Navbar basket={this.state.basket}/>
           <div className="container">
             <Switch>
               <Route
@@ -135,6 +112,7 @@ class App extends Component {
               />
               <Route path="/Home" component={Home} />
               <Route path="/About" component={About} />
+              <Route path="/Newsletter" component={Newsletter} />
               <Route path="/Basket" render={()=><Basket state={this.state} 
               apiData={this.state.apiData}
               emptyBasket={this.emptyBasket}
