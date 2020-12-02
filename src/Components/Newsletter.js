@@ -37,6 +37,7 @@ class Newsletter extends Component {
           <form onSubmit={this.handleSubmit}>
             <fieldset>
               <legend>Newsletter</legend>
+              <p>Please enter your email below to sign up for our newsletter, bringing you new Irish made products weekly!</p>
               <div className="form-group">
                 <label for="email">Email address</label>
                 <input
@@ -46,6 +47,7 @@ class Newsletter extends Component {
                   placeholder="Enter email"
                   onChange={this.onEmailFormChange}
                 />
+                
               </div>
               <button
                 type="submit"
@@ -56,10 +58,12 @@ class Newsletter extends Component {
                 Submit
               </button>
               <br />
-              {!this.state.emailValid && (
-                <alert>PLEASE ENTER A VALID EMAIL ADDRESS</alert>
+              {!this.state.emailValid && (  
+                <div className="alert alert-warning">
+                  <p className="mb-0">Please enter a valid email address.</p>  
+                </div>
               )}
-              {this.state.emailValid && <alert>THANKS!</alert>}
+              
             </fieldset>
           </form>
         </div>
