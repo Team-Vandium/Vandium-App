@@ -37,37 +37,41 @@ class Newsletter extends Component {
           <form onSubmit={this.handleSubmit}>
             <fieldset>
               <legend>Newsletter</legend>
-              <p>Please enter your email below to sign up for our newsletter, bringing you new Irish made products weekly!</p>
+              <p>
+                Please enter your email below to sign up for our newsletter,
+                bringing you new Irish made products weekly!
+              </p>
               <div className="form-group">
                 <label for="email">Email address</label>
-                <input
-                  className="form-control"
-                  type="email"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"
-                  onChange={this.onEmailFormChange}
-                />
-                
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    type="email"
+                    aria-describedby="emailHelp"
+                    placeholder="Enter email"
+                    onChange={this.onEmailFormChange}
+                  />
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={!this.state.emailValid}
+                    onClick={this.handleSignUpButtonClick}
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={!this.state.emailValid}
-                onClick={this.handleSignUpButtonClick}
-              >
-                Submit
-              </button>
+
               <br />
-              {!this.state.emailValid && (  
+              {!this.state.emailValid && (
                 <div className="alert alert-warning">
-                  <p className="mb-0">Please enter a valid email address.</p>  
+                  <p className="mb-0">Please enter a valid email address.</p>
                 </div>
               )}
-              
             </fieldset>
           </form>
         </div>
-        
+
         {this.state.submitted && (
           <div className="alert alert-dismissible alert-success">
             <button type="button" className="close" data-dismiss="alert">
