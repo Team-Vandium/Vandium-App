@@ -6,13 +6,6 @@ import '@brainhubeu/react-carousel/lib/style.css';
 
 const CarouselSlider = ({ data }) => {
 
-  const randomProducts = data
-    .sort((a, b) => {
-      let comparison = 0;
-      comparison = Math.random() - 0.5;
-      return comparison;
-    })
-    .slice(0, 19);
 
   const image = (id) => require(`../Images/${id}.jpg`);
   return (
@@ -73,7 +66,7 @@ const CarouselSlider = ({ data }) => {
             },
           }}
         >
-          {randomProducts.map((p) => {
+          {data.map((p) => {
             return (
               <div>
                 <img

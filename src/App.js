@@ -31,10 +31,9 @@ class App extends Component {
   addToBasket(id) {
     //use unique ID from productCard map function to filter for element in apiData
     let item = this.state.apiData.filter(
-    //variable item to hold the element
-    this.getItem(id) //call getItem function to return object
-     
-  );
+      //variable item to hold the element
+      this.getItem(id) //call getItem function to return object
+    );
     this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
   }
   getItem(a) {
@@ -70,6 +69,7 @@ class App extends Component {
       const jsonResult = await response.json();
 
       this.setState({ delivery: jsonResult.deliveryCost });
+      this.setState({ delivery: jsonResult.deliveryCost });
       this.setState({ apiData: jsonResult.products });
       this.setState({ isFetched: true });
     } catch (error) {
@@ -101,14 +101,19 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          {/* NavBar */}
           <Navbar basket={this.state.basket}/>
           <div className="container">
             <Switch>
               <Route
                 exact
                 path="/"
-                render={() => <Products apiData={this.state.apiData} addToBasket ={this.addToBasket}/>}
+                render={() => (
+                  <Products
+                    apiData={this.state.apiData}
+                    addToBasket={this.addToBasket}
+                    random={this.state.random}
+                  />
+                )}
               />
               <Route path="/Home" component={Home} />
               <Route path="/About" component={About} />
@@ -120,7 +125,12 @@ class App extends Component {
               />} />
               <Route
                 path="/Products"
-                render={() => <Products apiData={this.state.apiData} addToBasket ={this.addToBasket} />}
+                render={() => (
+                  <Products
+                    apiData={this.state.apiData}
+                    addToBasket={this.addToBasket}
+                  />
+                )}
               />
               <Route component={NoMatch} />
             </Switch>

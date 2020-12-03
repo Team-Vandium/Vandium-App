@@ -34,19 +34,16 @@ class Products extends Component {
   
 
   render() {
-    console.log(this.props);
+    const randomProducts = this.props.apiData.map(p => p)
+    randomProducts.sort((a, b) => {
+      let comparison = 0;
+      comparison = Math.random() - 0.5;
+      return comparison;
+    }).slice(0, 19)
     return (
       <div className="App">
-        {/* {this.state.apiData.length > 0 && (
-          <Basket
-            state={this.state}
-            emptyBasket={this.emptyBasket}
-            viewBasket={this.viewBasket}
-          ></Basket>
-        )} */}
 
-        {/* <ProductList /> */}
-        <CarouselSlider data={this.props.apiData}></CarouselSlider>
+        <CarouselSlider data={randomProducts.slice(0, 19)}></CarouselSlider>
 
         <SearchForm
           searchTerm={this.state.searchTerm}
