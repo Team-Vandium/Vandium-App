@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LazyLoad from 'react-lazyload';
 
 export default class ProductCard extends Component {
   shortenDescription(desc) {
@@ -8,28 +9,29 @@ export default class ProductCard extends Component {
   }
 
   toTitleCase(str) {
-    return str.replace(
-      /\w\S*/g,
-      function(txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-      }
-    );
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
   }
   render() {
     const { id, name, description, price, tags } = this.props.product;
     const image = require(`../Images/${id}.jpg`);
-    const desc = this.toTitleCase(description)
-    
+    const desc = this.toTitleCase(description);
+
     return (
-      <>
+      <div>
         <div className="card mb-3">
-          <img
-            className="card-img-top"
-            src={
-              image.default ? image.default : 'https://via.placeholder.com/800'
-            }
-            alt={name}
-          />
+          <LazyLoad height={100} offset={100}>
+            <img
+              className="card-img-top"
+              src={
+                image.default
+                  ? image.default
+                  : 'https://via.placeholder.com/800'
+              }
+              alt={name}
+            />
+          </LazyLoad>
           <div className="card-body">
             <h5 className="card-title">{this.toTitleCase(name)}</h5>
             <h4 className="lead">€{price.toFixed(2)}</h4>
@@ -57,7 +59,7 @@ export default class ProductCard extends Component {
             })}
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }
