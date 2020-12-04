@@ -53,6 +53,7 @@ class App extends Component {
     this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
+<<<<<<< HEAD
     this.shuffle = this.shuffle.bind(this);
   }
 
@@ -60,8 +61,10 @@ class App extends Component {
     let comparison = 0;
     comparison = Math.random() - 0.5;
     return comparison;
+=======
+    this.checkoutButton = this.checkoutButton.bind(this);
+>>>>>>> 147ac97a392aa3e65ea2361aa781a920de961ac8
   }
-
   addToBasket(id) {
     //use unique ID from productCard map function to filter for element in apiData
     let item = this.state.apiData.filter(
@@ -69,6 +72,7 @@ class App extends Component {
       this.getItem(id) //call getItem function to return object
     );
     this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
+    this.setState({ checkoutButton: false });
   }
   getItem(a) {
     //returns correct object from array when passed an element
@@ -92,6 +96,9 @@ class App extends Component {
     let itemIndex = bArray.findIndex(this.getItem(i));
     bArray.splice(itemIndex, 1);
     this.setState({ basket: bArray });
+  }
+  checkoutButton(){
+    this.emptyBasket();
   }
 
   handleCheckboxChange = async (e) => {
@@ -198,17 +205,13 @@ class App extends Component {
               <Route path="/Home" component={Home} />
               <Route path="/About" component={About} />
               <Route path="/Newsletter" component={Newsletter} />
-              <Route
-                path="/Basket"
-                render={() => (
-                  <Basket
-                    state={this.state}
-                    apiData={this.state.apiData}
-                    emptyBasket={this.emptyBasket}
-                    deliveryDetails={this.deliveryDetails}
-                  />
-                )}
-              />
+              <Route path="/Basket" render={()=><Basket state={this.state} 
+              apiData={this.state.apiData}
+              emptyBasket={this.emptyBasket}
+              deliveryDetails={this.deliveryDetails}
+              removeFromBasket={this.removeFromBasket}
+              checkoutButton = {this.checkoutButton}
+              />} />
               <Route
                 path="/Products"
                 render={() => (

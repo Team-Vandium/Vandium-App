@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+
+
 function getTotal(acc, obj){
     return acc + obj.price;
 }
@@ -12,14 +14,16 @@ function toTitleCase(str) {
       }
     );
   }
+  
 
 //function calculateDelivery(){
  //   {this.props.state.basket.map((d, index)=>(
  //       <div key = index> </div>
  //   ))}
 //}
-export default class Basket extends Component {
+    class Basket extends Component {
     render() {
+    const checkout = this.props.state.checkout;
     const deliveryDetails = this.props.state.deliveryDetails; 
     const id = this.props.state.product;
     const image =(id) => require(`../Images/${id}.jpg`);  
@@ -61,10 +65,14 @@ export default class Basket extends Component {
              </table>
                     Subtotal({this.props.state.basket.length} items): 
                     €{this.props.state.basket.reduce(getTotal, 0.00).toFixed(2)} &nbsp;
-                    <button>Checkout</button>
+                    {checkout ? "Success! You have purchased your items": 
+                        <button onClick={()=> this.props.checkoutButton()}>Checkout</button>
+                    }
+                    
             </div> 
             
             
         )
     }
 }
+export default Basket;
