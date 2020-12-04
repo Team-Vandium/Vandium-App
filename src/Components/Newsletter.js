@@ -40,7 +40,8 @@ class Newsletter extends Component {
     return (
       <div className="container">
         <div>
-          <form>
+          {!this.state.submitted && (
+            <form>
             <fieldset>
               <legend>Newsletter</legend>
               <p>
@@ -76,9 +77,13 @@ class Newsletter extends Component {
               )}
             </fieldset>
           </form>
+          )}
+          {this.state.submitted && (
+            <p>Thank you! You will receive the weekly newsletter to {this.state.emailInput}.</p>
+          )}
         </div>
 
-        {this.state.submitted && !this.state.clearToast && (
+        {/*this.state.submitted && !this.state.clearToast && (
           <div
             className="toast-show"
             role="alert"
@@ -101,7 +106,7 @@ class Newsletter extends Component {
               You have successfully signed up for our newsletter.
             </div>
           </div>
-        )}
+        )*/}
       </div>
     );
   }
