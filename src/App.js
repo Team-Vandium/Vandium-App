@@ -21,13 +21,19 @@ class App extends Component {
       errorMsg: null,
       basket: [],
       deliveryDetails: false,
+      checkout: false,
     };
     this.addToBasket = this.addToBasket.bind(this);
     this.emptyBasket = this.emptyBasket.bind(this);
     this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
+    this.checkoutButton = this.checkoutButton.bind(this);
+    
   }
-
+  checkoutButton(){
+    if (this.state.checkoutButton === false) this.setState({ checkoutButton: true });
+    this.emptyBasket();
+  }
   addToBasket(id) {
     //use unique ID from productCard map function to filter for element in apiData
     let item = this.state.apiData.filter(
@@ -36,6 +42,7 @@ class App extends Component {
      
   );
     this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
+    this.setState({ checkoutButton: false });
   }
   getItem(a) {
     //returns correct object from array when passed an element
@@ -83,19 +90,15 @@ class App extends Component {
   onSearchFormChange(event) {
     this.setState({ searchTerm: event.target.value });
   }
-
   clearSearchBox() {
     this.setState({ searchTerm: '' });
   }
-
-
   viewBasket() {
     if (this.state.viewBasket === false) this.setState({ viewBasket: true });
     else {
       this.setState({ viewBasket: false });
     }
   }
-
 
   render() {
     return (
@@ -117,6 +120,8 @@ class App extends Component {
               apiData={this.state.apiData}
               emptyBasket={this.emptyBasket}
               deliveryDetails={this.deliveryDetails}
+              removeFromBasket={this.removeFromBasket}
+              checkoutButton = {this.checkoutButton}
               />} />
               <Route
                 path="/Products"
