@@ -53,6 +53,7 @@ class App extends Component {
     this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
+    this.checkoutButton = this.checkoutButton.bind(this);
   }
   addToBasket(id) {
     //use unique ID from productCard map function to filter for element in apiData
@@ -85,6 +86,9 @@ class App extends Component {
     let itemIndex = bArray.findIndex(this.getItem(i));
     bArray.splice(itemIndex, 1);
     this.setState({ basket: bArray });
+  }
+  checkoutButton(){
+    this.emptyBasket();
   }
 
   handleCheckboxChange = async (e) => {
