@@ -53,6 +53,13 @@ class App extends Component {
     this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
+    this.shuffle = this.shuffle.bind(this);
+  }
+
+  shuffle(productA, productB) {
+    let comparison = 0;
+    comparison = Math.random() - 0.5;
+    return comparison;
   }
 
   addToBasket(id) {
@@ -129,7 +136,7 @@ class App extends Component {
       const jsonResult = await response.json();
       this.setState({ delivery: jsonResult.deliveryCost });
       this.setState({ delivery: jsonResult.deliveryCost });
-      this.setState({ apiData: jsonResult.products });
+      this.setState({ apiData: jsonResult.products.sort(this.shuffle) });
       this.setState({ isFetched: true });
     } catch (error) {
       // API threw an error
