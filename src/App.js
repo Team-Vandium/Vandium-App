@@ -14,33 +14,52 @@ class App extends Component {
   constructor(props) {
     super(props);
     // get product data from api and store in state
+    const categories = [
+      'Health & Beauty',
+      'Food & Drink',
+      'Clothing & Fashion',
+      'Jewellery',
+      'Sport ',
+      'Gardening & DIY',
+      'Home',
+      'Art',
+    ];
+    const categoriesTest = ['Home', 'Art'];
     this.state = {
       apiData: [],
       delivery: [],
       isFetched: false,
       errorMsg: null,
+      productFilters: { category: [] },
       basket: [],
+      filteredProducts: [],
+      searchTerm: "",
       deliveryDetails: false,
-      checkout: false,
+
+      checked: [],
+
+      selectedCategory: [],
+      checkboxes: categories.reduce(
+        (allCategories, singleCategory) => ({
+          ...allCategories,
+          [singleCategory]: false,
+        }),
+        {}
+      ),
     };
+
     this.addToBasket = this.addToBasket.bind(this);
     this.emptyBasket = this.emptyBasket.bind(this);
     this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
-    this.checkoutButton = this.checkoutButton.bind(this);
-    
-  }
-  checkoutButton(){
-    if (this.state.checkoutButton === false) this.setState({ checkoutButton: true });
-    this.emptyBasket();
+    this.onSearchFormChange = this.onSearchFormChange.bind(this);
   }
   addToBasket(id) {
     //use unique ID from productCard map function to filter for element in apiData
     let item = this.state.apiData.filter(
-    //variable item to hold the element
-    this.getItem(id) //call getItem function to return object
-     
-  );
+      //variable item to hold the element
+      this.getItem(id) //call getItem function to return object
+    );
     this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
     this.setState({ checkoutButton: false });
   }
@@ -55,7 +74,8 @@ class App extends Component {
     this.setState({ basket: [] });
   }
   deliveryDetails() {
-    if (this.state.deliveryDetails === false) this.setState({ deliveryDetails: true });
+    if (this.state.deliveryDetails === false)
+      this.setState({ deliveryDetails: true });
     else {
       this.setState({ deliveryDetails: false });
     }
@@ -67,6 +87,38 @@ class App extends Component {
     this.setState({ basket: bArray });
   }
 
+  handleCheckboxChange = async (e) => {
+    const { value } = e.target;
+    // this.setState((prevState) => ({
+    //   checkboxes: {
+    //     ...prevState.checkboxes,
+    //     [value]: !prevState.checkboxes[value],
+    //   },
+    // }));
+    const currentIndex = this.state.checked.indexOf(value);
+    const newCheckedArray = [...this.state.checked];
+
+    if (currentIndex === -1) {
+      newCheckedArray.push(value);
+    } else {
+      newCheckedArray.splice(currentIndex, 1);
+    }
+
+    await this.setState({ checked: newCheckedArray });
+    await this.handleFilter(newCheckedArray);
+  };
+
+  async handleFilter(filters, category) {
+    const newFilter = { ...this.state.productFilters };
+    newFilter[0] = filters;
+    this.setState({ productFilters: newFilter });
+    const data = this.state.apiData;
+    let filteredData = data.filter((p) => this.state.checked.includes(p.tags[2]));
+
+    this.setState({ filteredProducts: filteredData });
+  }
+
+  
   async componentDidMount() {
     try {
       const API_URL =
@@ -75,7 +127,7 @@ class App extends Component {
       const response = await fetch(API_URL);
       // store response
       const jsonResult = await response.json();
-
+      this.setState({ delivery: jsonResult.deliveryCost });
       this.setState({ delivery: jsonResult.deliveryCost });
       this.setState({ apiData: jsonResult.products });
       this.setState({ isFetched: true });
@@ -88,11 +140,20 @@ class App extends Component {
   } // end of componentDidMount()
 
   onSearchFormChange(event) {
+   
     this.setState({ searchTerm: event.target.value });
   }
+
+  filteredCategories() {
+    this.state.apiData.filter((p) =>
+      this.state.categoriesTest.every((c) => p.tags[2].includes(c))
+    );
+  }
+
   clearSearchBox() {
     this.setState({ searchTerm: '' });
   }
+
   viewBasket() {
     if (this.state.viewBasket === false) this.setState({ viewBasket: true });
     else {
@@ -104,14 +165,28 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          {/* NavBar */}
-          <Navbar basket={this.state.basket}/>
+          <Navbar basket={this.state.basket} />
           <div className="container">
             <Switch>
               <Route
                 exact
                 path="/"
-                render={() => <Products apiData={this.state.apiData} addToBasket ={this.addToBasket}/>}
+                render={() => (
+                  <Products
+                    apiData={this.state.apiData}
+                    addToBasket={this.addToBasket}
+                    random={this.state.random}
+                    handleSearch={this.onSearchFormChange}
+                    checkboxChange={this.handleCheckboxChange}
+                    filteredProducts={this.state.filteredProducts}
+                    checkboxes={this.state.checkboxes}
+                    searchTerm={this.state.searchTerm}
+                    handleFilter={(filters) =>
+                      this.handleFilter(filters, 'categories')
+                    }
+                    checked={this.state.checked}
+                  />
+                )}
               />
               <Route path="/Home" component={Home} />
               <Route path="/About" component={About} />
@@ -125,7 +200,12 @@ class App extends Component {
               />} />
               <Route
                 path="/Products"
-                render={() => <Products apiData={this.state.apiData} addToBasket ={this.addToBasket} />}
+                render={() => (
+                  <Products
+                    apiData={this.state.apiData}
+                    addToBasket={this.addToBasket}
+                  />
+                )}
               />
               <Route component={NoMatch} />
             </Switch>

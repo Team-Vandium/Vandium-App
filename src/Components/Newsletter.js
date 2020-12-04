@@ -14,6 +14,7 @@ class Newsletter extends Component {
   validateEmail(email) {
     let result = false;
     //const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // const re = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9+_.-]+\.[a-zA-Z]{2,}$/
     if (/^\S+@\S+\.\S+$/.test(String(email).toLowerCase())) {
       result = true;
     }
@@ -40,7 +41,8 @@ class Newsletter extends Component {
     return (
       <div className="container">
         <div>
-          <form>
+          {!this.state.submitted && (
+            <form>
             <fieldset>
               <legend>Newsletter</legend>
               <p>
@@ -76,9 +78,13 @@ class Newsletter extends Component {
               )}
             </fieldset>
           </form>
+          )}
+          {this.state.submitted && (
+            <p>Thank you! You will receive the weekly newsletter to {this.state.emailInput}.</p>
+          )}
         </div>
 
-        {this.state.submitted && !this.state.clearToast && (
+        {/*this.state.submitted && !this.state.clearToast && (
           <div
             className="toast-show"
             role="alert"
@@ -101,7 +107,7 @@ class Newsletter extends Component {
               You have successfully signed up for our newsletter.
             </div>
           </div>
-        )}
+        )*/}
       </div>
     );
   }
