@@ -7,6 +7,9 @@ export default class FilterBox extends Component {
     // apiData is an array to hold our JSON data
     // isFetched indicates if the API call has finished
     // errorMsg is either null (none) or there is some error
+  }
+
+  render() {
     const categories = [
       'Health & Beauty',
       'Food & Drink',
@@ -17,31 +20,6 @@ export default class FilterBox extends Component {
       'Home',
       'Art',
     ];
-    this.state = {
-      categories,
-      selectedCategory: [],
-      checkboxes: categories.reduce(
-        (allCategories, singleCategory) => ({
-          ...allCategories,
-          [singleCategory]: false,
-        }),
-        {}
-      ),
-    };
-  }
-  async componentDidMount() {}
-
-  handleCheckboxChange = (e) => {
-    const { value } = e.target;
-    console.log(e.target.value)
-    this.setState((prevState) => ({
-      checkboxes: {
-        ...prevState.checkboxes,
-        [value]: !prevState.checkboxes[value],
-      },
-    }));
-  };
-  render() {
     return (
       <>
         <div className="card border-primary mt-3 mb-3">
@@ -50,7 +28,7 @@ export default class FilterBox extends Component {
             <form action="">
               <fieldset className="form-group">
                 <div className="row">
-                  {this.state.categories.map((c) => {
+                  {categories.map((c) => {
                     return (
                       <div key={c} className="col-6 col-sm-4 col-lg-2">
                         <div className="form-check text-left">
@@ -58,8 +36,13 @@ export default class FilterBox extends Component {
                             className="form-check-input"
                             type="checkbox"
                             value={c}
-                            isSelected={this.state.checkboxes[c]}
-                            onChange={this.handleCheckboxChange}
+                            isSelected={this.props.checkboxes[c]}
+                            onChange={(e) => this.props.checkboxChange(e)}
+                            checked={
+                              this.props.checked.indexOf(c) === -1
+                                ? false
+                                : true
+                            }
                           />
                           <label className="form-check-label">{c}</label>
                         </div>

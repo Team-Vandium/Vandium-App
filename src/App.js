@@ -14,18 +14,45 @@ class App extends Component {
   constructor(props) {
     super(props);
     // get product data from api and store in state
+    const categories = [
+      'Health & Beauty',
+      'Food & Drink',
+      'Clothing & Fashion',
+      'Jewellery',
+      'Sport ',
+      'Gardening & DIY',
+      'Home',
+      'Art',
+    ];
+    const categoriesTest = ['Home', 'Art'];
     this.state = {
       apiData: [],
       delivery: [],
       isFetched: false,
       errorMsg: null,
+      productFilters: { category: [] },
       basket: [],
+      filteredProducts: [],
+      searchTerm: "",
       deliveryDetails: false,
+
+      checked: [],
+
+      selectedCategory: [],
+      checkboxes: categories.reduce(
+        (allCategories, singleCategory) => ({
+          ...allCategories,
+          [singleCategory]: false,
+        }),
+        {}
+      ),
     };
+
     this.addToBasket = this.addToBasket.bind(this);
     this.emptyBasket = this.emptyBasket.bind(this);
     this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
+    this.onSearchFormChange = this.onSearchFormChange.bind(this);
   }
 
   addToBasket(id) {
@@ -47,7 +74,8 @@ class App extends Component {
     this.setState({ basket: [] });
   }
   deliveryDetails() {
-    if (this.state.deliveryDetails === false) this.setState({ deliveryDetails: true });
+    if (this.state.deliveryDetails === false)
+      this.setState({ deliveryDetails: true });
     else {
       this.setState({ deliveryDetails: false });
     }
@@ -59,6 +87,38 @@ class App extends Component {
     this.setState({ basket: bArray });
   }
 
+  handleCheckboxChange = async (e) => {
+    const { value } = e.target;
+    // this.setState((prevState) => ({
+    //   checkboxes: {
+    //     ...prevState.checkboxes,
+    //     [value]: !prevState.checkboxes[value],
+    //   },
+    // }));
+    const currentIndex = this.state.checked.indexOf(value);
+    const newCheckedArray = [...this.state.checked];
+
+    if (currentIndex === -1) {
+      newCheckedArray.push(value);
+    } else {
+      newCheckedArray.splice(currentIndex, 1);
+    }
+
+    await this.setState({ checked: newCheckedArray });
+    await this.handleFilter(newCheckedArray);
+  };
+
+  async handleFilter(filters, category) {
+    const newFilter = { ...this.state.productFilters };
+    newFilter[0] = filters;
+    this.setState({ productFilters: newFilter });
+    const data = this.state.apiData;
+    let filteredData = data.filter((p) => this.state.checked.includes(p.tags[2]));
+
+    this.setState({ filteredProducts: filteredData });
+  }
+
+  
   async componentDidMount() {
     try {
       const API_URL =
@@ -67,7 +127,6 @@ class App extends Component {
       const response = await fetch(API_URL);
       // store response
       const jsonResult = await response.json();
-
       this.setState({ delivery: jsonResult.deliveryCost });
       this.setState({ delivery: jsonResult.deliveryCost });
       this.setState({ apiData: jsonResult.products });
@@ -81,13 +140,19 @@ class App extends Component {
   } // end of componentDidMount()
 
   onSearchFormChange(event) {
+   
     this.setState({ searchTerm: event.target.value });
+  }
+
+  filteredCategories() {
+    this.state.apiData.filter((p) =>
+      this.state.categoriesTest.every((c) => p.tags[2].includes(c))
+    );
   }
 
   clearSearchBox() {
     this.setState({ searchTerm: '' });
   }
-
 
   viewBasket() {
     if (this.state.viewBasket === false) this.setState({ viewBasket: true });
@@ -96,12 +161,11 @@ class App extends Component {
     }
   }
 
-
   render() {
     return (
       <Router>
         <div className="App">
-          <Navbar basket={this.state.basket}/>
+          <Navbar basket={this.state.basket} />
           <div className="container">
             <Switch>
               <Route
@@ -112,17 +176,32 @@ class App extends Component {
                     apiData={this.state.apiData}
                     addToBasket={this.addToBasket}
                     random={this.state.random}
+                    handleSearch={this.onSearchFormChange}
+                    checkboxChange={this.handleCheckboxChange}
+                    filteredProducts={this.state.filteredProducts}
+                    checkboxes={this.state.checkboxes}
+                    searchTerm={this.state.searchTerm}
+                    handleFilter={(filters) =>
+                      this.handleFilter(filters, 'categories')
+                    }
+                    checked={this.state.checked}
                   />
                 )}
               />
               <Route path="/Home" component={Home} />
               <Route path="/About" component={About} />
               <Route path="/Newsletter" component={Newsletter} />
-              <Route path="/Basket" render={()=><Basket state={this.state} 
-              apiData={this.state.apiData}
-              emptyBasket={this.emptyBasket}
-              deliveryDetails={this.deliveryDetails}
-              />} />
+              <Route
+                path="/Basket"
+                render={() => (
+                  <Basket
+                    state={this.state}
+                    apiData={this.state.apiData}
+                    emptyBasket={this.emptyBasket}
+                    deliveryDetails={this.deliveryDetails}
+                  />
+                )}
+              />
               <Route
                 path="/Products"
                 render={() => (
