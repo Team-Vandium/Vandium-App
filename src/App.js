@@ -53,7 +53,6 @@ class App extends Component {
     this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
-<<<<<<< HEAD
     this.shuffle = this.shuffle.bind(this);
   }
 
@@ -61,9 +60,6 @@ class App extends Component {
     let comparison = 0;
     comparison = Math.random() - 0.5;
     return comparison;
-=======
-    this.checkoutButton = this.checkoutButton.bind(this);
->>>>>>> 147ac97a392aa3e65ea2361aa781a920de961ac8
   }
   addToBasket(id) {
     //use unique ID from productCard map function to filter for element in apiData
