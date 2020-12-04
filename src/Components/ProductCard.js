@@ -6,9 +6,19 @@ export default class ProductCard extends Component {
       return desc.substring(0, 100) + '...';
     } else return desc;
   }
+
+  toTitleCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
   render() {
     const { id, name, description, price, tags } = this.props.product;
     const image = require(`../Images/${id}.jpg`);
+    const desc = this.toTitleCase(description)
     
     return (
       <>
@@ -21,9 +31,9 @@ export default class ProductCard extends Component {
             alt={name}
           />
           <div className="card-body">
-            <h5 className="card-title">{name}</h5>
+            <h5 className="card-title">{this.toTitleCase(name)}</h5>
             <h4 className="lead">€{price.toFixed(2)}</h4>
-            <p className="card-text">{this.shortenDescription(description)}</p>
+            <p className="card-text">{this.shortenDescription(desc)}</p>
 
             <div className="row">
               <div className="col-6">
