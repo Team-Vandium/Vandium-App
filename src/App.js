@@ -24,7 +24,6 @@ class App extends Component {
       'Home',
       'Art',
     ];
-    const categoriesTest = ['Home', 'Art'];
     this.state = {
       apiData: [],
       delivery: [],
@@ -33,12 +32,10 @@ class App extends Component {
       productFilters: { category: [] },
       basket: [],
       filteredProducts: [],
-      searchTerm: "",
+      searchTerm: '',
       deliveryDetails: false,
 
       checked: [],
-
-      selectedCategory: [],
       checkboxes: categories.reduce(
         (allCategories, singleCategory) => ({
           ...allCategories,
@@ -53,6 +50,7 @@ class App extends Component {
     this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
+    this.clearSearchBox = this.clearSearchBox.bind(this);
     this.shuffle = this.shuffle.bind(this);
   }
 
@@ -93,7 +91,7 @@ class App extends Component {
     bArray.splice(itemIndex, 1);
     this.setState({ basket: bArray });
   }
-  checkoutButton(){
+  checkoutButton() {
     this.emptyBasket();
   }
 
@@ -123,12 +121,13 @@ class App extends Component {
     newFilter[0] = filters;
     this.setState({ productFilters: newFilter });
     const data = this.state.apiData;
-    let filteredData = data.filter((p) => this.state.checked.includes(p.tags[2]));
+    let filteredData = data.filter((p) =>
+      this.state.checked.includes(p.tags[2])
+    );
 
     this.setState({ filteredProducts: filteredData });
   }
 
-  
   async componentDidMount() {
     try {
       const API_URL =
@@ -150,8 +149,24 @@ class App extends Component {
   } // end of componentDidMount()
 
   onSearchFormChange(event) {
-   
     this.setState({ searchTerm: event.target.value });
+  }
+
+  productFilterFunction(searchTerm) {
+    return function (libraryObject) {
+      let name = libraryObject.name.toLowerCase();
+      let description = libraryObject.description.toLowerCase();
+
+      if (searchTerm.length === 0) {
+        return libraryObject;
+      }
+      return (
+        searchTerm !== '' &&
+        searchTerm.length >= 3 &&
+        (name.includes(searchTerm.toLowerCase()) ||
+          description.includes(searchTerm.toLowerCase()))
+      );
+    };
   }
 
   filteredCategories() {
@@ -160,7 +175,8 @@ class App extends Component {
     );
   }
 
-  clearSearchBox() {
+  clearSearchBox(e) {
+    e.preventDefault();
     this.setState({ searchTerm: '' });
   }
 
@@ -191,6 +207,8 @@ class App extends Component {
                     filteredProducts={this.state.filteredProducts}
                     checkboxes={this.state.checkboxes}
                     searchTerm={this.state.searchTerm}
+                    clearSearch={this.clearSearchBox}
+                    productFilter={this.productFilterFunction}
                     handleFilter={(filters) =>
                       this.handleFilter(filters, 'categories')
                     }
@@ -201,13 +219,19 @@ class App extends Component {
               <Route path="/Home" component={Home} />
               <Route path="/About" component={About} />
               <Route path="/Newsletter" component={Newsletter} />
-              <Route path="/Basket" render={()=><Basket state={this.state} 
-              apiData={this.state.apiData}
-              emptyBasket={this.emptyBasket}
-              deliveryDetails={this.deliveryDetails}
-              removeFromBasket={this.removeFromBasket}
-              checkoutButton = {this.checkoutButton}
-              />} />
+              <Route
+                path="/Basket"
+                render={() => (
+                  <Basket
+                    state={this.state}
+                    apiData={this.state.apiData}
+                    emptyBasket={this.emptyBasket}
+                    deliveryDetails={this.deliveryDetails}
+                    removeFromBasket={this.removeFromBasket}
+                    checkoutButton={this.checkoutButton}
+                  />
+                )}
+              />
               <Route
                 path="/Products"
                 render={() => (

@@ -17,7 +17,7 @@ class Products extends Component {
       len: 0,
     };
 
-   // this.onSearchFormChange = this.onSearchFormChange.bind(this);
+    // this.onSearchFormChange = this.onSearchFormChange.bind(this);
     this.clearSearchBox = this.clearSearchBox.bind(this);
   }
 
@@ -28,7 +28,6 @@ class Products extends Component {
   clearSearchBox() {
     this.setState({ searchTerm: '' });
   }
-  
 
   render() {
     const randomProducts = this.props.apiData.map((p) => p);
@@ -45,38 +44,43 @@ class Products extends Component {
         <SearchForm
           searchTerm={this.props.searchTerm}
           onChange={this.props.handleSearch}
-          buttonHandler={this.clearSearchBox}
+          buttonHandler={this.props.clearSearch}
         />
         <FilterBox
           checkboxChange={this.props.checkboxChange}
           checkboxes={this.props.checkboxes}
-          handleFilter = {this.props.handleFilter}
-          checked ={this.props.checked}
+          handleFilter={this.props.handleFilter}
+          checked={this.props.checked}
         ></FilterBox>
-        <SearchResults searchTerm = {this.props.searchTerm} productArray = {this.props.apiData}></SearchResults>
         <div className="row">
-          {this.props.filteredProducts.map((p) => {
-            return (
-              <div className="col-xs-12 col-sm-6 col-lg-4">
-                <ProductCard
-                  key={p.id}
-                  product={p}
-                  addToBasket={this.props.addToBasket}
-                ></ProductCard>
-              </div>
-            );
-          })}
-          {this.props.filteredProducts.length === 0 && this.props.apiData.map((p) => {
-            return (
-              <div className="col-xs-12 col-sm-6 col-lg-4">
-                <ProductCard
-                  key={p.id}
-                  product={p}
-                  addToBasket={this.props.addToBasket}
-                ></ProductCard>
-              </div>
-            );
-          })}
+          {}
+          {this.props.filteredProducts.length === 0
+            ? this.props.apiData
+                .filter(this.props.productFilter(this.props.searchTerm))
+                .map((p) => {
+                  return (
+                    <div className="col-xs-12 col-sm-6 col-lg-4">
+                      <ProductCard
+                        key={p.id}
+                        product={p}
+                        addToBasket={this.props.addToBasket}
+                      ></ProductCard>
+                    </div>
+                  );
+                })
+            : this.props.filteredProducts
+                .filter(this.props.productFilter(this.props.searchTerm))
+                .map((p) => {
+                  return (
+                    <div className="col-xs-12 col-sm-6 col-lg-4">
+                      <ProductCard
+                        key={p.id}
+                        product={p}
+                        addToBasket={this.props.addToBasket}
+                      ></ProductCard>
+                    </div>
+                  );
+                })}
         </div>
       </div>
     );
