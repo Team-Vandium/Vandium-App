@@ -9,6 +9,7 @@ import About from './Components/About.js';
 import NoMatch from './Components/NoMatch.js';
 import Products from './Components/Products.js';
 import Basket from './Components/Basket.js';
+import SingleProduct from './Components/SingleProduct';
 
 class App extends Component {
   constructor(props) {
@@ -220,6 +221,16 @@ class App extends Component {
               <Route path="/About" component={About} />
               <Route path="/Newsletter" component={Newsletter} />
               <Route
+                path="/Products/:productid"
+                render={(props) => (
+                  <SingleProduct
+                    data={this.state.apiData}
+                    addToBasket={this.addToBasket}
+                    {...props}
+                  ></SingleProduct>
+                )}
+              />
+              <Route
                 path="/Basket"
                 render={() => (
                   <Basket
@@ -232,7 +243,7 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
+              {/* <Route
                 path="/Products"
                 render={() => (
                   <Products
@@ -240,7 +251,7 @@ class App extends Component {
                     addToBasket={this.addToBasket}
                   />
                 )}
-              />
+              /> */}
               <Route component={NoMatch} />
             </Switch>
           </div>

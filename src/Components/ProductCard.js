@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import LazyLoad from 'react-lazyload';
+import { Link } from 'react-router-dom';
 
 export default class ProductCard extends Component {
   shortenDescription(desc) {
@@ -39,9 +40,12 @@ export default class ProductCard extends Component {
 
             <div className="row">
               <div className="col-6">
-                <a href="#" className="btn btn-primary btn-block">
+                <Link
+                  to={`/Products/${id}`}
+                  className="btn btn-primary btn-block"
+                >
                   More Info
-                </a>
+                </Link>
               </div>
               <div className="col-6">
                 <button
