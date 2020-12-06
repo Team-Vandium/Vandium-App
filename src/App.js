@@ -9,6 +9,8 @@ import About from './Components/About.js';
 import NoMatch from './Components/NoMatch.js';
 import Products from './Components/Products.js';
 import Basket from './Components/Basket.js';
+import myFirebase from "./Components/myFirebaseConfig.js";
+import Firebase from "firebase";
 
 class App extends Component {
   constructor(props) {
@@ -27,9 +29,11 @@ class App extends Component {
     const categoriesTest = ['Home', 'Art'];
     this.state = {
       apiData: [],
-      delivery: [],
+      delivery: [],// I think that this variable may be superfluous now (GM)
       isFetched: false,
       errorMsg: null,
+      deliveryData: [],
+      freeDeliveryThreshold: 0,
       productFilters: { category: [] },
       basket: [],
       filteredProducts: [],
@@ -54,13 +58,11 @@ class App extends Component {
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
     this.shuffle = this.shuffle.bind(this);
+    this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
   }
 
-  shuffle(productA, productB) {
-    let comparison = 0;
-    comparison = Math.random() - 0.5;
-    return comparison;
-  }
+ 
+
   addToBasket(id) {
     //use unique ID from productCard map function to filter for element in apiData
     let item = this.state.apiData.filter(
@@ -128,26 +130,75 @@ class App extends Component {
     this.setState({ filteredProducts: filteredData });
   }
 
-  
-  async componentDidMount() {
+ componentDidMount() {
     try {
-      const API_URL =
-        'https://raw.githubusercontent.com/Team-Vandium/data/main/products-masterlist.json';
-      // fetch data from api
-      const response = await fetch(API_URL);
-      // store response
-      const jsonResult = await response.json();
-      this.setState({ delivery: jsonResult.deliveryCost });
-      this.setState({ delivery: jsonResult.deliveryCost });
-      this.setState({ apiData: jsonResult.products.sort(this.shuffle) });
-      this.setState({ isFetched: true });
+      this.getMessagesFromDatabase(); 
     } catch (error) {
-      // API threw an error
-      this.setState({ isFetched: false });
-      // save to variable to display the error
-      this.setState({ errorMsg: error });
+      this.setState({Msgerror: error})
     } // end of try catch
   } // end of componentDidMount()
+
+  getMessagesFromDatabase() {
+    let ref1 = Firebase.database().ref("products");
+
+    ref1.on("value", (snapshot) => {
+      // json array
+      let msgData = snapshot.val();
+      let newMessagesFromDB1 = [];
+      for (let m in msgData) {
+        // create a JSON object version of our object.
+        let currObject = {
+          description: msgData[m].description,
+          id: msgData[m].id,
+          image: msgData[m].image,
+          manufacturer: msgData[m].manufacturer,
+          manufacturer_website: msgData[m].manufacturer_website,
+          name: msgData[m].name,
+          price: msgData[m].price,
+          weight: msgData[m].weight,
+          tags: msgData[m].tags
+        };
+        // add it to our newStateMessages array.
+        newMessagesFromDB1.push(currObject);
+      } // end for loop
+      // set state = don't use concat.
+      this.setState({ apiData: newMessagesFromDB1.sort(this.shuffle) });
+    });
+
+    let ref2 = Firebase.database().ref("deliveryCost");
+
+    ref2.on("value", (snapshot) => {
+      // json array
+      let msgData = snapshot.val();
+      let newMessagesFromDB2 = [];
+      for (let m in msgData) {
+        // create a JSON object version of our object.
+        let currObject = {
+          cost: msgData[m].Cost,
+          size: msgData[m].size,
+          weight: msgData[m].weight
+        };
+        // add it to our newStateMessages array.
+        newMessagesFromDB2.push(currObject);
+      } // end for loop
+      // set state = don't use concat.
+      this.setState({ deliveryData: newMessagesFromDB2 });
+    });
+
+    let ref3 = Firebase.database().ref("freeDeliveryThreshold");
+    ref3.on("value", (snapshot) => {
+      // json array
+      let msgData = snapshot.val();
+
+      this.setState({ freeDeliveryThreshold: msgData });
+    });
+  }
+
+  shuffle(productA, productB) {
+    let comparison = 0;
+    comparison = Math.random() - 0.5;
+    return comparison;
+  }
 
   onSearchFormChange(event) {
    
@@ -183,6 +234,7 @@ class App extends Component {
                 path="/"
                 render={() => (
                   <Products
+                    errorMsg = {this.state.errorMsg}
                     apiData={this.state.apiData}
                     addToBasket={this.addToBasket}
                     random={this.state.random}

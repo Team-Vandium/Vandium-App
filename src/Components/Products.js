@@ -41,6 +41,11 @@ class Products extends Component {
       .slice(0, 19);
     return (
       <div className="App">
+        {/*Not sure this is the appropriate place for this code however I have put it here so we don't forget to include
+        it or something similar. Loading message is testing ok. Will need to test errorMsg (GM)*/}
+        {this.props.errorMsg && (<p><strong>An error has occured:{this.props.errorMsg.message}</strong></p> )}  
+        {this.props.apiData.length <= 0 && (<p>Please wait.....product data is loading from our database</p>)}
+
         <CarouselSlider data={randomProducts.slice(0, 19)}></CarouselSlider>
         <SearchForm
           searchTerm={this.props.searchTerm}
