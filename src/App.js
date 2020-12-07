@@ -61,8 +61,6 @@ class App extends Component {
     this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
   }
 
- 
-
   addToBasket(id) {
     //use unique ID from productCard map function to filter for element in apiData
     let item = this.state.apiData.filter(
