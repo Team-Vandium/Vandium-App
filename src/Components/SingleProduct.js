@@ -20,6 +20,7 @@ export default class SingleProduct extends Component {
                     src={image(p.id).default}
                     class="card-img"
                     alt={p.name}
+                    style={{maxWidth: 400 }}
                   />
                 </div>
                 <div class="col-sm-8">
@@ -28,21 +29,21 @@ export default class SingleProduct extends Component {
                     <p class="card-text text-bold">€{p.price.toFixed(2)}</p>
                     <p class="card-text">{p.description}</p>
                     <p class="card-text">
-                        <a
-                          target="_blank"
-                          rel="noreferrer"
-                          href={p.manufacturer_website}
-                        >
-                          <RiExternalLinkFill></RiExternalLinkFill>
-                        </a>{' '}
-                        Manufacturer: {p.manufacturer}
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={p.manufacturer_website}
+                      >
+                        <RiExternalLinkFill></RiExternalLinkFill>
+                      </a>{' '}
+                      Manufacturer: {p.manufacturer}
                     </p>
                     <button
-                  className="btn btn-success btn-block"
-                  onClick={() => this.props.addToBasket(p.id)}
-                >
-                  Add To Cart
-                </button>
+                      className="btn btn-success btn-block"
+                      onClick={() => this.props.addToBasket(p.id)}
+                    >
+                      Add To Cart
+                    </button>
                   </div>
                 </div>
               </div>
