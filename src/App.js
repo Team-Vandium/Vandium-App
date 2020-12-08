@@ -39,7 +39,7 @@ class App extends Component {
       filteredProducts: [],
       searchTerm: '',
       deliveryDetails: false,
-
+      emailData: [],
       checked: [],
       checkboxes: categories.reduce(
         (allCategories, singleCategory) => ({
@@ -58,6 +58,7 @@ class App extends Component {
     this.clearSearchBox = this.clearSearchBox.bind(this);
     this.shuffle = this.shuffle.bind(this);
     this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
+    this.addItemToEmails = this.addItemToEmails.bind(this);
   }
 
   addToBasket(id) {
@@ -193,6 +194,23 @@ class App extends Component {
 
       this.setState({ freeDeliveryThreshold: msgData });
     });
+
+    let ref4 = Firebase.database().ref("emails");
+    ref4.on("value", (snapshot) => {
+      // json array
+      let msgData = snapshot.val();
+      let newMessagesFromDB3 = [];
+      for (let m in msgData) {
+        // create a JSON object version of our object
+        let currObject = {
+          id: msgData[m].id,
+          address: msgData[m].address
+        };
+        // add to the local array
+        newMessagesFromDB3.push(currObject);
+      } // end of for loop
+      this.setState({ emailData: newMessagesFromDB3 });
+    });
   }
 
   shuffle(productA, productB) {
@@ -240,6 +258,30 @@ class App extends Component {
     }
   }
 
+  /* append a new email address to the JSON array in firebase */
+  addItemToEmails(address) {
+    // get the current state array for emails
+    let localEmails = this.state.emailData;
+
+    // generate a new ID (no validation on this.)
+    let addressId = String(this.state.emailData.length + 1);
+
+    // combine id and address for new object to be added
+    let newAddressObj = {
+      id: addressId,
+      address: address
+    }
+
+    // append the new object to the local array
+    localEmails.push(newAddressObj);
+
+    // overwrite the emails array in firebase
+    Firebase.database().ref("emails").set(localEmails);
+
+    // update state with the list
+    this.setState({ emailData: localEmails });
+  }
+
   render() {
     return (
       <Router>
@@ -270,9 +312,17 @@ class App extends Component {
                   />
                 )}
               />
-              <Route path="/Home" component={Home} />
+              {/*<Route path="/Home" component={Home} />*/}
               <Route path="/About" component={About} />
-              <Route path="/Newsletter" component={Newsletter} />
+              <Route 
+                path="/Newsletter" 
+                render={(props) => (
+                  <Newsletter
+                    emails={this.state.emailData}
+                    addItemToEmails={this.addItemToEmails}
+                  />
+                )}
+              />
               <Route
                 path="/Products/:productid"
                 render={(props) => (
