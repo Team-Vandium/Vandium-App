@@ -100,11 +100,11 @@ class Products extends Component {
         <div className="row">
           {}
           
-          <button onClick={this.sortButton}>Sort by: Price</button>
+          <button type="button" className="btn btn-default"onClick={this.sortButton}>Sort by: Price</button>
           {this.state.sortBy ? (
             <div className="menu">
-              <button onClick={this.sortLow}>Price: Low to High</button>
-              <button onClick={this.sortHighest}>Price: High to Low</button>
+              <button type="button" className="btn btn-default" onClick={this.sortLow}>Price: Low to High</button>
+              <button type="button" className="btn btn-default" onClick={this.sortHighest}>Price: High to Low</button>
             </div>
           ) : null}
           {/* <SearchResults
