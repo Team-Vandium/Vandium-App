@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { GiShoppingCart } from 'react-icons/gi';
+
   
     class Basket extends Component {
         constructor(props) {
@@ -33,24 +34,36 @@ import { GiShoppingCart } from 'react-icons/gi';
     
 
     render() {
-    const checkout = this.props.state.checkout; 
     const freeDelivery = this.state.freeDelivery;
     const freeDeliveryThreshold = this.props.state.freeDeliveryThreshold;
     const id = this.props.state.product;
     const image =(id) => require(`../Images/${id}.jpg`);  
     let total = this.props.state.basket.reduce(this.getTotal, 0.00).toFixed(2);
+    let basketSize = this.props.state.basket.length;
         return (
+            
             <div>
-            Items in Basket: {this.props.state.basket.length} &nbsp;
-            Total: €{total} &nbsp;
-            Delivery charge: {this.deliveryCost()}  &nbsp;
-            
-                <button type="button" className=" btn btn-link"
-                onClick = {()=>this.props.emptyBasket()}
-                >
+              { //displays basic basket details when there is at least one element in the basket array
+              basketSize > 0 &&  
+                <div>
+                    Items in Basket: {this.props.state.basket.length} &nbsp;
+                    Total: €{total} &nbsp;
+                    Delivery charge: {this.deliveryCost()}  &nbsp;
+                    <button type="button" className=" btn btn-link"
+                    onClick = {()=>this.props.emptyBasket()}>
                     <GiShoppingCart></GiShoppingCart> Empty Basket 
-                </button> 
-            
+                    </button> 
+                    
+                </div>
+                }
+                {//display message when basket is empty
+                basketSize === 0 &&
+                <p><br></br>
+                <h3>Your basket is empty.</h3><br></br><br></br>
+                Start shopping Irish products now.
+                </p>}
+            {//mapped table of basket items displays when there are elements in basket array
+            basketSize > 0 &&            
              <table class = "table" >
              <thead class="thead=dark">
                   <tr>  
@@ -82,15 +95,17 @@ import { GiShoppingCart } from 'react-icons/gi';
                  ))} 
              </tbody> 
              </table>
+            }
+            {//displays checkout features when there is at least one element in basket array
+            basketSize > 0 &&  
+                <div>
                     Subtotal({this.props.state.basket.length} items): 
-                    €{total} &nbsp;
+                    €{total} &nbsp;                        
                     <button className="btn btn-success btn-block" onClick={()=> this.props.checkoutButton()}>
                     <GiShoppingCart></GiShoppingCart>Checkout</button>
-                    
-                    
+                </div>
+            }         
             </div> 
-            
-            
         )
     }
 }
