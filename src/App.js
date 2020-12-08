@@ -9,6 +9,7 @@ import About from './Components/About.js';
 import NoMatch from './Components/NoMatch.js';
 import Products from './Components/Products.js';
 import Basket from './Components/Basket.js';
+import SingleProduct from './Components/SingleProduct'; 
 import myFirebase from "./Components/myFirebaseConfig.js";
 import Firebase from "firebase";
 
@@ -26,7 +27,6 @@ class App extends Component {
       'Home',
       'Art',
     ];
-    const categoriesTest = ['Home', 'Art'];
     this.state = {
       apiData: [],
       delivery: [],// I think that this variable may be superfluous now (GM)
@@ -37,12 +37,10 @@ class App extends Component {
       productFilters: { category: [] },
       basket: [],
       filteredProducts: [],
-      searchTerm: "",
+      searchTerm: '',
       deliveryDetails: false,
 
       checked: [],
-
-      selectedCategory: [],
       checkboxes: categories.reduce(
         (allCategories, singleCategory) => ({
           ...allCategories,
@@ -57,6 +55,7 @@ class App extends Component {
     this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
+    this.clearSearchBox = this.clearSearchBox.bind(this);
     this.shuffle = this.shuffle.bind(this);
     this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
   }
@@ -93,7 +92,7 @@ class App extends Component {
     bArray.splice(itemIndex, 1);
     this.setState({ basket: bArray });
   }
-  checkoutButton(){
+  checkoutButton() {
     this.emptyBasket();
   }
 
@@ -123,10 +122,14 @@ class App extends Component {
     newFilter[0] = filters;
     this.setState({ productFilters: newFilter });
     const data = this.state.apiData;
-    let filteredData = data.filter((p) => this.state.checked.includes(p.tags[2]));
+    let filteredData = data.filter((p) =>
+      this.state.checked.includes(p.tags[2])
+    );
 
     this.setState({ filteredProducts: filteredData });
   }
+
+
 
  componentDidMount() {
     try {
@@ -199,8 +202,24 @@ class App extends Component {
   }
 
   onSearchFormChange(event) {
-   
     this.setState({ searchTerm: event.target.value });
+  }
+
+  productFilterFunction(searchTerm) {
+    return function (libraryObject) {
+      let name = libraryObject.name.toLowerCase();
+      let description = libraryObject.description.toLowerCase();
+
+      if (searchTerm.length === 0) {
+        return libraryObject;
+      }
+      return (
+        searchTerm !== '' &&
+        searchTerm.length >= 3 &&
+        (name.includes(searchTerm.toLowerCase()) ||
+          description.includes(searchTerm.toLowerCase()))
+      );
+    };
   }
 
   filteredCategories() {
@@ -209,7 +228,8 @@ class App extends Component {
     );
   }
 
-  clearSearchBox() {
+  clearSearchBox(e) {
+    e.preventDefault();
     this.setState({ searchTerm: '' });
   }
 
@@ -241,6 +261,8 @@ class App extends Component {
                     filteredProducts={this.state.filteredProducts}
                     checkboxes={this.state.checkboxes}
                     searchTerm={this.state.searchTerm}
+                    clearSearch={this.clearSearchBox}
+                    productFilter={this.productFilterFunction}
                     handleFilter={(filters) =>
                       this.handleFilter(filters, 'categories')
                     }
@@ -251,14 +273,30 @@ class App extends Component {
               <Route path="/Home" component={Home} />
               <Route path="/About" component={About} />
               <Route path="/Newsletter" component={Newsletter} />
-              <Route path="/Basket" render={()=><Basket state={this.state} 
-              apiData={this.state.apiData}
-              emptyBasket={this.emptyBasket}
-              deliveryDetails={this.deliveryDetails}
-              removeFromBasket={this.removeFromBasket}
-              checkoutButton = {this.checkoutButton}
-              />} />
               <Route
+                path="/Products/:productid"
+                render={(props) => (
+                  <SingleProduct
+                    data={this.state.apiData}
+                    addToBasket={this.addToBasket}
+                    {...props}
+                  ></SingleProduct>
+                )}
+              />
+              <Route
+                path="/Basket"
+                render={() => (
+                  <Basket
+                    state={this.state}
+                    apiData={this.state.apiData}
+                    emptyBasket={this.emptyBasket}
+                    deliveryDetails={this.deliveryDetails}
+                    removeFromBasket={this.removeFromBasket}
+                    checkoutButton={this.checkoutButton}
+                  />
+                )}
+              />
+              {/* <Route
                 path="/Products"
                 render={() => (
                   <Products
@@ -266,7 +304,7 @@ class App extends Component {
                     addToBasket={this.addToBasket}
                   />
                 )}
-              />
+              /> */}
               <Route component={NoMatch} />
             </Switch>
           </div>
