@@ -30,31 +30,30 @@ class Products extends Component {
   // onSearchFormChange(event) {
   //   this.setState({ searchTerm: event.target.value });
   // }
-  sortLow(event){
+  sortLow(event) {
     event.preventDefault();
-    this.setState({sortLowest: true});
-    this.setState({sortBy: false});
+    this.setState({ sortLowest: true });
+    this.setState({ sortBy: false });
   }
-  sortHighest(event){
+  sortHighest(event) {
     event.preventDefault();
-    this.setState({sortLowest: false});
-    this.setState({sortBy: false});
+    this.setState({ sortLowest: false });
+    this.setState({ sortBy: false });
   }
-  sortButton(event){
+  sortButton(event) {
     event.preventDefault();
-    if (this.state.sortBy === false){this.setState({sortBy: true})}
-    else this.setState({sortBy: false});
+    if (this.state.sortBy === false) {
+      this.setState({ sortBy: true });
+    } else this.setState({ sortBy: false });
   }
-  sortCost(a, b){
+  sortCost(a, b) {
     let comparison = 0;
-    if (this.state.sortLowest === true){
-    if(a.price < b.price) comparison = -1;
-    else if (a.price > b.price) comparison = 1;
-    else comparison = 0;
-    
-    }
-    else {
-      if(a.price < b.price) comparison = 1;
+    if (this.state.sortLowest === true) {
+      if (a.price < b.price) comparison = -1;
+      else if (a.price > b.price) comparison = 1;
+      else comparison = 0;
+    } else {
+      if (a.price < b.price) comparison = 1;
       else if (a.price > b.price) comparison = -1;
       else comparison = 0;
     }
@@ -77,8 +76,14 @@ class Products extends Component {
       <div className="App">
         {/*Not sure this is the appropriate place for this code however I have put it here so we don't forget to include
         it or something similar. Loading message is testing ok. Will need to test errorMsg (GM)*/}
-        {this.props.errorMsg && (<p><strong>An error has occured:{this.props.errorMsg.message}</strong></p> )}  
-        {this.props.apiData.length <= 0 && (<p>Please wait.....product data is loading from our database</p>)}
+        {this.props.errorMsg && (
+          <p>
+            <strong>An error has occured:{this.props.errorMsg.message}</strong>
+          </p>
+        )}
+        {this.props.apiData.length <= 0 && (
+          <p>Please wait.....product data is loading from our database</p>
+        )}
 
         <CarouselSlider data={randomProducts.slice(0, 19)}></CarouselSlider>
         <SearchForm
@@ -94,8 +99,44 @@ class Products extends Component {
         ></FilterBox>
         <div className="row">
           {}
-          {this.props.filteredProducts.length === 0
-            ? this.props.apiData
+          
+          <button onClick={this.sortButton}>Sort by: Price</button>
+          {this.state.sortBy ? (
+            <div className="menu">
+              <button onClick={this.sortLow}>Price: Low to High</button>
+              <button onClick={this.sortHighest}>Price: High to Low</button>
+            </div>
+          ) : null}
+          {/* <SearchResults
+            searchTerm={this.props.searchTerm}
+            productArray={this.props.apiData}
+          ></SearchResults> */}
+          <div className="row">
+            {/* {this.props.filteredProducts.sort(this.sortCost).map((p) => {
+              return (
+                <div className="col-xs-12 col-sm-6 col-lg-4">
+                  <ProductCard
+                    key={p.id}
+                    product={p}
+                    addToBasket={this.props.addToBasket}
+                  ></ProductCard>
+                </div>
+              );
+            })}
+            {this.props.filteredProducts.length === 0 &&
+              this.props.apiData.sort(this.sortCost).map((p) => {
+                return (
+                  <div className="col-xs-12 col-sm-6 col-lg-4">
+                    <ProductCard
+                      key={p.id}
+                      product={p}
+                      addToBasket={this.props.addToBasket}
+                    ></ProductCard>
+                  </div>
+                );
+              })} */}
+              {this.props.filteredProducts.length === 0
+            ? this.props.apiData.sort(this.sortCost)
                 .filter(this.props.productFilter(this.props.searchTerm))
                 .map((p) => {
                   return (
@@ -108,7 +149,7 @@ class Products extends Component {
                     </div>
                   );
                 })
-            : this.props.filteredProducts
+            : this.props.filteredProducts.sort(this.sortCost)
                 .filter(this.props.productFilter(this.props.searchTerm))
                 .map((p) => {
                   return (
@@ -121,37 +162,7 @@ class Products extends Component {
                     </div>
                   );
                 })}
-        <button onClick={this.sortButton}>Sort by: Price</button>
-        {this.state.sortBy ?
-        (<div className='menu'>
-          <button onClick={this.sortLow}>Price: Low to High</button>
-          <button onClick={this.sortHighest}>Price: High to Low</button>
-        </div>)
-        : (null)}
-        <SearchResults searchTerm = {this.props.searchTerm} productArray = {this.props.apiData}></SearchResults>
-        <div className="row">
-          {this.props.filteredProducts.sort(this.sortCost).map((p) => {
-            return (
-              <div className="col-xs-12 col-sm-6 col-lg-4">
-                <ProductCard
-                  key={p.id}
-                  product={p}
-                  addToBasket={this.props.addToBasket}
-                ></ProductCard>
-              </div>
-            );
-          })}
-          {this.props.filteredProducts.length === 0 && this.props.apiData.sort(this.sortCost).map((p) => {
-            return (
-              <div className="col-xs-12 col-sm-6 col-lg-4">
-                <ProductCard
-                  key={p.id}
-                  product={p}
-                  addToBasket={this.props.addToBasket}
-                ></ProductCard>
-              </div>
-            );
-          })}
+          </div>
         </div>
       </div>
     );
