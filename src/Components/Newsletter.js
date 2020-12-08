@@ -1,9 +1,22 @@
 import React, { Component } from "react";
 
 class Newsletter extends Component {
+  /*
+  * A newsletter page, where a visitor can sign up for a weekly newsletter.
+  * Nothing actually gets emailed to the person.
+  * Email address will be validated and checked against existing mailing list.
+  * If it's a new address it will be added to the mailing list. 
+  * 
+  */
   constructor(props) {
     super(props);
-    this.state = { emailInput: "", emailValid: false, submitted: false, clearToast: false };
+    this.state = {
+      emailInput: "",
+      emailValid: false,
+      emailExists: false,
+      submitted: false,
+      clearToast: false,
+    };
 
     this.onEmailFormChange = this.onEmailFormChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -13,9 +26,17 @@ class Newsletter extends Component {
 
   validateEmail(email) {
     let result = false;
+    /*
+    * Trying various examples of regex to validate the address.
+    * Not perfect but does an okay job.
+    * from here: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+    */
     //const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // const re = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9+_.-]+\.[a-zA-Z]{2,}$/
-    if (/^\S+@\S+\.\S+$/.test(String(email).toLowerCase())) {
+    //if (/^\S+@\S+\.\S+$/.test(String(email).toLowerCase())) {
+    
+    const re = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9+_.-]+\.[a-zA-Z]{2,}$/
+    
+    if (re.test(String(email).toLowerCase())) {
       result = true;
     }
 
@@ -29,85 +50,103 @@ class Newsletter extends Component {
   }
 
   handleSubmit() {
+    // if the email address exists, handle it
+    let found = this.props.emails.find(
+      (e) => e.address === this.state.emailInput
+    );
+    // found email address
+    if (found !== undefined) {
+      console.log(found.address);
+      this.setState({ emailExists: true });
+    }
+    // new email address
+    else {
+      console.log("new email address");
+      this.props.addItemToEmails(this.state.emailInput);
+    }
+
     this.setState({ submitted: true });
   }
 
   handleToastClose() {
-    this.setState({ clearToast: true })
-
+    this.setState({ clearToast: true });
   }
 
   render() {
+    const emails = this.props.emails;
     return (
       <div className="container">
         <div>
           {!this.state.submitted && (
             <form>
-            <fieldset>
-              <legend>Newsletter</legend>
+              <fieldset>
+                <legend>Newsletter</legend>
+                <p>
+                  Please enter your email below to sign up for our newsletter,
+                  bringing you new Irish made products weekly!
+                </p>
+                <div className="form-group">
+                  <label for="email">Email address</label>
+                  <div className="input-group">
+                    <input
+                      className="form-control"
+                      type="email"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter email"
+                      onChange={this.onEmailFormChange}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      disabled={!this.state.emailValid}
+                      onClick={this.handleSubmit}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+                <div className="emailResults">
+                  <table border="1">
+                    <thead>
+                      <th> ID </th>
+                      <th> ADDRESS </th>
+                    </thead>
+                    <tbody>
+                      {emails.map((e) => (
+                        <tr key={e.id}>
+                          <td>{e.id}</td>
+                          <td>{e.address}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <br />
+                {!this.state.emailValid && (
+                  <div className="alert alert-warning">
+                    <p className="mb-0">Please enter a valid email address.</p>
+                  </div>
+                )}
+              </fieldset>
+            </form>
+          )}
+          {
+            // Email submitted and was not already on list
+            this.state.submitted && !this.state.emailExists && (
               <p>
-                Please enter your email below to sign up for our newsletter,
-                bringing you new Irish made products weekly!
+                Thank you! You will receive the weekly newsletter to{" "}
+                {this.state.emailInput}.
               </p>
-              <div className="form-group">
-                <label for="email">Email address</label>
-                <div className="input-group">
-                  <input
-                    className="form-control"
-                    type="email"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter email"
-                    onChange={this.onEmailFormChange}
-                  />
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    disabled={!this.state.emailValid}
-                    onClick={this.handleSubmit}
-                  >
-                    Submit
-                  </button>
-                </div>
-              </div>
-
-              <br />
-              {!this.state.emailValid && (
-                <div className="alert alert-warning">
-                  <p className="mb-0">Please enter a valid email address.</p>
-                </div>
-              )}
-            </fieldset>
-          </form>
-          )}
-          {this.state.submitted && (
-            <p>Thank you! You will receive the weekly newsletter to {this.state.emailInput}.</p>
-          )}
+            )
+          }
+          {
+            // Email submitted but already on mailing list
+            this.state.submitted && this.state.emailExists && (
+              <p>{this.state.emailInput} is already on our mailing list.</p>
+            )
+          }
         </div>
-
-        {/*this.state.submitted && !this.state.clearToast && (
-          <div
-            className="toast-show"
-            role="alert"
-            aria-live="assertive"
-            aria-atomic="true"
-          >
-            <div className="toast-header">
-              <strong className="mr-auto">Thank you!</strong>
-              <button
-                type="button"
-                className="ml-2 mb-1 close"
-                data-dismiss="toast"
-                aria-label="close"
-                onClick={this.handleToastClose}
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="toast-body">
-              You have successfully signed up for our newsletter.
-            </div>
-          </div>
-        )*/}
       </div>
     );
   }
