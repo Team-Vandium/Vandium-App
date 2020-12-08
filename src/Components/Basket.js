@@ -65,9 +65,8 @@ function toTitleCase(str) {
              </table>
                     Subtotal({this.props.state.basket.length} items): 
                     €{this.props.state.basket.reduce(getTotal, 0.00).toFixed(2)} &nbsp;
-                    {checkout ? "Success! You have purchased your items": 
-                        <button onClick={()=> this.props.checkoutButton()}>Checkout</button>
-                    }
+                    <button className="btn btn-success btn-block" onClick={()=> this.props.checkoutButton()}>Checkout</button>
+                    
                     
             </div> 
             
