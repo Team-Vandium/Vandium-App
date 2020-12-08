@@ -1,39 +1,56 @@
 import React, { Component } from 'react';
-
-
-
-function getTotal(acc, obj){
-    return acc + obj.price;
-}
-
-function toTitleCase(str) {
-    return str.replace(
-      /\w\S*/g,
-      function(txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-      }
-    );
-  }
+import { GiShoppingCart } from 'react-icons/gi';
   
-
-//function calculateDelivery(){
- //   {this.props.state.basket.map((d, index)=>(
- //       <div key = index> </div>
- //   ))}
-//}
     class Basket extends Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+              freeDelivery: false,
+              deliveryCharge: 0,
+            };
+
+            
+            this.toTitleCase = this.toTitleCase.bind(this);
+            this.getTotal = this.getTotal.bind(this);
+        }
+    deliveryCost(){
+        if (this.props.state.basket.reduce(this.getTotal, 0.00).toFixed(2) >= this.props.freeDeliveryThreshold){
+            return "FREE";
+        
+        }
+    }
+
+    getTotal(acc, obj){
+        return acc + obj.price;
+    }
+    toTitleCase(str) {
+        return str.replace(
+            /\w\S*/g,
+            function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+    );}
+    
+
     render() {
-    const checkout = this.props.state.checkout;
-    const deliveryDetails = this.props.state.deliveryDetails; 
+    const checkout = this.props.state.checkout; 
+    const freeDelivery = this.state.freeDelivery;
+    const freeDeliveryThreshold = this.props.state.freeDeliveryThreshold;
     const id = this.props.state.product;
     const image =(id) => require(`../Images/${id}.jpg`);  
+    let total = this.props.state.basket.reduce(this.getTotal, 0.00).toFixed(2);
         return (
             <div>
             Items in Basket: {this.props.state.basket.length} &nbsp;
-            Total: €{this.props.state.basket.reduce(getTotal, 0.00).toFixed(2)} <br></br>
-            <button onClick = {()=>this.props.emptyBasket()}>Empty Basket</button> &nbsp; 
-            <button onClick ={()=>this.props.deliveryDetails()}>Delivery charge breakdown</button>
-            {deliveryDetails? "Delivery": ""} 
+            Total: €{total} &nbsp;
+            Delivery charge: {this.deliveryCost()}  &nbsp;
+            
+                <button type="button" className=" btn btn-link"
+                onClick = {()=>this.props.emptyBasket()}
+                >
+                    <GiShoppingCart></GiShoppingCart> Empty Basket 
+                </button> 
+            
              <table class = "table" >
              <thead class="thead=dark">
                   <tr>  
@@ -42,8 +59,7 @@ function toTitleCase(str) {
                      <th>Item Name</th>
                      <th>Quantity</th>
                      <th>Manufacturer</th>
-                     <th>Price</th>  
-                      
+                     <th>Price</th>   
                  </tr> 
              </thead>    
              <tbody>
@@ -51,21 +67,25 @@ function toTitleCase(str) {
                      <tr key = {index}>  
                          <td>{index+1}</td>
                          <td><img src= {image(i.id).default} class="img-responsive" alt={i.name} width="100" height="100"/></td>
-                         <td>{toTitleCase(i.name)} </td>
-                         <td><button>-</button>&nbsp;
+                         <td>{this.toTitleCase(i.name)} </td>
+                         
+                         <td><button type="button" className="btn btn-group-xs">-</button>&nbsp;
                          <b>1</b> &nbsp;
-                         <button>+</button>
+                         <button type="button" className="btn btn-group-xs">+</button>
                          </td>
-                         <td>{toTitleCase(i.manufacturer)} </td>
+                         
+                         <td>{this.toTitleCase(i.manufacturer)} </td>
                          <td>€{i.price}</td> 
-                         <td><button onClick = {()=>this.props.removeFromBasket(i.id)}>Remove Item</button></td>
+                         
+                         <td><button type="button" className=" btn btn-link" onClick = {()=>this.props.removeFromBasket(i.id)}>Remove Item</button></td>
                      </tr>
                  ))} 
              </tbody> 
              </table>
                     Subtotal({this.props.state.basket.length} items): 
-                    €{this.props.state.basket.reduce(getTotal, 0.00).toFixed(2)} &nbsp;
-                    <button className="btn btn-success btn-block" onClick={()=> this.props.checkoutButton()}>Checkout</button>
+                    €{total} &nbsp;
+                    <button className="btn btn-success btn-block" onClick={()=> this.props.checkoutButton()}>
+                    <GiShoppingCart></GiShoppingCart>Checkout</button>
                     
                     
             </div> 

@@ -33,13 +33,11 @@ class App extends Component {
       isFetched: false,
       errorMsg: null,
       deliveryData: [],
-      freeDeliveryThreshold: 0,
+      freeDeliveryThreshold: 100,
       productFilters: { category: [] },
       basket: [],
       filteredProducts: [],
       searchTerm: '',
-      deliveryDetails: false,
-
       checked: [],
       checkboxes: categories.reduce(
         (allCategories, singleCategory) => ({
@@ -52,12 +50,13 @@ class App extends Component {
 
     this.addToBasket = this.addToBasket.bind(this);
     this.emptyBasket = this.emptyBasket.bind(this);
-    this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
     this.clearSearchBox = this.clearSearchBox.bind(this);
     this.shuffle = this.shuffle.bind(this);
     this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
+    
+    
   }
 
   addToBasket(id) {
@@ -79,13 +78,7 @@ class App extends Component {
     //remove all items from basket array
     this.setState({ basket: [] });
   }
-  deliveryDetails() {
-    if (this.state.deliveryDetails === false)
-      this.setState({ deliveryDetails: true });
-    else {
-      this.setState({ deliveryDetails: false });
-    }
-  }
+  
   removeFromBasket(i) {
     let bArray = this.state.basket;
     let itemIndex = bArray.findIndex(this.getItem(i));
@@ -290,9 +283,11 @@ class App extends Component {
                     state={this.state}
                     apiData={this.state.apiData}
                     emptyBasket={this.emptyBasket}
-                    deliveryDetails={this.deliveryDetails}
                     removeFromBasket={this.removeFromBasket}
                     checkoutButton={this.checkoutButton}
+                    freeDeliveryThreshold = {this.state.freeDeliveryThreshold}
+                    deliveryData={this.state.deliveryData}
+                    
                   />
                 )}
               />
