@@ -19,7 +19,7 @@ class Products extends Component {
       sortLowest: true,
     };
 
-   // this.onSearchFormChange = this.onSearchFormChange.bind(this);
+    // this.onSearchFormChange = this.onSearchFormChange.bind(this);
     this.clearSearchBox = this.clearSearchBox.bind(this);
     this.sortButton = this.sortButton.bind(this);
     this.sortHighest = this.sortHighest.bind(this);
@@ -63,7 +63,7 @@ class Products extends Component {
   clearSearchBox() {
     this.setState({ searchTerm: '' });
   }
-  
+
   render() {
     const randomProducts = this.props.apiData.map((p) => p);
     randomProducts
@@ -84,14 +84,43 @@ class Products extends Component {
         <SearchForm
           searchTerm={this.props.searchTerm}
           onChange={this.props.handleSearch}
-          buttonHandler={this.clearSearchBox}
+          buttonHandler={this.props.clearSearch}
         />
         <FilterBox
           checkboxChange={this.props.checkboxChange}
           checkboxes={this.props.checkboxes}
-          handleFilter = {this.props.handleFilter}
-          checked ={this.props.checked}
+          handleFilter={this.props.handleFilter}
+          checked={this.props.checked}
         ></FilterBox>
+        <div className="row">
+          {}
+          {this.props.filteredProducts.length === 0
+            ? this.props.apiData
+                .filter(this.props.productFilter(this.props.searchTerm))
+                .map((p) => {
+                  return (
+                    <div className="col-sm-6 col-md-4 col-lg-4 py-2">
+                      <ProductCard
+                        key={p.id}
+                        product={p}
+                        addToBasket={this.props.addToBasket}
+                      ></ProductCard>
+                    </div>
+                  );
+                })
+            : this.props.filteredProducts
+                .filter(this.props.productFilter(this.props.searchTerm))
+                .map((p) => {
+                  return (
+                    <div className="col-sm-6 col-md-4 col-lg-4">
+                      <ProductCard
+                        key={p.id}
+                        product={p}
+                        addToBasket={this.props.addToBasket}
+                      ></ProductCard>
+                    </div>
+                  );
+                })}
         <button onClick={this.sortButton}>Sort by: Price</button>
         {this.state.sortBy ?
         (<div className='menu'>

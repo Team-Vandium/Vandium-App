@@ -1,12 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { GoX } from 'react-icons/go';
 
 class SearchForm extends Component {
   render() {
-    
     const searchTermFromProps = this.props.searchTerm;
     const onChangeFromProps = this.props.onChange;
-
-    const buttonHandler = this.props.buttonHandler;
 
     return (
       <div className="SearchFormForm">
@@ -18,10 +16,14 @@ class SearchForm extends Component {
             value={searchTermFromProps}
             onChange={onChangeFromProps}
           />
+          <button
+            onClick={this.props.buttonHandler}
+            className="btn btn-small btn-primary"
+          >
+            <GoX></GoX>
+          </button>
         </form>
-        <hr/>
-
-        <button onClick={buttonHandler}>Press to clear search</button>
+        <hr />
       </div>
     );
   }
