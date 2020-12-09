@@ -43,6 +43,7 @@ class App extends Component {
     this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
     this.addItemToEmails = this.addItemToEmails.bind(this);
     this.decrement = this.decrement.bind(this);
+    this.showAll = this.showAll.bind(this);
   }
 
   addToBasket(id) {
@@ -367,11 +368,8 @@ class App extends Component {
                     addToBasket={this.addToBasket}
                     freeDeliveryThreshold={this.state.freeDeliveryThreshold}
                     deliveryData={this.state.deliveryData}
-<<<<<<< HEAD
                     decrement ={this.decrement}
                     
-=======
->>>>>>> 7e63ab6b7d085fd3740db9824bd7f537e035ab31
                   />
                 )}
               />

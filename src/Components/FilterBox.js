@@ -18,6 +18,7 @@ export default class FilterBox extends Component {
             <form action="">
               <div className="form-group">
                 <div className="row">
+                  {this.props.checked.length > 0 && <button className="m-2 btn btn-primary btn-block" onClick={(e) => this.props.showAll(e)}>Show All</button>}
                   {this.props.categories.map((c) => {
                     return (
                       <div key={c.id} className="col-6 col-sm-4 col-lg-2">
@@ -39,7 +40,7 @@ export default class FilterBox extends Component {
                       </div>
                     );
                   })}
-                  <button onClick={(e) => this.props.showAll(e)}>show all</button>
+                  
                 </div>
               </div>
             </form>
