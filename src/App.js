@@ -17,16 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     // get product data from api and store in state
-    const categories = [
-      'Health & Beauty',
-      'Food & Drink',
-      'Clothing & Fashion',
-      'Jewellery',
-      'Sport ',
-      'Gardening & DIY',
-      'Home',
-      'Art',
-    ];
+    
     this.state = {
       apiData: [],
       delivery: [], // I think that this variable may be superfluous now (GM)
@@ -41,13 +32,7 @@ class App extends Component {
       deliveryDetails: false,
       emailData: [],
       checked: [],
-      checkboxes: categories.reduce(
-        (allCategories, singleCategory) => ({
-          ...allCategories,
-          [singleCategory]: false,
-        }),
-        {}
-      ),
+      categories: []
     };
 
     this.addToBasket = this.addToBasket.bind(this);
@@ -138,7 +123,7 @@ class App extends Component {
     this.setState({ productFilters: newFilter });
     const data = this.state.apiData;
     let filteredData = data.filter((p) =>
-      this.state.checked.includes(p.tags[2])
+      this.state.checked.includes(p.categoryID)
     );
 
     this.setState({ filteredProducts: filteredData });
@@ -162,6 +147,7 @@ class App extends Component {
       for (let m in msgData) {
         // create a JSON object version of our object.
         let currObject = {
+          categoryID: msgData[m].categoryID,
           description: msgData[m].description,
           id: msgData[m].id,
           image: msgData[m].image,
@@ -222,6 +208,14 @@ class App extends Component {
         newMessagesFromDB3.push(currObject);
       } // end of for loop
       this.setState({ emailData: newMessagesFromDB3 });
+    });
+
+    let ref5 = Firebase.database().ref('categories');
+    ref5.on('value', (snapshot) => {
+      // json array
+      let msgData = snapshot.val();
+
+      this.setState({ categories: msgData });
     });
   }
 
@@ -306,6 +300,7 @@ class App extends Component {
                 path="/"
                 render={() => (
                   <Products
+                  categories = {this.state.categories}
                     errorMsg={this.state.errorMsg}
                     apiData={this.state.apiData}
                     addToBasket={this.addToBasket}

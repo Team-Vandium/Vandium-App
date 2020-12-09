@@ -96,6 +96,7 @@ class Products extends Component {
           checkboxes={this.props.checkboxes}
           handleFilter={this.props.handleFilter}
           checked={this.props.checked}
+          categories = {this.props.categories}
         ></FilterBox>
         <div className="row">
           {}

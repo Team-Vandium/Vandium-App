@@ -28,23 +28,23 @@ export default class FilterBox extends Component {
             <form action="">
               <div className="form-group">
                 <div className="row">
-                  {categories.map((c) => {
+                  {this.props.categories.map((c) => {
                     return (
-                      <div key={c} className="col-6 col-sm-4 col-lg-2">
+                      <div key={c.id} className="col-6 col-sm-4 col-lg-2">
                         <div className="form-check text-left">
                           <input
                             className="form-check-input"
                             type="radio"
-                            value={c}
+                            value={c.id}
                            // isSelected={this.props.checkboxes[c]}
                             onChange={(e) => this.props.checkboxChange(e)}
                              checked={
-                               this.props.checked.indexOf(c) === -1
+                               this.props.checked.indexOf(c.id) === -1
                                  ? false
                                  : true
                              }
                           />
-                          <label className="form-check-label">{c}</label>
+                          <label className="form-check-label">{c.name}</label>
                         </div>
                       </div>
                     );
