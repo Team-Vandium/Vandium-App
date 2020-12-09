@@ -10,16 +10,6 @@ export default class FilterBox extends Component {
   }
 
   render() {
-    const categories = [
-      'Health & Beauty',
-      'Food & Drink',
-      'Clothing & Fashion',
-      'Jewellery',
-      'Sport ',
-      'Gardening & DIY',
-      'Home',
-      'Art',
-    ];
     return (
       <>
         <div className="card border-primary mt-3 mb-3">
@@ -49,6 +39,7 @@ export default class FilterBox extends Component {
                       </div>
                     );
                   })}
+                  <button onClick={(e) => this.props.showAll(e)}>show all</button>
                 </div>
               </div>
             </form>
