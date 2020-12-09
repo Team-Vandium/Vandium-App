@@ -43,6 +43,7 @@ class App extends Component {
     this.shuffle = this.shuffle.bind(this);
     this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
     this.addItemToEmails = this.addItemToEmails.bind(this);
+    this.decrement = this.decrement.bind(this);
   }
 
   addToBasket(id) {
@@ -53,7 +54,6 @@ class App extends Component {
     );
 
     const checkIfProductInBasket = this.state.basket.filter((p) => p.id === id);
-    
     if (checkIfProductInBasket.length > 0) {
       this.setState((prevState) => ({
         basket: prevState.basket.map((product) =>
@@ -62,19 +62,23 @@ class App extends Component {
             : product
         ),
       }));
-      this.setState({ checkoutButton: false });
-
-
-
     } else 
-    
-    
     {
       item[0].quantity = 1;
       this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
-      this.setState({ checkoutButton: false });
     }
   }
+  decrement(id){
+        this.setState((prevState) => ({
+          basket: prevState.basket.map((product) =>
+            product.id === id
+              ? { ...product, quantity: product.quantity - 1 }
+              : product
+          ),
+        }));
+    
+  }
+  
   getItem(a) {
     //returns correct object from array when passed an element
     return function (obj) {
@@ -352,6 +356,7 @@ class App extends Component {
                     addToBasket ={this.addToBasket}
                     freeDeliveryThreshold = {this.state.freeDeliveryThreshold}
                     deliveryData={this.state.deliveryData}
+                    decrement ={this.decrement}
                     
                   />
                 )}

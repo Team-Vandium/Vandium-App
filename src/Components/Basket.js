@@ -14,7 +14,7 @@ import { GiShoppingCart } from 'react-icons/gi';
             this.deliveryCost = this.deliveryCost.bind(this);
             this.alreadyInBasket = this.alreadyInBasket.bind(this);
             this.getItems = this.getItems.bind(this);
-            this.alreadyInBasketB = this.alreadyInBasketB.bind(this);
+            
         }
     deliveryCost(){
         if (this.props.state.basket.reduce(this.getTotal, 0.00).toFixed(2) >= this.props.freeDeliveryThreshold){
@@ -40,11 +40,7 @@ import { GiShoppingCart } from 'react-icons/gi';
         );
         return inBasket.length;
     }
-    alreadyInBasketB(id){
-        let inBasket = this.props.state.basket.filter(this.getItems(id)
-        );
-        return inBasket === id;
-    }
+    
     getItems(id){
         return function (b){
             return b.id === id;
@@ -78,6 +74,7 @@ import { GiShoppingCart } from 'react-icons/gi';
                 <p><br></br>
                 <h3>Your basket is empty.</h3><br></br><br></br>
                 Start shopping Irish products now.
+                
                 </p>}
                 
             {//mapped table of basket items displays when there are elements in basket array
@@ -96,19 +93,18 @@ import { GiShoppingCart } from 'react-icons/gi';
              <tbody>
                  {this.props.state.basket.map((i, index) =>(
                      <tr key = {i}>  
-                         {!this.alreadyinBasketB &&
-                         <>
+                         
                          <td>{index+1}</td>
                          <td><img src= {image(i.id).default} class="img-responsive" alt={i.name} width="100" height="100"/></td>
                          <td>{this.toTitleCase(i.name)} </td>
-                         <td><button type="button" className="btn btn-group-xs"onClick = {()=>this.props.removeFromBasket(i.id)}>-</button>&nbsp;
-                         <b>{this.alreadyInBasket(i.id)}</b> &nbsp;
+                         <td><button type="button" className="btn btn-group-xs"onClick = {()=>this.props.decrement(i.id)}>-</button>&nbsp;
+                         <b>{i.quantity}</b> &nbsp;
                          <button type="button" className="btn btn-group-xs" onClick = {()=>this.props.addToBasket(i.id)}>+</button>
                          </td>
                          <td>{this.toTitleCase(i.manufacturer)} </td>
                          <td>€{i.price}</td> 
                          <td><button type="button" className=" btn btn-link" onClick = {()=>this.props.removeFromBasket(i.id)}>Remove Item</button></td>
-                         </>}
+                         
                     </tr>
                  ))} 
              </tbody> 
