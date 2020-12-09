@@ -33,13 +33,13 @@ class App extends Component {
       isFetched: false,
       errorMsg: null,
       deliveryData: [],
-      freeDeliveryThreshold: 0,
+      freeDeliveryThreshold: 100,
       productFilters: { category: [] },
       basket: [],
       filteredProducts: [],
       searchTerm: '',
       deliveryDetails: false,
-
+      emailData: [],
       checked: [],
       checkboxes: categories.reduce(
         (allCategories, singleCategory) => ({
@@ -52,12 +52,12 @@ class App extends Component {
 
     this.addToBasket = this.addToBasket.bind(this);
     this.emptyBasket = this.emptyBasket.bind(this);
-    this.deliveryDetails = this.deliveryDetails.bind(this);
     this.removeFromBasket = this.removeFromBasket.bind(this);
     this.onSearchFormChange = this.onSearchFormChange.bind(this);
     this.clearSearchBox = this.clearSearchBox.bind(this);
     this.shuffle = this.shuffle.bind(this);
     this.getMessagesFromDatabase = this.getMessagesFromDatabase.bind(this);
+    this.addItemToEmails = this.addItemToEmails.bind(this);
   }
 
   addToBasket(id) {
@@ -100,13 +100,7 @@ class App extends Component {
     //remove all items from basket array
     this.setState({ basket: [] });
   }
-  deliveryDetails() {
-    if (this.state.deliveryDetails === false)
-      this.setState({ deliveryDetails: true });
-    else {
-      this.setState({ deliveryDetails: false });
-    }
-  }
+  
   removeFromBasket(i) {
     let bArray = this.state.basket;
     let itemIndex = bArray.findIndex(this.getItem(i));
@@ -150,7 +144,11 @@ class App extends Component {
     this.setState({ filteredProducts: filteredData });
   }
 
+<<<<<<< HEAD
   componentDidMount() {
+=======
+ componentDidMount() {
+>>>>>>> f51e8fa2ee4e6006ce5eb7940f3baa6ee5fd708d
     try {
       this.getMessagesFromDatabase();
     } catch (error) {
@@ -212,6 +210,23 @@ class App extends Component {
 
       this.setState({ freeDeliveryThreshold: msgData });
     });
+
+    let ref4 = Firebase.database().ref("emails");
+    ref4.on("value", (snapshot) => {
+      // json array
+      let msgData = snapshot.val();
+      let newMessagesFromDB3 = [];
+      for (let m in msgData) {
+        // create a JSON object version of our object
+        let currObject = {
+          id: msgData[m].id,
+          address: msgData[m].address
+        };
+        // add to the local array
+        newMessagesFromDB3.push(currObject);
+      } // end of for loop
+      this.setState({ emailData: newMessagesFromDB3 });
+    });
   }
 
   shuffle(productA, productB) {
@@ -259,6 +274,30 @@ class App extends Component {
     }
   }
 
+  /* append a new email address to the JSON array in firebase */
+  addItemToEmails(address) {
+    // get the current state array for emails
+    let localEmails = this.state.emailData;
+
+    // generate a new ID (no validation on this.)
+    let addressId = String(this.state.emailData.length + 1);
+
+    // combine id and address for new object to be added
+    let newAddressObj = {
+      id: addressId,
+      address: address
+    }
+
+    // append the new object to the local array
+    localEmails.push(newAddressObj);
+
+    // overwrite the emails array in firebase
+    Firebase.database().ref("emails").set(localEmails);
+
+    // update state with the list
+    this.setState({ emailData: localEmails });
+  }
+
   render() {
     return (
       <Router>
@@ -289,9 +328,17 @@ class App extends Component {
                   />
                 )}
               />
-              <Route path="/Home" component={Home} />
+              {/*<Route path="/Home" component={Home} />*/}
               <Route path="/About" component={About} />
-              <Route path="/Newsletter" component={Newsletter} />
+              <Route 
+                path="/Newsletter" 
+                render={(props) => (
+                  <Newsletter
+                    emails={this.state.emailData}
+                    addItemToEmails={this.addItemToEmails}
+                  />
+                )}
+              />
               <Route
                 path="/Products/:productid"
                 render={(props) => (
@@ -309,9 +356,12 @@ class App extends Component {
                     state={this.state}
                     apiData={this.state.apiData}
                     emptyBasket={this.emptyBasket}
-                    deliveryDetails={this.deliveryDetails}
                     removeFromBasket={this.removeFromBasket}
                     checkoutButton={this.checkoutButton}
+                    addToBasket ={this.addToBasket}
+                    freeDeliveryThreshold = {this.state.freeDeliveryThreshold}
+                    deliveryData={this.state.deliveryData}
+                    
                   />
                 )}
               />
