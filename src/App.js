@@ -144,11 +144,7 @@ class App extends Component {
     this.setState({ filteredProducts: filteredData });
   }
 
-<<<<<<< HEAD
-  componentDidMount() {
-=======
  componentDidMount() {
->>>>>>> f51e8fa2ee4e6006ce5eb7940f3baa6ee5fd708d
     try {
       this.getMessagesFromDatabase();
     } catch (error) {
