@@ -94,6 +94,7 @@ class Products extends Component {
         <FilterBox
           checkboxChange={this.props.checkboxChange}
           checkboxes={this.props.checkboxes}
+          showAll = {this.props.showAll}
           handleFilter={this.props.handleFilter}
           checked={this.props.checked}
           categories = {this.props.categories}

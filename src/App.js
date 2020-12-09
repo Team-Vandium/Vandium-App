@@ -4,7 +4,6 @@ import 'bootswatch/dist/yeti/bootstrap.min.css';
 import Navbar from './Components/NavbarC.js';
 import Newsletter from './Components/Newsletter';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './Components/Home.js';
 import About from './Components/About.js';
 import NoMatch from './Components/NoMatch.js';
 import Products from './Components/Products.js';
@@ -17,10 +16,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     // get product data from api and store in state
-    
+
     this.state = {
       apiData: [],
-      delivery: [], // I think that this variable may be superfluous now (GM)
       isFetched: false,
       errorMsg: null,
       deliveryData: [],
@@ -32,7 +30,8 @@ class App extends Component {
       deliveryDetails: false,
       emailData: [],
       checked: [],
-      categories: []
+      Msgerror: null,
+      categories: [],
     };
 
     this.addToBasket = this.addToBasket.bind(this);
@@ -62,8 +61,8 @@ class App extends Component {
             : product
         ),
       }));
-    } else 
-    {
+      this.setState({ checkoutButton: false });
+    } else {
       item[0].quantity = 1;
       this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
     }
@@ -89,7 +88,12 @@ class App extends Component {
     //remove all items from basket array
     this.setState({ basket: [] });
   }
-  
+  showAll(e) {
+    e.preventDefault();
+    this.setState({ checked: '' });
+    this.setState({ filteredProducts: '' });
+  }
+
   removeFromBasket(i) {
     let bArray = this.state.basket;
     let itemIndex = bArray.findIndex(this.getItem(i));
@@ -133,10 +137,11 @@ class App extends Component {
     this.setState({ filteredProducts: filteredData });
   }
 
- componentDidMount() {
+  componentDidMount() {
     try {
       this.getMessagesFromDatabase();
     } catch (error) {
+      console.log(error)
       this.setState({ Msgerror: error });
     } // end of try catch
   } // end of componentDidMount()
@@ -162,9 +167,14 @@ class App extends Component {
           weight: msgData[m].weight,
           tags: msgData[m].tags,
         };
+
+        
         // add it to our newStateMessages array.
         newMessagesFromDB1.push(currObject);
       } // end for loop
+      // if(newMessagesFromDB1.length === 0){
+      //     throw 'Error'
+      //   }
       // set state = don't use concat.
       this.setState({ apiData: newMessagesFromDB1.sort(this.shuffle) });
     });
@@ -197,8 +207,8 @@ class App extends Component {
       this.setState({ freeDeliveryThreshold: msgData });
     });
 
-    let ref4 = Firebase.database().ref("emails");
-    ref4.on("value", (snapshot) => {
+    let ref4 = Firebase.database().ref('emails');
+    ref4.on('value', (snapshot) => {
       // json array
       let msgData = snapshot.val();
       let newMessagesFromDB3 = [];
@@ -206,7 +216,7 @@ class App extends Component {
         // create a JSON object version of our object
         let currObject = {
           id: msgData[m].id,
-          address: msgData[m].address
+          address: msgData[m].address,
         };
         // add to the local array
         newMessagesFromDB3.push(currObject);
@@ -279,14 +289,14 @@ class App extends Component {
     // combine id and address for new object to be added
     let newAddressObj = {
       id: addressId,
-      address: address
-    }
+      address: address,
+    };
 
     // append the new object to the local array
     localEmails.push(newAddressObj);
 
     // overwrite the emails array in firebase
-    Firebase.database().ref("emails").set(localEmails);
+    Firebase.database().ref('emails').set(localEmails);
 
     // update state with the list
     this.setState({ emailData: localEmails });
@@ -304,7 +314,8 @@ class App extends Component {
                 path="/"
                 render={() => (
                   <Products
-                  categories = {this.state.categories}
+                    showAll={this.showAll}
+                    categories={this.state.categories}
                     errorMsg={this.state.errorMsg}
                     apiData={this.state.apiData}
                     addToBasket={this.addToBasket}
@@ -325,8 +336,8 @@ class App extends Component {
               />
               {/*<Route path="/Home" component={Home} />*/}
               <Route path="/About" component={About} />
-              <Route 
-                path="/Newsletter" 
+              <Route
+                path="/Newsletter"
                 render={(props) => (
                   <Newsletter
                     emails={this.state.emailData}
@@ -353,11 +364,14 @@ class App extends Component {
                     emptyBasket={this.emptyBasket}
                     removeFromBasket={this.removeFromBasket}
                     checkoutButton={this.checkoutButton}
-                    addToBasket ={this.addToBasket}
-                    freeDeliveryThreshold = {this.state.freeDeliveryThreshold}
+                    addToBasket={this.addToBasket}
+                    freeDeliveryThreshold={this.state.freeDeliveryThreshold}
                     deliveryData={this.state.deliveryData}
+<<<<<<< HEAD
                     decrement ={this.decrement}
                     
+=======
+>>>>>>> 7e63ab6b7d085fd3740db9824bd7f537e035ab31
                   />
                 )}
               />
