@@ -96,13 +96,15 @@ class Products extends Component {
           checkboxes={this.props.checkboxes}
           handleFilter={this.props.handleFilter}
           checked={this.props.checked}
+          categories = {this.props.categories}
         ></FilterBox>
         <div className="row">
           {}
           
           <button type="button" className="btn btn-default"onClick={this.sortButton}>Sort by: Price</button>
-          {this.state.sortBy ? (
-            <div className="menu">
+          {//buttons for sorting products by price high to low and low to high
+          this.state.sortBy ? (
+          <div className="menu">
               <button type="button" className="btn btn-default" onClick={this.sortLow}>Price: Low to High</button>
               <button type="button" className="btn btn-default" onClick={this.sortHighest}>Price: High to Low</button>
             </div>
@@ -140,7 +142,7 @@ class Products extends Component {
                 .filter(this.props.productFilter(this.props.searchTerm))
                 .map((p) => {
                   return (
-                    <div className="col-sm-6 col-md-4 col-lg-4 py-2">
+                    <div className="col-xs-6 col-md-4 col-lg-4 mt-2 mb-2">
                       <ProductCard
                         key={p.id}
                         product={p}
