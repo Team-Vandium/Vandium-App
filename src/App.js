@@ -69,6 +69,12 @@ class App extends Component {
     }
   }
   decrement(id){
+    let i = this.state.basket.filter(this.getItem(id));
+    //console.log(i);
+    if(i[0].quantity === 1){
+      this.removeFromBasket(i);
+    }
+    else{
         this.setState((prevState) => ({
           basket: prevState.basket.map((product) =>
             product.id === id
@@ -76,7 +82,7 @@ class App extends Component {
               : product
           ),
         }));
-    
+      }
   }
   
   getItem(a) {
@@ -165,6 +171,7 @@ class App extends Component {
           manufacturer_website: msgData[m].manufacturer_website,
           name: msgData[m].name,
           price: msgData[m].price,
+          deliveryCost: msgData[m].deliveryCost,
           weight: msgData[m].weight,
           tags: msgData[m].tags,
         };
