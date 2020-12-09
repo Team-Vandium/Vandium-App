@@ -67,7 +67,7 @@ class App extends Component {
       this.getItem(id) //call getItem function to return object
     );
     this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
-    this.setState({ checkoutButton: false });
+    
   }
   getItem(a) {
     //returns correct object from array when passed an element
@@ -122,8 +122,6 @@ class App extends Component {
 
     this.setState({ filteredProducts: filteredData });
   }
-
-
 
  componentDidMount() {
     try {
@@ -335,6 +333,7 @@ class App extends Component {
                     emptyBasket={this.emptyBasket}
                     removeFromBasket={this.removeFromBasket}
                     checkoutButton={this.checkoutButton}
+                    addToBasket ={this.addToBasket}
                     freeDeliveryThreshold = {this.state.freeDeliveryThreshold}
                     deliveryData={this.state.deliveryData}
                     

@@ -9,18 +9,22 @@ import { GiShoppingCart } from 'react-icons/gi';
               freeDelivery: false,
               deliveryCharge: 0,
             };
-
-            
             this.toTitleCase = this.toTitleCase.bind(this);
             this.getTotal = this.getTotal.bind(this);
+            this.deliveryCost = this.deliveryCost.bind(this);
+            this.alreadyInBasket = this.alreadyInBasket.bind(this);
+            this.getItems = this.getItems.bind(this);
+            this.alreadyInBasketB = this.alreadyInBasketB.bind(this);
         }
     deliveryCost(){
         if (this.props.state.basket.reduce(this.getTotal, 0.00).toFixed(2) >= this.props.freeDeliveryThreshold){
             return "FREE";
-        
         }
+        {//need help with cross ref elements in 2 arrays
+            this.props.state.deliveryData.map((i, index) =>(
+            <div key={index}>{index+1}, {i.cost}, {i.weight}, {i.size}</div>
+        ))}
     }
-
     getTotal(acc, obj){
         return acc + obj.price;
     }
@@ -31,8 +35,21 @@ import { GiShoppingCart } from 'react-icons/gi';
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             }
     );}
-    
-
+    alreadyInBasket(id){
+        let inBasket = this.props.state.basket.filter(this.getItems(id)
+        );
+        return inBasket.length;
+    }
+    alreadyInBasketB(id){
+        let inBasket = this.props.state.basket.filter(this.getItems(id)
+        );
+        return inBasket === id;
+    }
+    getItems(id){
+        return function (b){
+            return b.id === id;
+        }
+    }
     render() {
     const freeDelivery = this.state.freeDelivery;
     const freeDeliveryThreshold = this.props.state.freeDeliveryThreshold;
@@ -62,6 +79,7 @@ import { GiShoppingCart } from 'react-icons/gi';
                 <h3>Your basket is empty.</h3><br></br><br></br>
                 Start shopping Irish products now.
                 </p>}
+                
             {//mapped table of basket items displays when there are elements in basket array
             basketSize > 0 &&            
              <table class = "table" >
@@ -77,21 +95,21 @@ import { GiShoppingCart } from 'react-icons/gi';
              </thead>    
              <tbody>
                  {this.props.state.basket.map((i, index) =>(
-                     <tr key = {index}>  
+                     <tr key = {i}>  
+                         {!this.alreadyinBasketB &&
+                         <>
                          <td>{index+1}</td>
                          <td><img src= {image(i.id).default} class="img-responsive" alt={i.name} width="100" height="100"/></td>
                          <td>{this.toTitleCase(i.name)} </td>
-                         
-                         <td><button type="button" className="btn btn-group-xs">-</button>&nbsp;
-                         <b>1</b> &nbsp;
-                         <button type="button" className="btn btn-group-xs">+</button>
+                         <td><button type="button" className="btn btn-group-xs"onClick = {()=>this.props.removeFromBasket(i.id)}>-</button>&nbsp;
+                         <b>{this.alreadyInBasket(i.id)}</b> &nbsp;
+                         <button type="button" className="btn btn-group-xs" onClick = {()=>this.props.addToBasket(i.id)}>+</button>
                          </td>
-                         
                          <td>{this.toTitleCase(i.manufacturer)} </td>
                          <td>€{i.price}</td> 
-                         
                          <td><button type="button" className=" btn btn-link" onClick = {()=>this.props.removeFromBasket(i.id)}>Remove Item</button></td>
-                     </tr>
+                         </>}
+                    </tr>
                  ))} 
              </tbody> 
              </table>

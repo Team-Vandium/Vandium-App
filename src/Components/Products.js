@@ -101,8 +101,9 @@ class Products extends Component {
           {}
           
           <button type="button" className="btn btn-default"onClick={this.sortButton}>Sort by: Price</button>
-          {this.state.sortBy ? (
-            <div className="menu">
+          {//buttons for sorting products by price high to low and low to high
+          this.state.sortBy ? (
+          <div className="menu">
               <button type="button" className="btn btn-default" onClick={this.sortLow}>Price: Low to High</button>
               <button type="button" className="btn btn-default" onClick={this.sortHighest}>Price: High to Low</button>
             </div>
