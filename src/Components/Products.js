@@ -5,7 +5,6 @@ import FilterBox from './FilterBox.js';
 import ProductCard from './ProductCard.js';
 import SearchForm from './SearchForm.js';
 import CarouselSlider from './CarouselSlider.js';
-import SearchResults from './SearchResults';
 
 // update to use API data from props, mounted in App
 

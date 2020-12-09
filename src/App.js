@@ -15,7 +15,6 @@ import Firebase from 'firebase';
 class App extends Component {
   constructor(props) {
     super(props);
-    // get product data from api and store in state
 
     this.state = {
       apiData: [],
@@ -154,6 +153,7 @@ class App extends Component {
   } // end of componentDidMount()
 
   getMessagesFromDatabase() {
+    //download and create json array of product data
     let ref1 = Firebase.database().ref('products');
 
     ref1.on('value', (snapshot) => {
@@ -175,20 +175,15 @@ class App extends Component {
           weight: msgData[m].weight,
           tags: msgData[m].tags,
         };
-
-        
         // add it to our newStateMessages array.
         newMessagesFromDB1.push(currObject);
       } // end for loop
-      // if(newMessagesFromDB1.length === 0){
-      //     throw 'Error'
-      //   }
-      // set state = don't use concat.
+      // set state
       this.setState({ apiData: newMessagesFromDB1.sort(this.shuffle) });
     });
 
+    //download and create a json array of delivery cost data
     let ref2 = Firebase.database().ref('deliveryCost');
-
     ref2.on('value', (snapshot) => {
       // json array
       let msgData = snapshot.val();
@@ -207,14 +202,15 @@ class App extends Component {
       this.setState({ deliveryData: newMessagesFromDB2 });
     });
 
+    //download and set state for free delivery threshold
     let ref3 = Firebase.database().ref('freeDeliveryThreshold');
     ref3.on('value', (snapshot) => {
-      // json array
       let msgData = snapshot.val();
-
+      //set state
       this.setState({ freeDeliveryThreshold: msgData });
     });
 
+    //download and create json array of email addresses
     let ref4 = Firebase.database().ref('emails');
     ref4.on('value', (snapshot) => {
       // json array
@@ -232,6 +228,7 @@ class App extends Component {
       this.setState({ emailData: newMessagesFromDB3 });
     });
 
+    //download and create array of categories
     let ref5 = Firebase.database().ref('categories');
     ref5.on('value', (snapshot) => {
       // json array
@@ -241,6 +238,7 @@ class App extends Component {
     });
   }
 
+  //method used to shuffle the array of products into random order
   shuffle(productA, productB) {
     let comparison = 0;
     comparison = Math.random() - 0.5;
