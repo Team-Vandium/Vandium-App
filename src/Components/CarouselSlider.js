@@ -3,6 +3,7 @@ import Carousel, {
   autoplayPlugin,
 } from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
+import {Link} from 'react-router-dom'
 
 const CarouselSlider = ({ data }) => {
 
@@ -69,13 +70,14 @@ const CarouselSlider = ({ data }) => {
           {data.map((p) => {
             return (
               <div>
+                <Link to={`/Products/${p.id}`}>
                 <img
                   alt="test"
                   className="img-example img-fluid"
                   src={image(p.id).default}
                 />
                 <p className="mt-2 h6"> {p.name}</p>
-                {/* <a className="btn btn-primary mt-2">View</a> */}
+                </Link>
               </div>
             );
           })}

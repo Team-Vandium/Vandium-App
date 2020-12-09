@@ -26,7 +26,7 @@ export default class FilterBox extends Component {
           <div className="card-header text-left">Filter Products</div>
           <div className="card-body">
             <form action="">
-              <fieldset className="form-group">
+              <div className="form-group">
                 <div className="row">
                   {categories.map((c) => {
                     return (
@@ -34,15 +34,15 @@ export default class FilterBox extends Component {
                         <div className="form-check text-left">
                           <input
                             className="form-check-input"
-                            type="checkbox"
+                            type="radio"
                             value={c}
-                            isSelected={this.props.checkboxes[c]}
+                           // isSelected={this.props.checkboxes[c]}
                             onChange={(e) => this.props.checkboxChange(e)}
-                            checked={
-                              this.props.checked.indexOf(c) === -1
-                                ? false
-                                : true
-                            }
+                             checked={
+                               this.props.checked.indexOf(c) === -1
+                                 ? false
+                                 : true
+                             }
                           />
                           <label className="form-check-label">{c}</label>
                         </div>
@@ -50,7 +50,7 @@ export default class FilterBox extends Component {
                     );
                   })}
                 </div>
-              </fieldset>
+              </div>
             </form>
           </div>
         </div>

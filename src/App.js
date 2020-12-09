@@ -9,9 +9,9 @@ import About from './Components/About.js';
 import NoMatch from './Components/NoMatch.js';
 import Products from './Components/Products.js';
 import Basket from './Components/Basket.js';
-import SingleProduct from './Components/SingleProduct'; 
-import myFirebase from "./Components/myFirebaseConfig.js";
-import Firebase from "firebase";
+import SingleProduct from './Components/SingleProduct';
+import myFirebase from './Components/myFirebaseConfig.js';
+import Firebase from 'firebase';
 
 class App extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class App extends Component {
     ];
     this.state = {
       apiData: [],
-      delivery: [],// I think that this variable may be superfluous now (GM)
+      delivery: [], // I think that this variable may be superfluous now (GM)
       isFetched: false,
       errorMsg: null,
       deliveryData: [],
@@ -66,8 +66,29 @@ class App extends Component {
       //variable item to hold the element
       this.getItem(id) //call getItem function to return object
     );
-    this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
-    this.setState({ checkoutButton: false });
+
+    const checkIfProductInBasket = this.state.basket.filter((p) => p.id === id);
+    
+    if (checkIfProductInBasket.length > 0) {
+      this.setState((prevState) => ({
+        basket: prevState.basket.map((product) =>
+          product.id === id
+            ? { ...product, quantity: product.quantity + 1 }
+            : product
+        ),
+      }));
+      this.setState({ checkoutButton: false });
+
+
+
+    } else 
+    
+    
+    {
+      item[0].quantity = 1;
+      this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
+      this.setState({ checkoutButton: false });
+    }
   }
   getItem(a) {
     //returns correct object from array when passed an element
@@ -113,7 +134,7 @@ class App extends Component {
       newCheckedArray.splice(currentIndex, 1);
     }
 
-    await this.setState({ checked: newCheckedArray });
+    await this.setState({ checked: value });
     await this.handleFilter(newCheckedArray);
   };
 
@@ -129,20 +150,18 @@ class App extends Component {
     this.setState({ filteredProducts: filteredData });
   }
 
-
-
- componentDidMount() {
+  componentDidMount() {
     try {
-      this.getMessagesFromDatabase(); 
+      this.getMessagesFromDatabase();
     } catch (error) {
-      this.setState({Msgerror: error})
+      this.setState({ Msgerror: error });
     } // end of try catch
   } // end of componentDidMount()
 
   getMessagesFromDatabase() {
-    let ref1 = Firebase.database().ref("products");
+    let ref1 = Firebase.database().ref('products');
 
-    ref1.on("value", (snapshot) => {
+    ref1.on('value', (snapshot) => {
       // json array
       let msgData = snapshot.val();
       let newMessagesFromDB1 = [];
@@ -157,7 +176,7 @@ class App extends Component {
           name: msgData[m].name,
           price: msgData[m].price,
           weight: msgData[m].weight,
-          tags: msgData[m].tags
+          tags: msgData[m].tags,
         };
         // add it to our newStateMessages array.
         newMessagesFromDB1.push(currObject);
@@ -166,9 +185,9 @@ class App extends Component {
       this.setState({ apiData: newMessagesFromDB1.sort(this.shuffle) });
     });
 
-    let ref2 = Firebase.database().ref("deliveryCost");
+    let ref2 = Firebase.database().ref('deliveryCost');
 
-    ref2.on("value", (snapshot) => {
+    ref2.on('value', (snapshot) => {
       // json array
       let msgData = snapshot.val();
       let newMessagesFromDB2 = [];
@@ -177,7 +196,7 @@ class App extends Component {
         let currObject = {
           cost: msgData[m].Cost,
           size: msgData[m].size,
-          weight: msgData[m].weight
+          weight: msgData[m].weight,
         };
         // add it to our newStateMessages array.
         newMessagesFromDB2.push(currObject);
@@ -186,8 +205,8 @@ class App extends Component {
       this.setState({ deliveryData: newMessagesFromDB2 });
     });
 
-    let ref3 = Firebase.database().ref("freeDeliveryThreshold");
-    ref3.on("value", (snapshot) => {
+    let ref3 = Firebase.database().ref('freeDeliveryThreshold');
+    ref3.on('value', (snapshot) => {
       // json array
       let msgData = snapshot.val();
 
@@ -252,7 +271,7 @@ class App extends Component {
                 path="/"
                 render={() => (
                   <Products
-                    errorMsg = {this.state.errorMsg}
+                    errorMsg={this.state.errorMsg}
                     apiData={this.state.apiData}
                     addToBasket={this.addToBasket}
                     random={this.state.random}

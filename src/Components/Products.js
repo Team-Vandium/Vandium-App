@@ -140,7 +140,7 @@ class Products extends Component {
                 .filter(this.props.productFilter(this.props.searchTerm))
                 .map((p) => {
                   return (
-                    <div className="col-sm-6 col-md-4 col-lg-4 py-2">
+                    <div className="col-xs-6 col-md-4 col-lg-4 mt-2 mb-2">
                       <ProductCard
                         key={p.id}
                         product={p}
