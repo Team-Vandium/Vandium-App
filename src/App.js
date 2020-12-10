@@ -21,7 +21,7 @@ class App extends Component {
       isFetched: false,
       errorMsg: null,
       deliveryData: [],
-      freeDeliveryThreshold: 100,
+      freeDeliveryThreshold: null,
       productFilters: { category: [] },
       basket: [],
       filteredProducts: [],
