@@ -73,7 +73,6 @@ class Newsletter extends Component {
   }
 
   render() {
-    const emails = this.props.emails;
     return (
       <div className="container">
         <div>
