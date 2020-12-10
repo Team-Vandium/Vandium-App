@@ -6,27 +6,21 @@ import { GiShoppingCart } from 'react-icons/gi';
         constructor(props) {
             super(props);
             this.state = {
-              freeDelivery: false,
-              deliveryCharge: 0,
+              
+              
             };
             this.toTitleCase = this.toTitleCase.bind(this);
             this.getTotal = this.getTotal.bind(this);
-            this.deliveryCost = this.deliveryCost.bind(this);
-            this.alreadyInBasket = this.alreadyInBasket.bind(this);
             this.getItems = this.getItems.bind(this);
+            this.getDelivery = this.getDelivery.bind(this);
             
         }
-    deliveryCost(){
-        if (this.props.state.basket.reduce(this.getTotal, 0.00).toFixed(2) >= this.props.freeDeliveryThreshold){
-            return "FREE";
-        }
-        {//need help with cross ref elements in 2 arrays
-            this.props.state.deliveryData.map((i, index) =>(
-            <div key={index}>{index+1}, {i.cost}, {i.weight}, {i.size}</div>
-        ))}
-    }
+    
     getTotal(acc, obj){
-        return acc + obj.price;
+        return acc + (obj.price*obj.quantity);
+    }
+    getDelivery(acc, obj){
+        return acc + (obj.deliveryCost*obj.quantity);
     }
     toTitleCase(str) {
         return str.replace(
@@ -35,23 +29,17 @@ import { GiShoppingCart } from 'react-icons/gi';
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             }
     );}
-    alreadyInBasket(id){
-        let inBasket = this.props.state.basket.filter(this.getItems(id)
-        );
-        return inBasket.length;
-    }
-    
     getItems(id){
         return function (b){
             return b.id === id;
         }
     }
-    render() {
-    const freeDelivery = this.state.freeDelivery;
+    render() {//variables specifically for basket component
     const freeDeliveryThreshold = this.props.state.freeDeliveryThreshold;
     const id = this.props.state.product;
     const image =(id) => require(`../Images/${id}.jpg`);  
     let total = this.props.state.basket.reduce(this.getTotal, 0.00).toFixed(2);
+    let totalDelivery = this.props.state.basket.reduce(this.getDelivery, 0.00).toFixed(2);
     let basketSize = this.props.state.basket.length;
         return (
             
@@ -61,7 +49,8 @@ import { GiShoppingCart } from 'react-icons/gi';
                 <div>
                     Items in Basket: {this.props.state.basket.length} &nbsp;
                     Total: €{total} &nbsp;
-                    Delivery charge: {this.deliveryCost()}  &nbsp;
+                    {total <= freeDeliveryThreshold && <>Delivery charge: {totalDelivery}</>} &nbsp;
+                    {total > freeDeliveryThreshold && <>Delivery charge: FREE</>} &nbsp;
                     <button type="button" className=" btn btn-link"
                     onClick = {()=>this.props.emptyBasket()}>
                     <GiShoppingCart></GiShoppingCart> Empty Basket 
@@ -87,12 +76,13 @@ import { GiShoppingCart } from 'react-icons/gi';
                      <th>Item Name</th>
                      <th>Quantity</th>
                      <th>Manufacturer</th>
-                     <th>Price</th>   
+                     <th>Price</th>  
+                     <th>Delivery</th> 
                  </tr> 
              </thead>    
              <tbody>
                  {this.props.state.basket.map((i, index) =>(
-                     <tr key = {i}>  
+                     <tr key = {index}>  
                          
                          <td>{index+1}</td>
                          <td><img src= {image(i.id).default} class="img-responsive" alt={i.name} width="100" height="100"/></td>
@@ -102,8 +92,10 @@ import { GiShoppingCart } from 'react-icons/gi';
                          <button type="button" className="btn btn-group-xs" onClick = {()=>this.props.addToBasket(i.id)}>+</button>
                          </td>
                          <td>{this.toTitleCase(i.manufacturer)} </td>
-                         <td>€{i.price}</td> 
-                         <td><button type="button" className=" btn btn-link" onClick = {()=>this.props.removeFromBasket(i.id)}>Remove Item</button></td>
+                         <td>€{(i.price*i.quantity).toFixed(2)}</td> 
+                         {total <= freeDeliveryThreshold && <td>{(i.deliveryCost*i.quantity).toFixed(2)}</td>}
+                         {total > freeDeliveryThreshold && <td>FREE</td>}
+                         <td><button type="button" className=" btn btn-link" onClick = {()=>this.props.removeFromBasket(i.id)}>Remove</button></td>
                          
                     </tr>
                  ))} 
