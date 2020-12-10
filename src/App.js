@@ -29,7 +29,6 @@ class App extends Component {
       deliveryDetails: false,
       emailData: [],
       checked: [],
-      Msgerror: null,
       categories: [],
     };
 
@@ -137,12 +136,12 @@ class App extends Component {
     this.setState({ filteredProducts: filteredData });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     try {
       this.getMessagesFromDatabase();
     } catch (error) {
       console.log(error)
-      this.setState({ Msgerror: error });
+      this.setState({ errorMsg: error });
     } // end of try catch
   } // end of componentDidMount()
 

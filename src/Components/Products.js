@@ -77,10 +77,11 @@ class Products extends Component {
         it or something similar. Loading message is testing ok. Will need to test errorMsg (GM)*/}
         {this.props.errorMsg && (
           <p>
-            <strong>An error has occured:{this.props.errorMsg.message}</strong>
+            <strong>An error has occured:{this.props.errorMsg.toString()}</strong>
           </p>
         )}
-        {this.props.apiData.length <= 0 && (
+        
+        {(this.props.apiData.length <= 0 && this.props.errorMsg === null) && (
           <p>Please wait.....product data is loading from our database</p>
         )}
 
