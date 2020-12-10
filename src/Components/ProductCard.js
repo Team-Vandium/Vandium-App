@@ -22,6 +22,7 @@ export default class ProductCard extends Component {
     const desc = this.toTitleCase(description);
     let category;
     let text = 'white';
+
     switch (tags[2]) {
       case 'health and beauty':
         category = 'success';
@@ -56,62 +57,72 @@ export default class ProductCard extends Component {
     }
 
     return (
-      <div
-        className={` card border-${category} text-${text} bg-light shadow-sm h-100`}
-      >
-        <LazyLoad height={100} offset={100}>
-          <img
-            className="card-img-top"
-            src={
-              image.default ? image.default : 'https://via.placeholder.com/800'
-            }
-            style={{ maxWidth: 400 }}
-            alt={name}
-          />
-        </LazyLoad>
-
+      this.props.category.length > 0 && (
         <div
-          className={`card-body d-flex flex-column align-items-start text-dark bg-light`}
+          className={` card border-${this.props.category[0].colour} text-${text} bg-light shadow-sm h-100`}
         >
-          <strong className={category === 'light' ? `mb-0 text-dark text-left` :`mb-0 text-${category} text-left`}>
-            {this.toTitleCase(name)}
-          </strong>
-          <strong className={category === 'light' ? `mb-0 text-dark` :`mb-0 text-${category}`}>€{price.toFixed(2)}</strong>
-          <p class="card-text mb-auto text-left mt-1">
-            {this.shortenDescription(desc)}
-          </p>
-          <div className="row mt-3">
-            <div className="col-6 text-center">
-              <Link to={`/Products/${id}`}>
+          <LazyLoad height={100} offset={100}>
+            <img
+              className="card-img-top"
+              src={
+                image.default
+                  ? image.default
+                  : 'https://via.placeholder.com/800'
+              }
+              style={{ maxWidth: 400 }}
+              alt={name}
+            />
+          </LazyLoad>
+
+          <div
+            className={`card-body d-flex flex-column align-items-start text-dark bg-light`}
+          >
+            <strong
+              className={
+                this.props.category[0].colour === 'light'
+                  ? `mb-0 text-dark text-left`
+                  : `mb-0 text-${this.props.category[0].colour} text-left`
+              }
+            >
+              {this.toTitleCase(name)}
+            </strong>
+            <strong
+              className={
+                this.props.category[0].colour === 'light'
+                  ? `mb-0 text-dark`
+                  : `mb-0 text-${this.props.category[0].colour}`
+              }
+            >
+              €{price.toFixed(2)}
+            </strong>
+            <p class="card-text mb-auto text-left mt-1">
+              {this.shortenDescription(desc)}
+            </p>
+            <div className="row mt-3">
+              <div className="col-6 text-center">
+                <Link to={`/Products/${id}`} style={{ textDecoration: 'none' }}>
+                  <button
+                    className={'btn btn-block btn-dark mr-3 text-left mb-2'}
+                  >
+                    <i class="fas fa-info pr-1"></i> More Info
+                  </button>
+                </Link>{' '}
+              </div>
+              <div className="col-6 text-center">
                 <button
-                  className={
-                    category === 'light'
-                      ? 'btn btn-block btn-sm btn-link mr-3 text-light text-left mb-2'
-                      : 'btn btn-block btn-sm btn-link mr-3 text-dark text-left mb-2'
-                  }
+                  className={'btn btn-block btn-primary mr-3 text-left mb-2'}
+                  onClick={() => this.props.addToBasket(id)}
                 >
-                  <GrCircleInformation></GrCircleInformation> More Info
+                  <i class="fas fa-cart-plus pr-1"></i> Add To Cart
                 </button>
-              </Link>{' '}
+              </div>
             </div>
-            <div className="col-6 text-center">
-              <button
-                className={
-                  category === 'light'
-                    ? 'btn btn-block btn-sm btn-link text-light text-left'
-                    : 'btn btn-block btn-sm btn-link  text-dark text-left'
-                }
-                onClick={() => this.props.addToBasket(id)}
-              >
-                <GiShoppingCart></GiShoppingCart> Add To Cart
-              </button>
-            </div>
-          </div>
-          {/* {tags.map((t) => {
+            {/* {tags.map((t) => {
             return <span className="badge badge-light m-1">{t}</span>;
           })} */}
+          </div>
         </div>
-      </div>
+      )
     );
   }
 }

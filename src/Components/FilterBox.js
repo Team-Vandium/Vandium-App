@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SearchForm from './SearchForm';
 
 export default class FilterBox extends Component {
   constructor(props) {
@@ -13,37 +14,55 @@ export default class FilterBox extends Component {
     return (
       <>
         <div className="card border-primary mt-3 mb-3">
-          <div className="card-header text-left">Filter Products</div>
+          <div className="card-header bg-dark text-white text-left">Filter/Search Products</div>
           <div className="card-body">
-            <form action="">
-              <div className="form-group">
-                <div className="row">
-                  {this.props.checked.length > 0 && <button className="m-2 btn btn-primary btn-block" onClick={(e) => this.props.showAll(e)}>Show All</button>}
-                  {this.props.categories.map((c) => {
-                    return (
-                      <div key={c.id} className="col-6 col-sm-4 col-lg-2">
-                        <div className="form-check text-left">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            value={c.id}
-                           // isSelected={this.props.checkboxes[c]}
-                            onChange={(e) => this.props.checkboxChange(e)}
-                             checked={
-                               this.props.checked.indexOf(c.id) === -1
-                                 ? false
-                                 : true
-                             }
-                          />
-                          <label className="form-check-label">{c.name}</label>
-                        </div>
-                      </div>
-                    );
-                  })}
-                  
-                </div>
+            <div className="row">
+              <div className="col-12">
+                <SearchForm
+                  searchTerm={this.props.searchTerm}
+                  onChange={this.props.onChange}
+                  buttonHandler={this.props.buttonHandler}
+                ></SearchForm>
               </div>
-            </form>
+              <div className="col-12">
+                {this.props.checked.length > 0 && (
+                  <button
+                    className="mt-1 mb-1 btn btn-primary btn-block"
+                    onClick={(e) => this.props.showAll(e)}
+                  >
+                    Show All
+                  </button>
+                )}
+              </div>
+              {this.props.categories.map((c, index) => {
+                return (
+                  <div
+                    key={c.id}
+                    className={
+                      index > 5
+                        ? 'col-6 col-sm-6 col-lg-3 mb-1 mt-1'
+                        : 'col-6 col-sm-4 col-lg-3 mb-1 mt-1'
+                    }
+                  >
+                    <button
+                      className={
+                        this.props.checked == c.id
+                          ? `btn btn-${c.colour} text-white btn-block  btn-sm`
+                          : `btn btn-outline-${c.colour} text-dark btn-block  btn-sm`
+                      }
+                      value={c.id}
+                      // isSelected={this.props.checkboxes[c]}
+                      onClick={(e) => this.props.checkboxChange(e)}
+                      // checked={
+                      //   this.props.checked.indexOf(c.id) === -1 ? false : true
+                      // }
+                    >
+                      <i className={`fas fa-${c.icon}`}></i> {' ' + c.name}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </>
