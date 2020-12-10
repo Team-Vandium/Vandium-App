@@ -10,18 +10,24 @@ class SearchForm extends Component {
       <div className="SearchFormForm">
         <hr />
         <form>
-          <b>Search </b>
-          <input
-            type="text"
-            value={searchTermFromProps}
-            onChange={onChangeFromProps}
-          />
-          <button
-            onClick={this.props.buttonHandler}
-            className="btn btn-small btn-primary"
-          >
-            <GoX></GoX>
-          </button>
+          <div class="input-group mb-2 mr-sm-2">
+            <input
+              type="text"
+              value={searchTermFromProps}
+              onChange={onChangeFromProps}
+              placeholder="Search..."
+              class="form-control"
+            />
+            <div class="input-group-prepend">
+              <div
+                style={{ cursor: 'pointer' }}
+                onClick={this.props.buttonHandler}
+                class="input-group-text bg-danger text-white"
+              >
+                <i class="far fa-window-close"></i>
+              </div>
+            </div>
+          </div>
         </form>
         <hr />
       </div>

@@ -15,7 +15,7 @@ export default class FilterBox extends Component {
       <>
         <div className="card border-primary mt-3 mb-3">
           <div className="card-header bg-dark text-white text-left">Filter/Search Products</div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <div className="row">
               <div className="col-12">
                 <SearchForm
