@@ -84,112 +84,115 @@ class Basket extends Component {
         {
           //mapped table of basket items displays when there are elements in basket array
           basketSize > 0 && (
-            <table class="table table-striped table-sm mt-4">
-              <thead>
-                <tr className="table-primary text-left">
-                  <th colSpan="2"></th>
-                  <th>Name</th>
-                  <th colspan="3">Quantity</th>
-                  <th className="d-none d-sm-table-cell">Manufacturer</th>
-                  <th>Delivery</th>
-                  <th>Price</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.state.basket.map((i, index) => (
-                  <tr key={index} className="text-left">
-                    <td>{index + 1}</td>
-                    <td>
-                      <img
-                        src={image(i.id).default}
-                        class="img-responsive"
-                        alt={i.name}
-                        width="40"
-                        height="40"
-                      />
-                    </td>
-                    <td className="text-left ">
-                      <Link
-                        style={{ textDecoration: 'none', color: 'black' }}
-                        to={`/Products/${i.id}`}
-                      >
-                        {this.toTitleCase(i.name)}
-                      </Link>{' '}
-                    </td>
-                    <td>
-                      <i
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => this.props.decrement(i.id)}
-                        class="fas fa-minus"
-                      ></i>
-                    </td>
-                    <td>
-                      <b>{i.quantity}</b> &nbsp;
-                    </td>
-                    <td>
-                      <i
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => this.props.addToBasket(i.id)}
-                        class="fas fa-plus"
-                      ></i>
-                    </td>
-                    <td className="d-none d-sm-table-cell">
-                      {this.toTitleCase(i.manufacturer)}{' '}
-                    </td>
-                    {totalPrice <= freeDeliveryThreshold && (
-                      <td>€{(i.deliveryCost * i.quantity).toFixed(2)}</td>
-                    )}
-                    {totalPrice > freeDeliveryThreshold && <td>FREE</td>}
-                    <td>€{(i.price * i.quantity).toFixed(2)}</td>
-                    <td>
-                      <i
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => this.props.removeFromBasket(i.id)}
-                        class="fas fa-trash-alt"
-                      ></i>
-                    </td>
+            <>
+              <h1 className="text-left mt-2"><GiShoppingCart></GiShoppingCart> Your Basket</h1>
+              <table class="table table-striped table-sm mt-4">
+                <thead>
+                  <tr className="table-primary text-left">
+                    <th colSpan="2"></th>
+                    <th>Name</th>
+                    <th colspan="3">Quantity</th>
+                    <th className="d-none d-sm-table-cell">Manufacturer</th>
+                    <th>Delivery</th>
+                    <th>Price</th>
+                    <th></th>
                   </tr>
-                ))}
-              </tbody>
-              <tr class="table-secondary">
-                <td colspan="6"></td>
-                <td className="d-none d-sm-table-cell"></td>
-                <td>
-                  <strong>Subtotal </strong>
-                </td>
-                <td>
-                  <strong>€{totalPrice}</strong>
-                </td>
-                <td></td>
-              </tr>
-              <tr class="table-secondary">
-                <td colspan="6"></td>
-                <td className="d-none d-sm-table-cell"></td>
-                <td>
-                  <strong>Delivery </strong>
-                </td>
-                <td>
-                  <strong>
-                    {totalPrice > freeDeliveryThreshold
-                      ? 'FREE'
-                      : `€${totalDelivery}`}
-                  </strong>
-                </td>
-                <td></td>
-              </tr>
-              <tr class="table-secondary">
-                <td colspan="6"></td>
-                <td className="d-none d-sm-table-cell"></td>
-                <td>
-                  <strong>Total </strong>
-                </td>
-                <td>
-                  <strong>€{totalPrice}</strong>
-                </td>
-                <td></td>
-              </tr>
-            </table>
+                </thead>
+                <tbody>
+                  {this.props.state.basket.map((i, index) => (
+                    <tr key={index} className="text-left">
+                      <td>{index + 1}</td>
+                      <td>
+                        <img
+                          src={image(i.id).default}
+                          class="img-responsive"
+                          alt={i.name}
+                          width="40"
+                          height="40"
+                        />
+                      </td>
+                      <td className="text-left ">
+                        <Link
+                          style={{ textDecoration: 'none', color: 'black' }}
+                          to={`/Products/${i.id}`}
+                        >
+                          {this.toTitleCase(i.name)}
+                        </Link>{' '}
+                      </td>
+                      <td>
+                        <i
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => this.props.decrement(i.id)}
+                          class="fas fa-minus"
+                        ></i>
+                      </td>
+                      <td>
+                        <b>{i.quantity}</b> &nbsp;
+                      </td>
+                      <td>
+                        <i
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => this.props.addToBasket(i.id)}
+                          class="fas fa-plus"
+                        ></i>
+                      </td>
+                      <td className="d-none d-sm-table-cell">
+                        {this.toTitleCase(i.manufacturer)}{' '}
+                      </td>
+                      {totalPrice <= freeDeliveryThreshold && (
+                        <td>€{(i.deliveryCost * i.quantity).toFixed(2)}</td>
+                      )}
+                      {totalPrice > freeDeliveryThreshold && <td>FREE</td>}
+                      <td>€{(i.price * i.quantity).toFixed(2)}</td>
+                      <td>
+                        <i
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => this.props.removeFromBasket(i.id)}
+                          class="fas fa-trash-alt"
+                        ></i>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tr class="table-secondary">
+                  <td colspan="6"></td>
+                  <td className="d-none d-sm-table-cell"></td>
+                  <td>
+                    <strong>Subtotal </strong>
+                  </td>
+                  <td>
+                    <strong>€{totalPrice}</strong>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr class="table-secondary">
+                  <td colspan="6"></td>
+                  <td className="d-none d-sm-table-cell"></td>
+                  <td>
+                    <strong>Delivery </strong>
+                  </td>
+                  <td>
+                    <strong>
+                      {totalPrice > freeDeliveryThreshold
+                        ? 'FREE'
+                        : `€${totalDelivery}`}
+                    </strong>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr class="table-secondary">
+                  <td colspan="6"></td>
+                  <td className="d-none d-sm-table-cell"></td>
+                  <td>
+                    <strong>Total </strong>
+                  </td>
+                  <td>
+                    <strong>€{totalPrice}</strong>
+                  </td>
+                  <td></td>
+                </tr>
+              </table>
+            </>
           )
         }
         {
