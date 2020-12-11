@@ -29,6 +29,9 @@ class Products extends Component {
   // onSearchFormChange(event) {
   //   this.setState({ searchTerm: event.target.value });
   // }
+
+  //sort functions allow for products to be sorted by price, default is low to high, 
+  //separate to search functionality o both can be used at the same time
   sortLow(event) {
     event.preventDefault();
     this.setState({ sortLowest: true });
