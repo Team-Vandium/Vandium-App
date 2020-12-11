@@ -13,6 +13,7 @@ import { GiShoppingCart } from 'react-icons/gi';
             this.getTotal = this.getTotal.bind(this);
             this.getItems = this.getItems.bind(this);
             this.getDelivery = this.getDelivery.bind(this);
+            this.getTotalItems = this.getTotalItems.bind(this);
             
         }
     
@@ -21,6 +22,9 @@ import { GiShoppingCart } from 'react-icons/gi';
     }
     getDelivery(acc, obj){
         return acc + (obj.deliveryCost*obj.quantity);
+    }
+    getTotalItems(acc, obj){
+        return acc + (obj.quantity);
     }
     toTitleCase(str) {
         return str.replace(
@@ -40,6 +44,7 @@ import { GiShoppingCart } from 'react-icons/gi';
     const image =(id) => require(`../Images/${id}.jpg`);  
     let total = this.props.state.basket.reduce(this.getTotal, 0.00).toFixed(2);
     let totalDelivery = this.props.state.basket.reduce(this.getDelivery, 0.00).toFixed(2);
+    let totalQuantity = this.props.state.basket.reduce(this.getTotalItems, 0);
     let basketSize = this.props.state.basket.length;
         return (
             
@@ -47,7 +52,7 @@ import { GiShoppingCart } from 'react-icons/gi';
               { //displays basic basket details when there is at least one element in the basket array
               basketSize > 0 &&  
                 <div>
-                    Items in Basket: {this.props.state.basket.length} &nbsp;
+                    Items in Basket: {totalQuantity} &nbsp;
                     Total: €{total} &nbsp;
                     {total <= freeDeliveryThreshold && <>Delivery charge: {totalDelivery}</>} &nbsp;
                     {total > freeDeliveryThreshold && <>Delivery charge: FREE</>} &nbsp;
@@ -105,7 +110,7 @@ import { GiShoppingCart } from 'react-icons/gi';
             {//displays checkout features when there is at least one element in basket array
             basketSize > 0 &&  
                 <div>
-                    Subtotal({this.props.state.basket.length} items): 
+                    Subtotal({totalQuantity} items): 
                     €{total} &nbsp;                        
                     <button className="btn btn-success btn-block" onClick={()=> this.props.checkoutButton()}>
                     <GiShoppingCart></GiShoppingCart>Checkout</button>
