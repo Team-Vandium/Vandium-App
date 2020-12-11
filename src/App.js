@@ -31,6 +31,7 @@ class App extends Component {
       emailData: [],
       checked: [],
       categories: [],
+      
     };
 
     this.addToBasket = this.addToBasket.bind(this);
@@ -43,6 +44,7 @@ class App extends Component {
     this.addItemToEmails = this.addItemToEmails.bind(this);
     this.decrement = this.decrement.bind(this);
     this.showAll = this.showAll.bind(this);
+    this.checkoutButton = this.checkoutButton.bind(this);
   }
 
   addToBasket(id) {
