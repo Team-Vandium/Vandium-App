@@ -340,7 +340,14 @@ class App extends Component {
                 )}
               />
               {/*<Route path="/Home" component={Home} />*/}
-              <Route path="/About" component={About} />
+              <Route path="/About" 
+              render={(props) => (
+                <About
+                  deliveryData={this.state.deliveryData}
+                />
+              )}
+              />
+            
               <Route
                 path="/Newsletter"
                 render={(props) => (
