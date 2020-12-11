@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { GiStarSwirl, GiShoppingCart } from 'react-icons/gi';
-import {Link} from 'react-router-dom';
+import { GiStarSwirl } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 class Newsletter extends Component {
   /*
@@ -123,7 +123,11 @@ class Newsletter extends Component {
                 <br />
                 Thank you! You will receive the weekly newsletter to{" "}
                 {this.state.emailInput}.
-                <Link to="/"><br></br><GiStarSwirl></GiStarSwirl> Start shopping Irish products now...</Link>
+                <Link to="/">
+                  <br></br>
+                  <GiStarSwirl></GiStarSwirl> Start shopping Irish products
+                  now...
+                </Link>
               </p>
             )
           }
@@ -133,6 +137,23 @@ class Newsletter extends Component {
               <p>
                 <br />
                 {this.state.emailInput} is already on our mailing list.
+                <br />
+                <br />
+                {/* Allow the user re-enter if they want to */}
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => {
+                    this.setState({
+                      emailInput: "",
+                      emailValid: false,
+                      emailExists: false,
+                      submitted: false,
+                    });
+                  }}
+                >
+                  Click here to re-enter.
+                </button>
               </p>
             )
           }
