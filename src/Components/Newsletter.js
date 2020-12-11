@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { GiStarSwirl, GiShoppingCart } from 'react-icons/gi';
+import {Link} from 'react-router-dom';
 
 class Newsletter extends Component {
   /*
@@ -121,6 +123,7 @@ class Newsletter extends Component {
                 <br />
                 Thank you! You will receive the weekly newsletter to{" "}
                 {this.state.emailInput}.
+                <Link to="/"><br></br><GiStarSwirl></GiStarSwirl> Start shopping Irish products now...</Link>
               </p>
             )
           }
