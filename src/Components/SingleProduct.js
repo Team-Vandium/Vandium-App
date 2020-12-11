@@ -20,7 +20,7 @@ export default class SingleProduct extends Component {
                     src={image(p.id).default}
                     class="card-img"
                     alt={p.name}
-                    style={{maxWidth: 400 }}
+                    style={{ maxWidth: 400 }}
                   />
                 </div>
                 <div class="col-sm-8">
@@ -42,6 +42,7 @@ export default class SingleProduct extends Component {
                       className="btn btn-success btn-block"
                       onClick={() => this.props.addToBasket(p.id)}
                     >
+                      <i class="fas fa-cart-plus pr-1"></i>
                       Add To Cart
                     </button>
                   </div>

@@ -11,6 +11,7 @@ import Basket from './Components/Basket.js';
 import SingleProduct from './Components/SingleProduct';
 import myFirebase from './Components/myFirebaseConfig.js';
 import Firebase from 'firebase';
+import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -66,23 +67,22 @@ class App extends Component {
       this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
     }
   }
-  decrement(id){
+  decrement(id) {
     let i = this.state.basket.filter(this.getItem(id));
     //console.log(i);
-    if(i[0].quantity === 1){
+    if (i[0].quantity === 1) {
       this.removeFromBasket(i);
+    } else {
+      this.setState((prevState) => ({
+        basket: prevState.basket.map((product) =>
+          product.id === id
+            ? { ...product, quantity: product.quantity - 1 }
+            : product
+        ),
+      }));
     }
-    else{
-        this.setState((prevState) => ({
-          basket: prevState.basket.map((product) =>
-            product.id === id
-              ? { ...product, quantity: product.quantity - 1 }
-              : product
-          ),
-        }));
-      }
   }
-  
+
   getItem(a) {
     //returns correct object from array when passed an element
     return function (obj) {
@@ -146,7 +146,7 @@ class App extends Component {
     try {
       this.getMessagesFromDatabase();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       this.setState({ errorMsg: error });
     } // end of try catch
   } // end of componentDidMount()
@@ -312,7 +312,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <Navbar basket={this.state.basket} />
-          <div className="container">
+          <div className="container-lg">
             <Switch>
               <Route
                 exact
@@ -379,20 +379,10 @@ class App extends Component {
                     addToBasket={this.addToBasket}
                     freeDeliveryThreshold={this.state.freeDeliveryThreshold}
                     deliveryData={this.state.deliveryData}
-                    decrement ={this.decrement}
-                    
+                    decrement={this.decrement}
                   />
                 )}
               />
-              {/* <Route
-                path="/Products"
-                render={() => (
-                  <Products
-                    apiData={this.state.apiData}
-                    addToBasket={this.addToBasket}
-                  />
-                )}
-              /> */}
               <Route component={NoMatch} />
             </Switch>
           </div>

@@ -77,95 +77,103 @@ class Products extends Component {
         it or something similar. Loading message is testing ok. Will need to test errorMsg (GM)*/}
         {this.props.errorMsg && (
           <p>
-            <strong>An error has occured:{this.props.errorMsg.toString()}</strong>
+            <strong>
+              An error has occured:{this.props.errorMsg.toString()}
+            </strong>
           </p>
         )}
-        
-        {(this.props.apiData.length <= 0 && this.props.errorMsg === null) && (
+
+        {this.props.apiData.length <= 0 && this.props.errorMsg === null && (
           <p>Please wait.....product data is loading from our database</p>
         )}
 
-        <CarouselSlider data={randomProducts.slice(0, 19)}></CarouselSlider>
-        <SearchForm
-          searchTerm={this.props.searchTerm}
-          onChange={this.props.handleSearch}
-          buttonHandler={this.props.clearSearch}
-        />
-        <FilterBox
-          checkboxChange={this.props.checkboxChange}
-          checkboxes={this.props.checkboxes}
-          showAll = {this.props.showAll}
-          handleFilter={this.props.handleFilter}
-          checked={this.props.checked}
-          categories = {this.props.categories}
-        ></FilterBox>
         <div className="row">
-          {}
-          
-          <button type="button" className="btn btn-default"onClick={this.sortButton}>Sort by: Price</button>
-          {//buttons for sorting products by price high to low and low to high
+          <div className="col-12">
+            <CarouselSlider data={randomProducts.slice(0, 19)}></CarouselSlider>
+          </div>
+          <div className="col-12">
+            <FilterBox
+              checkboxChange={this.props.checkboxChange}
+              checkboxes={this.props.checkboxes}
+              showAll={this.props.showAll}
+              handleFilter={this.props.handleFilter}
+              checked={this.props.checked}
+              categories={this.props.categories}
+              searchTerm={this.props.searchTerm}
+              onChange={this.props.handleSearch}
+              buttonHandler={this.props.clearSearch}
+            ></FilterBox>
+          </div>
+        </div>
+        <button
+          type="button"
+          className="btn btn-default"
+          onClick={this.sortButton}
+        >
+          Sort by: Price
+        </button>
+        {
+          //buttons for sorting products by price high to low and low to high
           this.state.sortBy ? (
-          <div className="menu">
-              <button type="button" className="btn btn-default" onClick={this.sortLow}>Price: Low to High</button>
-              <button type="button" className="btn btn-default" onClick={this.sortHighest}>Price: High to Low</button>
+            <div className="menu">
+              <button
+                type="button"
+                className="btn btn-default"
+                onClick={this.sortLow}
+              >
+                Price: Low to High
+              </button>
+              <button
+                type="button"
+                className="btn btn-default"
+                onClick={this.sortHighest}
+              >
+                Price: High to Low
+              </button>
             </div>
-          ) : null}
-          {/* <SearchResults
-            searchTerm={this.props.searchTerm}
-            productArray={this.props.apiData}
-          ></SearchResults> */}
-          <div className="row">
-            {/* {this.props.filteredProducts.sort(this.sortCost).map((p) => {
-              return (
-                <div className="col-xs-12 col-sm-6 col-lg-4">
-                  <ProductCard
-                    key={p.id}
-                    product={p}
-                    addToBasket={this.props.addToBasket}
-                  ></ProductCard>
-                </div>
-              );
-            })}
-            {this.props.filteredProducts.length === 0 &&
-              this.props.apiData.sort(this.sortCost).map((p) => {
-                return (
-                  <div className="col-xs-12 col-sm-6 col-lg-4">
-                    <ProductCard
-                      key={p.id}
-                      product={p}
-                      addToBasket={this.props.addToBasket}
-                    ></ProductCard>
-                  </div>
-                );
-              })} */}
-              {this.props.filteredProducts.length === 0
-            ? this.props.apiData.sort(this.sortCost)
+          ) : null
+        }
+        <div className="row">
+          {this.props.filteredProducts.length === 0
+            ? this.props.apiData
+                .sort(this.sortCost)
                 .filter(this.props.productFilter(this.props.searchTerm))
                 .map((p) => {
+                  const ca = this.props.categories.filter(
+                    (c) => c.id == p.categoryID
+                  );
+
                   return (
                     <div className="col-xs-6 col-md-4 col-lg-4 mt-2 mb-2">
                       <ProductCard
                         key={p.id}
                         product={p}
                         addToBasket={this.props.addToBasket}
+                        categories={this.props.categories}
+                        category={ca}
                       ></ProductCard>
                     </div>
                   );
                 })
-            : this.props.filteredProducts.sort(this.sortCost)
+            : this.props.filteredProducts
+                .sort(this.sortCost)
                 .filter(this.props.productFilter(this.props.searchTerm))
                 .map((p) => {
+                  const ca = this.props.categories.filter(
+                    (c) => c.id == p.categoryID
+                  );
                   return (
-                    <div className="col-sm-6 col-md-4 col-lg-4">
+                    <div className="col-xs-6 col-md-4 col-lg-4 mt-2 mb-2">
                       <ProductCard
                         key={p.id}
+                        categories={this.props.categories}
                         product={p}
                         addToBasket={this.props.addToBasket}
+                        category={ca}
                       ></ProductCard>
                     </div>
                   );
                 })}
-          </div>
         </div>
       </div>
     );
