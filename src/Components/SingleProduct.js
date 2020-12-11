@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import { RiExternalLinkFill } from 'react-icons/ri';
 
 export default class SingleProduct extends Component {
   render() {
-    const test = this.props.data.filter(
-      (p) => p.id == this.props.match.params.productid
-    );
-
     const image = (id) => require(`../Images/${id}.jpg`);
     return (
       <>
