@@ -5,9 +5,7 @@ import { GiShoppingCart } from 'react-icons/gi';
     class Basket extends Component {
         constructor(props) {
             super(props);
-            this.state = {
-              
-              
+            this.state = { 
             };
             this.toTitleCase = this.toTitleCase.bind(this);
             this.getTotal = this.getTotal.bind(this);
@@ -16,7 +14,7 @@ import { GiShoppingCart } from 'react-icons/gi';
             this.getTotalItems = this.getTotalItems.bind(this);
             
         }
-    
+    //reduce functionalities used for totaling Price/Quantity/Delivery charge of basket state
     getTotal(acc, obj){
         return acc + (obj.price*obj.quantity);
     }
@@ -40,9 +38,8 @@ import { GiShoppingCart } from 'react-icons/gi';
     }
     render() {//variables specifically for basket component
     const freeDeliveryThreshold = this.props.state.freeDeliveryThreshold;
-    const id = this.props.state.product;
     const image =(id) => require(`../Images/${id}.jpg`);  
-    let total = this.props.state.basket.reduce(this.getTotal, 0.00).toFixed(2);
+    let totalPrice = this.props.state.basket.reduce(this.getTotal, 0.00).toFixed(2);
     let totalDelivery = this.props.state.basket.reduce(this.getDelivery, 0.00).toFixed(2);
     let totalQuantity = this.props.state.basket.reduce(this.getTotalItems, 0);
     let basketSize = this.props.state.basket.length;
@@ -53,9 +50,9 @@ import { GiShoppingCart } from 'react-icons/gi';
               basketSize > 0 &&  
                 <div>
                     Items in Basket: {totalQuantity} &nbsp;
-                    Total: €{total} &nbsp;
-                    {total <= freeDeliveryThreshold && <>Delivery charge: {totalDelivery}</>} &nbsp;
-                    {total > freeDeliveryThreshold && <>Delivery charge: FREE</>} &nbsp;
+                    Total: €{totalPrice} &nbsp;
+                    {totalPrice <= freeDeliveryThreshold && <>Delivery charge: {totalDelivery}</>} &nbsp;
+                    {totalPrice > freeDeliveryThreshold && <>Delivery charge: FREE</>} &nbsp;
                     <button type="button" className=" btn btn-link"
                     onClick = {()=>this.props.emptyBasket()}>
                     <GiShoppingCart></GiShoppingCart> Empty Basket 
@@ -98,8 +95,8 @@ import { GiShoppingCart } from 'react-icons/gi';
                          </td>
                          <td>{this.toTitleCase(i.manufacturer)} </td>
                          <td>€{(i.price*i.quantity).toFixed(2)}</td> 
-                         {total <= freeDeliveryThreshold && <td>{(i.deliveryCost*i.quantity).toFixed(2)}</td>}
-                         {total > freeDeliveryThreshold && <td>FREE</td>}
+                         {totalPrice <= freeDeliveryThreshold && <td>{(i.deliveryCost*i.quantity).toFixed(2)}</td>}
+                         {totalPrice > freeDeliveryThreshold && <td>FREE</td>}
                          <td><button type="button" className=" btn btn-link" onClick = {()=>this.props.removeFromBasket(i.id)}>Remove</button></td>
                          
                     </tr>
@@ -111,7 +108,7 @@ import { GiShoppingCart } from 'react-icons/gi';
             basketSize > 0 &&  
                 <div>
                     Subtotal({totalQuantity} items): 
-                    €{total} &nbsp;                        
+                    €{totalPrice} &nbsp;                        
                     <button className="btn btn-success btn-block" onClick={()=> this.props.checkoutButton()}>
                     <GiShoppingCart></GiShoppingCart>Checkout</button>
                 </div>

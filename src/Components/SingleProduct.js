@@ -12,8 +12,8 @@ export default class SingleProduct extends Component {
       <>
         {this.props.data
           .filter((p) => p.id == this.props.match.params.productid)
-          .map((p) => (
-            <div class="card mb-3 mt-3">
+          .map((p, index) => (
+            <div key={index} class="card mb-3 mt-3">
               <div class="row no-gutters">
                 <div class="col-sm-4">
                   <img
