@@ -25,26 +25,35 @@ export default class SingleProduct extends Component {
                 </div>
                 <div class="col-sm-8">
                   <div class="card-body">
-                    <h5 class="card-title text-bold">{p.name}</h5>
-                    <p class="card-text text-bold">€{p.price.toFixed(2)}</p>
-                    <p class="card-text">{p.description}</p>
-                    <p class="card-text">
-                      <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={p.manufacturer_website}
-                      >
-                        <RiExternalLinkFill></RiExternalLinkFill>
-                      </a>{' '}
-                      Manufacturer: {p.manufacturer}
+                    <p class="card-title h4 text-left">
+                      <strong>{p.name}</strong>
                     </p>
+                    <p class="card-text text-left">
+                      <strong>€{p.price.toFixed(2)}</strong>
+                    </p>
+                    <p class="card-text text-left">{p.description}</p>
+                    <p class="card-text text-left"></p>
+
                     <button
-                      className="btn btn-success btn-block"
+                      className="btn btn-success btn-block mb-2"
                       onClick={() => this.props.addToBasket(p.id)}
                     >
-                      <i class="fas fa-cart-plus pr-1"></i>
+                      <i class="fas fa-cart-plus pr-2"></i>
                       Add To Cart
                     </button>
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={p.manufacturer_website}
+                    >
+                      <button
+                        className="btn btn-dark btn-block"
+                        onClick={() => this.props.addToBasket(p.id)}
+                      >
+                        <i class="fas fa-link pr-2"></i>
+                        {p.manufacturer}
+                      </button>
+                    </a>
                   </div>
                 </div>
               </div>

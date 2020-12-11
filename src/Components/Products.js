@@ -144,7 +144,7 @@ class Products extends Component {
                   );
 
                   return (
-                    <div className="col-xs-6 col-md-4 col-lg-4 mt-2 mb-2">
+                    <div className="col-12 col-sm-6 col-md-4 col-lg-4 mt-2 mb-2">
                       <ProductCard
                         key={p.id}
                         product={p}
@@ -163,7 +163,7 @@ class Products extends Component {
                     (c) => c.id == p.categoryID
                   );
                   return (
-                    <div className="col-xs-6 col-md-4 col-lg-4 mt-2 mb-2">
+                    <div className="col-12 col-sm-6 col-md-4 col-lg-4 mt-2 mb-2">
                       <ProductCard
                         key={p.id}
                         categories={this.props.categories}
