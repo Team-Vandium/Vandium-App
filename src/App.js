@@ -377,15 +377,6 @@ class App extends Component {
                   />
                 )}
               />
-              {/* <Route
-                path="/Products"
-                render={() => (
-                  <Products
-                    apiData={this.state.apiData}
-                    addToBasket={this.addToBasket}
-                  />
-                )}
-              /> */}
               <Route component={NoMatch} />
             </Switch>
           </div>
