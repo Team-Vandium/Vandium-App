@@ -2,8 +2,22 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { GiStarSwirl, GiShoppingCart } from 'react-icons/gi';
 
+
 export default class NavBar extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { 
+    };
+    this.getTotalItems = this.getTotalItems.bind(this);
+    
+}
+getTotalItems(acc, obj){
+  return acc + (obj.quantity);
+}
+
   render() {
+    let totalQuantity = this.props.basket.reduce(this.getTotalItems, 0);
     return (
       <nav class="navbar navbar-expand-lg bg-dark navbar-dark justify-content-end">
         <button
@@ -25,7 +39,7 @@ export default class NavBar extends Component {
               style={{ fontSize: '.6rem' }}
               class="badge badge-pill badge-success "
             >
-              {this.props.basket.length}
+              {totalQuantity}
             </span>
           )}
         </Link>
