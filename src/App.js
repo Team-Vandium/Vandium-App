@@ -110,36 +110,21 @@ class App extends Component {
   }
 
   handleCheckboxChange = async (e) => {
-    const { value } = e.target;
-    // this.setState((prevState) => ({
-    //   checkboxes: {
-    //     ...prevState.checkboxes,
-    //     [value]: !prevState.checkboxes[value],
-    //   },
-    // }));
-    const currentIndex = this.state.checked.indexOf(value);
-    const newCheckedArray = [...this.state.checked];
-
-    if (currentIndex === -1) {
-      newCheckedArray.push(value);
-    } else {
-      newCheckedArray.splice(currentIndex, 1);
-    }
-
+    const { value } = e.currentTarget;
     await this.setState({ checked: value });
-    await this.handleFilter(newCheckedArray);
+    await this.handleFilter();
   };
 
-  async handleFilter(filters, category) {
-    const newFilter = { ...this.state.productFilters };
-    newFilter[0] = filters;
-    this.setState({ productFilters: newFilter });
+  async handleFilter() {
     const data = this.state.apiData;
-    let filteredData = data.filter((p) =>
-      this.state.checked.includes(p.categoryID)
-    );
+    console.log(this.state.checked);
+    if (this.state.checked !== null) {
+      let filteredData = data.filter((p) =>
+        this.state.checked.includes(p.categoryID)
+      );
 
-    this.setState({ filteredProducts: filteredData });
+      this.setState({ filteredProducts: filteredData });
+    }
   }
 
   async componentDidMount() {
@@ -340,14 +325,13 @@ class App extends Component {
                 )}
               />
               {/*<Route path="/Home" component={Home} />*/}
-              <Route path="/About" 
-              render={(props) => (
-                <About
-                  deliveryData={this.state.deliveryData}
-                />
-              )}
+              <Route
+                path="/About"
+                render={(props) => (
+                  <About deliveryData={this.state.deliveryData} />
+                )}
               />
-            
+
               <Route
                 path="/Newsletter"
                 render={(props) => (
