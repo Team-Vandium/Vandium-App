@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { GiShoppingCart } from 'react-icons/gi';
 
+import {Link} from 'react-router-dom';
+import { GiStarSwirl, GiShoppingCart } from 'react-icons/gi';
 
 class Basket extends Component {
     constructor(props) {
@@ -66,14 +67,15 @@ class Basket extends Component {
                     basketSize === 0 && this.state.checkout === false &&
                     <p><br></br>
                         <h3>Your basket is empty.</h3><br></br><br></br>
-                Start shopping Irish products now.
-
+                
+                <Link to="/"><br></br><GiStarSwirl></GiStarSwirl> Start shopping Irish products now...</Link>
                 </p>}
                 {//display message when basket is empty
                     basketSize === 0 && this.state.checkout === true &&
                     <p><br></br>
                         <h3>Congratulations!</h3><br></br><br></br>
                 You have successfully completed your purchase of Irish Gifts.
+                <Link to="/"><br></br><GiStarSwirl></GiStarSwirl> Return to shopping...</Link>
                 </p>}
                 {//mapped table of basket items displays when there are elements in basket array
                     basketSize > 0 &&
