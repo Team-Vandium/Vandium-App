@@ -25,7 +25,7 @@ export default class FilterBox extends Component {
                 ></SearchForm>
               </div>
               <div className="col-12">
-                {this.props.checked.length > 0 && (
+                {this.props.checked && this.props.checked.length > 0 && (
                   <button
                     className="mt-1 mb-1 btn btn-primary btn-block"
                     onClick={(e) => this.props.showAll(e)}
