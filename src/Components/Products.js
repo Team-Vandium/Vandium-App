@@ -19,18 +19,13 @@ class Products extends Component {
     };
 
     // this.onSearchFormChange = this.onSearchFormChange.bind(this);
-    this.clearSearchBox = this.clearSearchBox.bind(this);
     this.sortButton = this.sortButton.bind(this);
     this.sortHighest = this.sortHighest.bind(this);
     this.sortLow = this.sortLow.bind(this);
     this.sortCost = this.sortCost.bind(this);
   }
 
-  // onSearchFormChange(event) {
-  //   this.setState({ searchTerm: event.target.value });
-  // }
-
-  //sort functions allow for products to be sorted by price, default is low to high, 
+  //sort functions allow for products to be sorted by price, default is low to high,
   //separate to search functionality o both can be used at the same time
   sortLow(event) {
     event.preventDefault();
@@ -61,9 +56,6 @@ class Products extends Component {
     }
     return comparison;
   }
-  clearSearchBox() {
-    this.setState({ searchTerm: '' });
-  }
 
   render() {
     const randomProducts = this.props.apiData.map((p) => p);
@@ -85,21 +77,21 @@ class Products extends Component {
             </strong>
           </p>
         )}
-
-        {this.props.apiData.length <= 0 && this.props.errorMsg === null && (
+{this.props.apiData.length <= 0 && this.props.errorMsg === null && (
           <p>Please wait.....product data is loading from our database</p>
         )}
-
+{/* Using Bootstrap grid system for layout */}
         <div className="row">
           <div className="col-12">
+            {/*  displays the product carousel component with 20 random products */}
             <CarouselSlider data={randomProducts.slice(0, 19)}></CarouselSlider>
           </div>
           <div className="col-12">
+            {/* displays the serach box and filter buttons */}
             <FilterBox
               checkboxChange={this.props.checkboxChange}
               checkboxes={this.props.checkboxes}
               showAll={this.props.showAll}
-              handleFilter={this.props.handleFilter}
               checked={this.props.checked}
               categories={this.props.categories}
               searchTerm={this.props.searchTerm}
@@ -137,13 +129,16 @@ class Products extends Component {
           ) : null
         }
         <div className="row">
+          {/* checks if the filtered product state has products and displays if so,
+              if not all 100 products get dsisplayed
+          */}
           {this.props.filteredProducts.length === 0
             ? this.props.apiData
                 .sort(this.sortCost)
                 .filter(this.props.productFilter(this.props.searchTerm))
                 .map((p) => {
                   const ca = this.props.categories.filter(
-                    (c) => c.id == p.categoryID
+                    (c) => c.id === p.categoryID
                   );
 
                   return (
@@ -163,7 +158,7 @@ class Products extends Component {
                 .filter(this.props.productFilter(this.props.searchTerm))
                 .map((p) => {
                   const ca = this.props.categories.filter(
-                    (c) => c.id == p.categoryID
+                    (c) => c.id === p.categoryID
                   );
                   return (
                     <div className="col-12 col-sm-6 col-md-4 col-lg-4 mt-2 mb-2">

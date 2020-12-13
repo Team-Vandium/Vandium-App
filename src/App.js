@@ -23,15 +23,13 @@ class App extends Component {
       errorMsg: null,
       deliveryData: [],
       freeDeliveryThreshold: null,
-      productFilters: { category: [] },
       basket: [],
       filteredProducts: [],
       searchTerm: '',
       deliveryDetails: false,
       emailData: [],
-      checked: [],
+      checked: null,
       categories: [],
-      
     };
 
     this.addToBasket = this.addToBasket.bind(this);
@@ -97,7 +95,7 @@ class App extends Component {
   }
   showAll(e) {
     e.preventDefault();
-    this.setState({ checked: '' });
+    this.setState({ checked: null });
     this.setState({ filteredProducts: '' });
   }
 
@@ -110,23 +108,19 @@ class App extends Component {
   checkoutButton() {
     this.emptyBasket();
   }
-
+  // function to add the selected product category to state
   handleCheckboxChange = async (e) => {
     const { value } = e.currentTarget;
-    await this.setState({ checked: value });
+
+    const number = parseInt(value);
+    await this.setState({ checked: number });
     await this.handleFilter();
   };
-
+  // function that populates the filtered products array in state based on the selected category
   async handleFilter() {
     const data = this.state.apiData;
-    console.log(this.state.checked);
-    if (this.state.checked !== null) {
-      let filteredData = data.filter((p) =>
-        this.state.checked.includes(p.categoryID)
-      );
-
-      this.setState({ filteredProducts: filteredData });
-    }
+    let filteredData = data.filter((p) => this.state.checked === p.categoryID);
+    this.setState({ filteredProducts: filteredData });
   }
 
   async componentDidMount() {
@@ -230,11 +224,11 @@ class App extends Component {
     comparison = Math.random() - 0.5;
     return comparison;
   }
-
+  // function that sets the entered search term in state
   onSearchFormChange(event) {
     this.setState({ searchTerm: event.target.value });
   }
-
+  // function to handle the filtered of the products based on the search term
   productFilterFunction(searchTerm) {
     return function (libraryObject) {
       let name = libraryObject.name.toLowerCase();
@@ -245,19 +239,12 @@ class App extends Component {
       }
       return (
         searchTerm !== '' &&
-        searchTerm.length >= 3 &&
         (name.includes(searchTerm.toLowerCase()) ||
           description.includes(searchTerm.toLowerCase()))
       );
     };
   }
-
-  filteredCategories() {
-    this.state.apiData.filter((p) =>
-      this.state.categoriesTest.every((c) => p.tags[2].includes(c))
-    );
-  }
-
+  // function to handle the clear seacrh button
   clearSearchBox(e) {
     e.preventDefault();
     this.setState({ searchTerm: '' });
@@ -311,7 +298,6 @@ class App extends Component {
                     errorMsg={this.state.errorMsg}
                     apiData={this.state.apiData}
                     addToBasket={this.addToBasket}
-                    random={this.state.random}
                     handleSearch={this.onSearchFormChange}
                     checkboxChange={this.handleCheckboxChange}
                     filteredProducts={this.state.filteredProducts}
@@ -319,9 +305,6 @@ class App extends Component {
                     searchTerm={this.state.searchTerm}
                     clearSearch={this.clearSearchBox}
                     productFilter={this.productFilterFunction}
-                    handleFilter={(filters) =>
-                      this.handleFilter(filters, 'categories')
-                    }
                     checked={this.state.checked}
                   />
                 )}

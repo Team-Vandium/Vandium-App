@@ -39,7 +39,11 @@ class Basket extends Component {
   render() {
     //variables specifically for basket component
     const freeDeliveryThreshold = this.props.state.freeDeliveryThreshold;
+
+
     const image = (id) => require(`../Images/${id}.jpg`);
+
+    
     let totalPrice = this.props.state.basket
       .reduce(this.getTotal, 0.0)
       .toFixed(2);

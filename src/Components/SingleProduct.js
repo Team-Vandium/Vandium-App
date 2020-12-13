@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 
 export default class SingleProduct extends Component {
   render() {
+    // helper function to source the image links
     const image = (id) => require(`../Images/${id}.jpg`);
     return (
       <>
+      {/* displays the single product information passed from props 
+          the filter checks the product id from the router & matches it with the API data
+          the map function then displays the product information on the page  
+      */}
         {this.props.data
-          .filter((p) => p.id == this.props.match.params.productid)
+          .filter((p) => p.id === this.props.match.params.productid)
           .map((p, index) => (
             <div key={index} class="card mb-3 mt-3">
               <div class="row no-gutters">

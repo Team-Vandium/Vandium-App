@@ -17,49 +17,20 @@ export default class ProductCard extends Component {
     });
   }
   render() {
+    // extract variables from product props
     const { id, name, description, price, tags } = this.props.product;
+
+    // arrow function to dynamically reference product images
     const image = require(`../Images/${id}.jpg`);
+    
+    // 
     const desc = this.toTitleCase(description);
-    let category;
     let text = 'white';
-
-    switch (tags[2]) {
-      case 'health and beauty':
-        category = 'success';
-        break;
-      case 'jewellery':
-        category = 'light';
-        text = 'dark';
-        break;
-      case 'Clothing & Fashion':
-        category = 'danger';
-        break;
-      case 'Sports':
-        category = 'primary';
-        break;
-      case 'Home':
-        category = 'secondary';
-        text = 'dark';
-        break;
-      case 'DIY & Garden':
-        category = 'warning';
-        break;
-      case 'Art':
-        category = 'info';
-        break;
-      case 'Food & Drink':
-        category = 'dark';
-        break;
-
-      default:
-        category = 'primary';
-        break;
-    }
 
     return (
       this.props.category.length > 0 && (
         <div
-          className={` card border-${this.props.category[0].colour} text-${text} bg-light shadow-sm h-100`}
+          className={` card border-${this.props.category[0].colour} text-${this.props.category[0].text} bg-light shadow-sm h-100`}
         >
           <LazyLoad height={100} offset={100}>
             <img
@@ -95,7 +66,7 @@ export default class ProductCard extends Component {
             >
               €{price.toFixed(2)}
             </strong>
-            <p class="card-text mb-auto text-left mt-1">
+            <p className="card-text mb-auto text-left mt-1">
               {this.shortenDescription(desc)}
             </p>
             <div className="row mt-3">
@@ -104,7 +75,7 @@ export default class ProductCard extends Component {
                   <button
                     className={'btn btn-block btn-dark mr-3 text-left mb-2'}
                   >
-                    <i class="fas fa-info pr-1"></i> More Info
+                    <i className="fas fa-info pr-1"></i> More Info
                   </button>
                 </Link>{' '}
               </div>
@@ -113,7 +84,7 @@ export default class ProductCard extends Component {
                   className={'btn btn-block btn-primary mr-3 text-left mb-2'}
                   onClick={() => this.props.addToBasket(id)}
                 >
-                  <i class="fas fa-cart-plus pr-1"></i> Add To Cart
+                  <i className="fas fa-cart-plus pr-1"></i> Add To Cart
                 </button>
               </div>
             </div>

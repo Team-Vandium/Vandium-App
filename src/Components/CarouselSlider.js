@@ -10,16 +10,15 @@ const CarouselSlider = ({ data }) => {
   const image = (id) => require(`../Images/${id}.jpg`);
   return (
     <div className="row">
-      <div className="col">
         <Carousel
           plugins={[
             {
               resolve: arrowsPlugin,
               options: {
-                arrowLeft: <i class="fas fa-arrow-left text-primary"></i>,
-                arrowLeftDisabled: <i class="fas fa-arrow-left"></i>,
-                arrowRight: <i class="fas fa-arrow-right text-primary"></i>,
-                arrowRightDisabled: <i class="fas fa-arrow-right"></i>,
+                arrowLeft: <i className="fas fa-arrow-left text-primary"></i>,
+                arrowLeftDisabled: <i className="fas fa-arrow-left"></i>,
+                arrowRight: <i className="fas fa-arrow-right text-primary"></i>,
+                arrowRightDisabled: <i className="fas fa-arrow-right"></i>,
                 addArrowClickHandler: true,
               },
             },
@@ -44,10 +43,10 @@ const CarouselSlider = ({ data }) => {
                 {
                   resolve: arrowsPlugin,
                   options: {
-                    arrowLeft: <i class="fas fa-arrow-left text-primary"></i>,
-                    arrowLeftDisabled: <i class="fas fa-arrow-left"></i>,
-                    arrowRight: <i class="fas fa-arrow-right text-primary"></i>,
-                    arrowRightDisabled: <i class="fas fa-arrow-right"></i>,
+                    arrowLeft: <i className="fas fa-arrow-left text-primary"></i>,
+                    arrowLeftDisabled: <i className="fas fa-arrow-left"></i>,
+                    arrowRight: <i className="fas fa-arrow-right text-primary"></i>,
+                    arrowRightDisabled: <i className="fas fa-arrow-right"></i>,
                     addArrowClickHandler: true,
                   },
                 },
@@ -71,10 +70,10 @@ const CarouselSlider = ({ data }) => {
                 {
                   resolve: arrowsPlugin,
                   options: {
-                    arrowLeft: <i class="fas fa-arrow-left text-primary"></i>,
-                    arrowLeftDisabled: <i class="fas fa-arrow-left"></i>,
-                    arrowRight: <i class="fas fa-arrow-right text-primary"></i>,
-                    arrowRightDisabled: <i class="fas fa-arrow-right"></i>,
+                    arrowLeft: <i className="fas fa-arrow-left text-primary"></i>,
+                    arrowLeftDisabled: <i className="fas fa-arrow-left"></i>,
+                    arrowRight: <i className="fas fa-arrow-right text-primary"></i>,
+                    arrowRightDisabled: <i className="fas fa-arrow-right"></i>,
                     addArrowClickHandler: true,
                   },
                 },
@@ -97,7 +96,7 @@ const CarouselSlider = ({ data }) => {
         >
           {data.map((p) => {
             return (
-              <div>
+              <div key={p.id}>
                 <Link to={`/Products/${p.id}`}>
                   <img
                     alt="test"
@@ -111,7 +110,6 @@ const CarouselSlider = ({ data }) => {
           })}
         </Carousel>
       </div>
-    </div>
   );
 };
 

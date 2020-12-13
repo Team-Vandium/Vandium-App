@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { GoX } from 'react-icons/go';
 
 class SearchForm extends Component {
   render() {
@@ -10,21 +9,21 @@ class SearchForm extends Component {
       <div className="SearchFormForm">
         <hr />
         <form>
-          <div class="input-group mb-2 mr-sm-2">
+          <div className="input-group mb-2 mr-sm-2">
             <input
               type="text"
               value={searchTermFromProps}
               onChange={onChangeFromProps}
               placeholder="Search..."
-              class="form-control"
+              className="form-control"
             />
-            <div class="input-group-prepend">
+            <div className="input-group-prepend">
               <div
                 style={{ cursor: 'pointer' }}
                 onClick={this.props.buttonHandler}
-                class="input-group-text bg-danger text-white"
+                className="input-group-text bg-danger text-white"
               >
-                <i class="far fa-window-close"></i>
+                <i className="far fa-window-close"></i>
               </div>
             </div>
           </div>
