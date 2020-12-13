@@ -9,7 +9,6 @@
     "@testing-library/user-event": "^12.2.2",
     "bootswatch": "^4.5.3",
     "firebase": "^8.1.2",
-    "lazy-load": "0.0.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.1.0",
