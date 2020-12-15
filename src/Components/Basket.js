@@ -50,7 +50,6 @@ class Basket extends Component {
     let totalDelivery = this.props.state.basket
       .reduce(this.getDelivery, 0.0)
       .toFixed(2);
-    let totalQuantity = this.props.state.basket.reduce(this.getTotalItems, 0);
     let basketSize = this.props.state.basket.length;
     return (
       <div>

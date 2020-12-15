@@ -2,14 +2,6 @@ import React, { Component } from 'react';
 import SearchForm from './SearchForm';
 
 export default class FilterBox extends Component {
-  constructor(props) {
-    super(props);
-    // create three state variables.
-    // apiData is an array to hold our JSON data
-    // isFetched indicates if the API call has finished
-    // errorMsg is either null (none) or there is some error
-  }
-
   render() {
     return (
       <>

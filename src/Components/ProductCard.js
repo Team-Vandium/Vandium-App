@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import LazyLoad from 'react-lazyload';
 import { Link } from 'react-router-dom';
-import { GiShoppingCart } from 'react-icons/gi';
-import { GrCircleInformation } from 'react-icons/gr';
 
 export default class ProductCard extends Component {
   shortenDescription(desc) {
@@ -18,14 +16,13 @@ export default class ProductCard extends Component {
   }
   render() {
     // extract variables from product props
-    const { id, name, description, price, tags } = this.props.product;
+    const { id, name, description, price } = this.props.product;
 
     // arrow function to dynamically reference product images
     const image = require(`../Images/${id}.jpg`);
-    
-    // 
+
+    //
     const desc = this.toTitleCase(description);
-    let text = 'white';
 
     return (
       this.props.category.length > 0 && (
@@ -88,9 +85,6 @@ export default class ProductCard extends Component {
                 </button>
               </div>
             </div>
-            {/* {tags.map((t) => {
-            return <span className="badge badge-light m-1">{t}</span>;
-          })} */}
           </div>
         </div>
       )
