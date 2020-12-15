@@ -28,7 +28,7 @@ export default class NavBar extends Component {
           className="navbar-brand m-auto text-light font-weight-bold"
           to="/"
         >
-          <GiStarSwirl></GiStarSwirl> Vandium
+          <GiStarSwirl></GiStarSwirl> Irish Gifts Marketplace
         </Link>
         <Link
           to="/Basket"
