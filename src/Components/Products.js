@@ -84,7 +84,7 @@ class Products extends Component {
         <div className="row">
           <div className="col-12">
             {/*  displays the product carousel component with 20 random products */}
-            <CarouselSlider data={randomProducts.slice(0, 19)}></CarouselSlider>
+            {/* <CarouselSlider data={randomProducts.slice(0, 19)}></CarouselSlider> */}
           </div>
           <div className="col-12">
             {/* displays the serach box and filter buttons */}
