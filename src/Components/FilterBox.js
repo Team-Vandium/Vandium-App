@@ -46,7 +46,7 @@ export default class FilterBox extends Component {
                       className={
                         this.props.checked === c.id
                           ? `btn btn-${c.colour} text-white btn-block  btn-sm`
-                          : `btn btn-outline-${c.colour} text-dark btn-block  btn-sm`
+                          : `btn btn-outline-${c.colour}  btn-block  btn-sm`
                       }
                       value={c.id}
                       onClick={(e) => this.props.checkboxChange(e)}
