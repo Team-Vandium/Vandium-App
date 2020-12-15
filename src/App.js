@@ -46,24 +46,24 @@ class App extends Component {
   }
 
   addToBasket(id) {
-    //use unique ID from productCard map function to filter for element in apiData
+    //use unique ID from any map function to filter for element in apiData
     let item = this.state.apiData.filter(
       //variable item to hold the element
       this.getItem(id) //call getItem function to return object
     );
 
-    const checkIfProductInBasket = this.state.basket.filter((p) => p.id === id);
-    if (checkIfProductInBasket.length > 0) {
-      this.setState((prevState) => ({
+    const checkIfProductInBasket = this.state.basket.filter((p) => p.id === id);//store filtered array in variable
+    if (checkIfProductInBasket.length > 0) { //if item in basket already
+      this.setState((prevState) => ({  //update basket state
         basket: prevState.basket.map((product) =>
           product.id === id
-            ? { ...product, quantity: product.quantity + 1 }
+            ? { ...product, quantity: product.quantity + 1 }//increase quantity of quantity by 1 usig spread operator
             : product
         ),
       }));
-      this.setState({ checkoutButton: false });
+      this.setState({ checkoutButton: false }); 
     } else {
-      item[0].quantity = 1;
+      item[0].quantity = 1; //create quantity attribute if item not in basket
       this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
     }
   }

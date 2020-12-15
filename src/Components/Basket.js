@@ -205,8 +205,8 @@ class Basket extends Component {
             <>
               <button
                 className="btn btn-success btn-block"
-                onClick={() => this.props.checkoutButton()}
-              >
+                onClick={() => {this.props.checkoutButton(); this.setState({checkout:true})}}
+                >
                 <GiShoppingCart></GiShoppingCart>Checkout
               </button>
               <button
