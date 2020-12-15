@@ -10,7 +10,8 @@ import Products from './Components/Products.js';
 import Basket from './Components/Basket.js';
 import SingleProduct from './Components/SingleProduct';
 import myFirebase from './Components/myFirebaseConfig.js';
-import Firebase from 'firebase';
+import Firebase from 'firebase/app';
+import 'firebase/database';
 import './App.css';
 
 class App extends Component {
@@ -244,6 +245,7 @@ class App extends Component {
       );
     };
   }
+  
   // function to handle the clear seacrh button
   clearSearchBox(e) {
     e.preventDefault();
