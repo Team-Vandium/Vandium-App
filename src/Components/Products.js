@@ -3,7 +3,6 @@ import '../App.css';
 import 'bootswatch/dist/yeti/bootstrap.min.css';
 import FilterBox from './FilterBox.js';
 import ProductCard from './ProductCard.js';
-import SearchForm from './SearchForm.js';
 import CarouselSlider from './CarouselSlider.js';
 
 // update to use API data from props, mounted in App
@@ -110,7 +109,7 @@ class Products extends Component {
         {
           //buttons for sorting products by price high to low and low to high
           this.state.sortBy ? (
-            <div className="menu">
+            <div>
               <button
                 type="button"
                 className="btn btn-default"
@@ -142,9 +141,8 @@ class Products extends Component {
                   );
 
                   return (
-                    <div className="col-12 col-sm-6 col-md-4 col-lg-4 mt-2 mb-2">
+                    <div key={p.id} className="col-12 col-sm-6 col-md-4 col-lg-4 mt-2 mb-2">
                       <ProductCard
-                        key={p.id}
                         product={p}
                         addToBasket={this.props.addToBasket}
                         categories={this.props.categories}
@@ -161,9 +159,8 @@ class Products extends Component {
                     (c) => c.id === p.categoryID
                   );
                   return (
-                    <div className="col-12 col-sm-6 col-md-4 col-lg-4 mt-2 mb-2">
+                    <div key={p.id} className="col-12 col-sm-6 col-md-4 col-lg-4 mt-2 mb-2">
                       <ProductCard
-                        key={p.id}
                         categories={this.props.categories}
                         product={p}
                         addToBasket={this.props.addToBasket}

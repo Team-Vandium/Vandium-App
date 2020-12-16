@@ -87,7 +87,7 @@ class Newsletter extends Component {
                   bringing you new Irish made products weekly!
                 </p>
                 <div className="form-group">
-                  <label for="email">Email address</label>
+                  <label htmlFor="email">Email address</label>
                   <div className="input-group">
                     <input
                       className="form-control"

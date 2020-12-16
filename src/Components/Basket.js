@@ -62,24 +62,24 @@ class Basket extends Component {
         {
           //display message when basket is empty
           basketSize === 0 && this.state.checkout === false && (
-            <p>
+            <div>
               <br></br>
-              <h3>Your basket is empty.</h3>
+              <p className="h3">Your basket is empty.</p>
               <br></br>
               <br></br>
               <Link to="/">
                 <br></br>
                 <GiStarSwirl></GiStarSwirl> Start shopping Irish products now...
               </Link>
-            </p>
+            </div>
           )
         }
         {
           //display message when checkout is selected and there are no items in the basket
           basketSize === 0 && this.state.checkout === true && (
-            <p>
+            <div>
               <br></br>
-              <h3>Congratulations!</h3>
+              <p className="h3">Congratulations!</p>
               <br></br>
               <br></br>
               You have successfully completed your purchase of Irish Gifts.
@@ -87,7 +87,7 @@ class Basket extends Component {
                 <br></br>
                 <GiStarSwirl></GiStarSwirl> Return to shopping...
               </Link>
-            </p>
+            </div>
           )
         }
         {
@@ -97,12 +97,12 @@ class Basket extends Component {
               <h1 className="text-left mt-2">
                 <GiShoppingCart></GiShoppingCart> Your Basket
               </h1>
-              <table class="table table-striped table-sm mt-4">
+              <table className="table table-striped table-sm mt-4">
                 <thead>
                   <tr className="table-primary text-left">
                     <th colSpan="2"></th>
                     <th>Name</th>
-                    <th colspan="3">Quantity</th>
+                    <th colSpan="3">Quantity</th>
                     <th className="d-none d-sm-table-cell">Manufacturer</th>
                     <th>Delivery</th>
                     <th>Price</th>
@@ -116,7 +116,7 @@ class Basket extends Component {
                       <td>
                         <img
                           src={image(i.id).default}
-                          class="img-responsive"
+                          className="img-responsive"
                           alt={i.name}
                           width="40"
                           height="40"
@@ -134,7 +134,7 @@ class Basket extends Component {
                         <i
                           style={{ cursor: 'pointer' }}
                           onClick={() => this.props.decrement(i.id)}
-                          class="fas fa-minus"
+                          className="fas fa-minus"
                         ></i>
                       </td>
                       <td>
@@ -144,7 +144,7 @@ class Basket extends Component {
                         <i
                           style={{ cursor: 'pointer' }}
                           onClick={() => this.props.addToBasket(i.id)}
-                          class="fas fa-plus"
+                          className="fas fa-plus"
                         ></i>
                       </td>
                       <td className="d-none d-sm-table-cell">
@@ -158,52 +158,55 @@ class Basket extends Component {
                       <td>
                         <i
                           style={{ cursor: 'pointer' }}
-                          onClick={() => this.props.removeFromBasket(i.id)}
-                          class="fas fa-trash-alt"
+                          onClick={() => this.props.removeFromBasket(i)}
+                          className="fas fa-trash-alt"
                         ></i>
                       </td>
                     </tr>
                   ))}
+
+                  <tr className="table-secondary">
+                    <td colSpan="6"></td>
+                    <td className="d-none d-sm-table-cell"></td>
+                    <td>
+                      <strong>Subtotal </strong>
+                    </td>
+                    <td>
+                      <strong>€{totalPrice}</strong>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr className="table-secondary">
+                    <td colSpan="6"></td>
+                    <td className="d-none d-sm-table-cell"></td>
+                    <td>
+                      <strong>Delivery </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        {totalPrice > freeDeliveryThreshold
+                          ? 'FREE'
+                          : `€${totalDelivery}`}
+                      </strong>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr className="table-secondary">
+                    <td colSpan="6"></td>
+                    <td className="d-none d-sm-table-cell"></td>
+                    <td>
+                      <strong>Total </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        {totalPrice > freeDeliveryThreshold
+                          ? `€${totalPrice}`
+                          : `€${total}`}
+                      </strong>
+                    </td>
+                    <td></td>
+                  </tr>
                 </tbody>
-                <tr class="table-secondary">
-                  <td colspan="6"></td>
-                  <td className="d-none d-sm-table-cell"></td>
-                  <td>
-                    <strong>Subtotal </strong>
-                  </td>
-                  <td>
-                    <strong>€{totalPrice}</strong>
-                  </td>
-                  <td></td>
-                </tr>
-                <tr class="table-secondary">
-                  <td colspan="6"></td>
-                  <td className="d-none d-sm-table-cell"></td>
-                  <td>
-                    <strong>Delivery </strong>
-                  </td>
-                  <td>
-                    <strong>
-                      {totalPrice > freeDeliveryThreshold
-                        ? 'FREE'
-                        : `€${totalDelivery}`}
-                    </strong>
-                  </td>
-                  <td></td>
-                </tr>
-                <tr class="table-secondary">
-                  <td colspan="6"></td>
-                  <td className="d-none d-sm-table-cell"></td>
-                  <td>
-                    <strong>Total </strong>
-                  </td>
-                  <td>
-                    <strong>{totalPrice > freeDeliveryThreshold
-                        ? `€${totalPrice}`
-                        : `€${total}`}</strong>
-                  </td>
-                  <td></td>
-                </tr>
               </table>
             </>
           )

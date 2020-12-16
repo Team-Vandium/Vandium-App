@@ -71,11 +71,9 @@ class App extends Component {
     }
   }
   decrement(id) {
-    let i = this.state.basket.filter(this.getItem(id));
-    //console.log(i);
-    if (i[0].quantity === 1) {
+    let i = this.state.basket.filter(this.getItem(id))[0];
+    if (i.quantity === 1) {
       this.removeFromBasket(i);
-      console.log(i);
     } else {
       this.setState((prevState) => ({
         basket: prevState.basket.map((product) =>
@@ -104,10 +102,10 @@ class App extends Component {
   }
 
   removeFromBasket(i) {
-    let bArray = this.state.basket;
-    const index = bArray.findIndex((item) => item.id === i[0].id);
-    bArray.splice(index, 1);
-    this.setState({ basket: bArray });
+     let bArray = this.state.basket;
+     const index = bArray.findIndex((item) => item.id === i.id);
+     bArray.splice(index, 1);
+     this.setState({ basket: bArray });
   }
   checkoutButton() {
     this.emptyBasket();

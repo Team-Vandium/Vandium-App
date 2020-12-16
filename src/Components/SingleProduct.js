@@ -11,34 +11,34 @@ export default class SingleProduct extends Component {
           the map function then displays the product information on the page  
       */}
         {this.props.data
-          .filter((p) => p.id == this.props.match.params.productid)
+          .filter((p) => p.id.toString() === this.props.match.params.productid)
           .map((p, index) => (
-            <div key={index} class="card mb-3 mt-3">
-              <div class="row no-gutters">
-                <div class="col-sm-4">
+            <div key={index} className="card mb-3 mt-3">
+              <div className="row no-gutters">
+                <div className="col-sm-4">
                   <img
                     src={image(p.id).default}
-                    class="card-img"
+                    className="card-img"
                     alt={p.name}
                     style={{ maxWidth: 400 }}
                   />
                 </div>
-                <div class="col-sm-8">
-                  <div class="card-body">
-                    <p class="card-title h4 text-left">
+                <div className="col-sm-8">
+                  <div className="card-body">
+                    <p className="card-title h4 text-left">
                       <strong>{p.name}</strong>
                     </p>
-                    <p class="card-text text-left">
+                    <p className="card-text text-left">
                       <strong>€{p.price.toFixed(2)}</strong>
                     </p>
-                    <p class="card-text text-left">{p.description}</p>
-                    <p class="card-text text-left"></p>
+                    <p className="card-text text-left">{p.description}</p>
+                    <p className="card-text text-left"></p>
 
                     <button
                       className="btn btn-success btn-block mb-2"
                       onClick={() => this.props.addToBasket(p.id)}
                     >
-                      <i class="fas fa-cart-plus pr-2"></i>
+                      <i className="fas fa-cart-plus pr-2"></i>
                       Add To Cart
                     </button>
                     <a
@@ -50,7 +50,7 @@ export default class SingleProduct extends Component {
                         className="btn btn-dark btn-block"
                         onClick={() => this.props.addToBasket(p.id)}
                       >
-                        <i class="fas fa-link pr-2"></i>
+                        <i className="fas fa-link pr-2"></i>
                         {p.manufacturer}
                       </button>
                     </a>
