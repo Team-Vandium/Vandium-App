@@ -53,16 +53,18 @@ class App extends Component {
       this.getItem(id) //call getItem function to return object
     );
 
-    const checkIfProductInBasket = this.state.basket.filter((p) => p.id === id);//store filtered array in variable
-    if (checkIfProductInBasket.length > 0) { //if item in basket already
-      this.setState((prevState) => ({  //update basket state
+    const checkIfProductInBasket = this.state.basket.filter((p) => p.id === id); //store filtered array in variable
+    if (checkIfProductInBasket.length > 0) {
+      //if item in basket already
+      this.setState((prevState) => ({
+        //update basket state
         basket: prevState.basket.map((product) =>
           product.id === id
-            ? { ...product, quantity: product.quantity + 1 }//increase quantity of quantity by 1 usig spread operator
+            ? { ...product, quantity: product.quantity + 1 } //increase quantity of quantity by 1 usig spread operator
             : product
         ),
       }));
-      this.setState({ checkoutButton: false }); 
+      this.setState({ checkoutButton: false });
     } else {
       item[0].quantity = 1; //create quantity attribute if item not in basket
       this.setState({ basket: this.state.basket.concat(item) }); //add item to basket array
@@ -73,6 +75,7 @@ class App extends Component {
     //console.log(i);
     if (i[0].quantity === 1) {
       this.removeFromBasket(i);
+      console.log(i);
     } else {
       this.setState((prevState) => ({
         basket: prevState.basket.map((product) =>
@@ -102,8 +105,8 @@ class App extends Component {
 
   removeFromBasket(i) {
     let bArray = this.state.basket;
-    let itemIndex = bArray.findIndex(this.getItem(i));
-    bArray.splice(itemIndex, 1);
+    const index = bArray.findIndex((item) => item.id === i[0].id);
+    bArray.splice(index, 1);
     this.setState({ basket: bArray });
   }
   checkoutButton() {
@@ -245,7 +248,7 @@ class App extends Component {
       );
     };
   }
-  
+
   // function to handle the clear seacrh button
   clearSearchBox(e) {
     e.preventDefault();
