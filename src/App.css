@@ -10,13 +10,16 @@
 .btn-jewellery,
 .btn-outline-jewellery:hover {
   background-color: #866c13 !important;
+  color: white !important;
 }
 .btn-home,
 .btn-outline-home:hover {
   background-color: #901a94 !important;
+  color: white !important;
 }
 .btn-outline-jewellery {
   border-color: #866c13 !important;
+  color: #866c13 !important;
 }
 .btn-outline-home {
   border-color: #901a94 !important;
@@ -26,6 +29,7 @@
 }
 .btn-outline-home {
   border-color: #901a94 !important;
+  color: #901a94 !important;
 }
 .btn-outline-dark {
   color: dark !important;
@@ -43,10 +47,10 @@
 .text-home {
   color: #901a94 !important;
 }
-.BrainhubCarousel__arrows{
+.BrainhubCarousel__arrows {
   background-color: #333333 !important;
-  padding: 10px!important;
-  margin: 3px
+  padding: 10px !important;
+  margin: 3px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

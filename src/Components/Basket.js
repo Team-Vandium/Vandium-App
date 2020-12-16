@@ -11,6 +11,7 @@ class Basket extends Component {
     };
     this.toTitleCase = this.toTitleCase.bind(this);
     this.getTotal = this.getTotal.bind(this);
+    this.getTotalPrice = this.getTotalPrice.bind(this);
     this.getItems = this.getItems.bind(this);
     this.getDelivery = this.getDelivery.bind(this);
     this.getTotalItems = this.getTotalItems.bind(this);
@@ -21,6 +22,9 @@ class Basket extends Component {
   }
   getDelivery(acc, obj) {
     return acc + obj.deliveryCost * obj.quantity;
+  }
+  getTotalPrice(acc, obj) {
+    return acc + obj.price * obj.quantity + obj.deliveryCost * obj.quantity;
   }
   getTotalItems(acc, obj) {
     return acc + obj.quantity;
@@ -40,17 +44,19 @@ class Basket extends Component {
     //variables specifically for basket component
     const freeDeliveryThreshold = this.props.state.freeDeliveryThreshold;
 
-
     const image = (id) => require(`../Images/${id}.jpg`);
 
-    
     let totalPrice = this.props.state.basket
       .reduce(this.getTotal, 0.0)
       .toFixed(2);
     let totalDelivery = this.props.state.basket
       .reduce(this.getDelivery, 0.0)
       .toFixed(2);
+    let total = this.props.state.basket
+      .reduce(this.getTotalPrice, 0.0)
+      .toFixed(2);
     let basketSize = this.props.state.basket.length;
+
     return (
       <div>
         {
@@ -88,7 +94,9 @@ class Basket extends Component {
           //mapped table of basket items displays when there are elements in basket array
           basketSize > 0 && (
             <>
-              <h1 className="text-left mt-2"><GiShoppingCart></GiShoppingCart> Your Basket</h1>
+              <h1 className="text-left mt-2">
+                <GiShoppingCart></GiShoppingCart> Your Basket
+              </h1>
               <table class="table table-striped table-sm mt-4">
                 <thead>
                   <tr className="table-primary text-left">
@@ -190,7 +198,9 @@ class Basket extends Component {
                     <strong>Total </strong>
                   </td>
                   <td>
-                    <strong>€{totalPrice}</strong>
+                    <strong>{totalPrice > freeDeliveryThreshold
+                        ? `€${totalPrice}`
+                        : `€${total}`}</strong>
                   </td>
                   <td></td>
                 </tr>
@@ -204,8 +214,11 @@ class Basket extends Component {
             <>
               <button
                 className="btn btn-success btn-block"
-                onClick={() => {this.props.checkoutButton(); this.setState({checkout:true})}}
-                >
+                onClick={() => {
+                  this.props.checkoutButton();
+                  this.setState({ checkout: true });
+                }}
+              >
                 <GiShoppingCart></GiShoppingCart>Checkout
               </button>
               <button
