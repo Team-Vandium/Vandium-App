@@ -286,6 +286,15 @@ class App extends Component {
 
   render() {
     return (
+      /*
+      * 
+      * <Route> components with props use the render functionality
+      * for components without props the component functionality may be used
+      * 
+      * Switch looks through its children <Route>s and 
+      * renders the first one that matches the current URL.
+      * 
+      */
       <Router>
         <div className="App">
           <Navbar basket={this.state.basket} />
@@ -312,7 +321,6 @@ class App extends Component {
                   />
                 )}
               />
-              {/*<Route path="/Home" component={Home} />*/}
               <Route
                 path="/About"
                 render={(props) => (
