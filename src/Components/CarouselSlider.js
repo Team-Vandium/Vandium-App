@@ -1,8 +1,4 @@
-import Carousel, {
-  slidesToShowPlugin,
-  autoplayPlugin,
-  arrowsPlugin,
-} from '@brainhubeu/react-carousel';
+import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 import { Link } from 'react-router-dom';
 

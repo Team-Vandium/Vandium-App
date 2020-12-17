@@ -56,7 +56,7 @@ export default class SingleProduct extends Component {
                     </a>
                     <Link to={`/`} style={{ textDecoration: 'none' }}>
                       <button className={'btn btn-primary btn-block mb-2'}>
-                        <i class="fas fa-chevron-circle-left"></i> Back to Home
+                        <i className="fas fa-chevron-circle-left"></i> Back to Home
                       </button>
                     </Link>{' '}
                   </div>
