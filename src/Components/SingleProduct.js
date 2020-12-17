@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class SingleProduct extends Component {
   render() {
@@ -6,7 +7,7 @@ export default class SingleProduct extends Component {
     const image = (id) => require(`../Images/${id}.jpg`);
     return (
       <>
-      {/* displays the single product information passed from props 
+        {/* displays the single product information passed from props 
           the filter checks the product id from the router & matches it with the API data
           the map function then displays the product information on the page  
       */}
@@ -33,7 +34,6 @@ export default class SingleProduct extends Component {
                     </p>
                     <p className="card-text text-left">{p.description}</p>
                     <p className="card-text text-left"></p>
-
                     <button
                       className="btn btn-success btn-block mb-2"
                       onClick={() => this.props.addToBasket(p.id)}
@@ -47,13 +47,18 @@ export default class SingleProduct extends Component {
                       href={p.manufacturer_website}
                     >
                       <button
-                        className="btn btn-dark btn-block"
+                        className="btn btn-dark btn-block mb-2"
                         onClick={() => this.props.addToBasket(p.id)}
                       >
                         <i className="fas fa-link pr-2"></i>
                         {p.manufacturer}
                       </button>
                     </a>
+                    <Link to={`/`} style={{ textDecoration: 'none' }}>
+                      <button className={'btn btn-primary btn-block mb-2'}>
+                        <i class="fas fa-chevron-circle-left"></i> Back to Home
+                      </button>
+                    </Link>{' '}
                   </div>
                 </div>
               </div>
