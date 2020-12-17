@@ -15,7 +15,7 @@ class About extends Component {
 
 
         <div className = "App">
-        <table class = "table">
+        <table className = "table">
             <thead>
               <tr>
                 <th>Size</th>
