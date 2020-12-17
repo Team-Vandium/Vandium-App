@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
-import { GiStarSwirl, GiShoppingCart } from 'react-icons/gi';
+import { GiShoppingCart } from 'react-icons/gi';
+import ireland from '../Images/ireland.png'
 
 class Basket extends Component {
   constructor(props) {
@@ -69,7 +70,7 @@ class Basket extends Component {
               <br></br>
               <Link to="/">
                 <br></br>
-                <GiStarSwirl></GiStarSwirl> Start shopping Irish products now...
+                <img src={ireland} alt="ireland flag"/> Start shopping Irish products now...
               </Link>
             </div>
           )
@@ -85,7 +86,7 @@ class Basket extends Component {
               You have successfully completed your purchase of Irish Gifts.
               <Link to="/">
                 <br></br>
-                <GiStarSwirl></GiStarSwirl> Return to shopping...
+                <img src={ireland} alt="ireland flag"/>  Return to shopping...
               </Link>
             </div>
           )
