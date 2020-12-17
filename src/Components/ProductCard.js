@@ -30,30 +30,34 @@ export default class ProductCard extends Component {
           className={` card border-${this.props.category[0].colour} text-${this.props.category[0].text} bg-light shadow-sm h-100`}
         >
           <LazyLoad height={100} offset={100}>
-            <img
-              className="card-img-top"
-              src={
-                image.default
-                  ? image.default
-                  : 'https://via.placeholder.com/800'
-              }
-              style={{ maxWidth: 400 }}
-              alt={name}
-            />
+            <Link to={`/Products/${id}`}>
+              <img
+                className="card-img-top"
+                src={
+                  image.default
+                    ? image.default
+                    : 'https://via.placeholder.com/800'
+                }
+                style={{ maxWidth: 400 }}
+                alt={name}
+              />
+            </Link>
           </LazyLoad>
 
           <div
             className={`card-body d-flex flex-column align-items-start text-dark bg-light`}
           >
-            <strong
-              className={
-                this.props.category[0].colour === 'light'
-                  ? `mb-0 text-dark text-left`
-                  : `mb-0 text-${this.props.category[0].colour} text-left`
-              }
-            >
-              {this.toTitleCase(name)}
-            </strong>
+            <Link to={`/Products/${id}`} style={{ textDecoration: 'none' }} className='text-left'>
+              <strong
+                className={
+                  this.props.category[0].colour === 'light'
+                    ? `mb-0 text-dark text-left`
+                    : `mb-0 text-${this.props.category[0].colour} text-left`
+                }
+              >
+                {this.toTitleCase(name)}
+              </strong>
+            </Link>
             <strong
               className={
                 this.props.category[0].colour === 'light'

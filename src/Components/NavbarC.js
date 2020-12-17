@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { GiStarSwirl, GiShoppingCart } from 'react-icons/gi';
+import ireland from '../Images/ireland.png'
 
 export default class NavBar extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ export default class NavBar extends Component {
           className="navbar-brand m-auto text-light font-weight-bold"
           to="/"
         >
-          <GiStarSwirl></GiStarSwirl> Irish Gifts Marketplace
+         <img src={ireland} className='img-responsive'></img> Irish Gifts Marketplace
         </Link>
         <Link
           to="/Basket"
